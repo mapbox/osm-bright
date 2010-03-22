@@ -1,4 +1,4 @@
-# OSM Bright by DevelopmentSeed
+# OSM Bright
 
 *A sensible starting point for quickly making beatiful maps based on an 
 "out-of-the-box" OpenStreetMap database.*
