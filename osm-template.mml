@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+  OSM Stock Map by DevelopmentSeed
+
+  A sensible starting point for quickly making beatiful maps based on an 
+  "out-of-the-box" OpenStreetMap database.
+  
+  Requires Cascadenik r912 or higher.
+
+  ## TODO:
+
+  * add more natural features, like glaciers, mud..
+  * add more landuse areas
+  * add bridleways
+  * label water bodies
+  * label airport gates
+  * level crossings (rail)
+  * railway stations
+  * railway platforms
+
+-->
+
+<!DOCTYPE Map[
+
+  <!-- Default OSM projection -->
+  <!ENTITY srs900913 '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs'>
+  
+  <!-- Used by built-up areas shapefile -->
+  <!ENTITY srsMerc '+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs'>
+
+  <!-- Common projection for shapefiles -->
+  <!ENTITY srs4326 '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'>
+
+  <!-- Database settings -->
+  <!ENTITY db_info '
+    <Parameter name="type">postgis</Parameter>
+    <Parameter name="password">$POSTGIS_PASSWORD</Parameter>
+    <Parameter name="host">localhost</Parameter>
+    <Parameter name="port">5434</Parameter>
+    <Parameter name="user">$POSTGIS_USER</Parameter>
+    <Parameter name="dbname">gis</Parameter>
+    <Parameter name="estimate_extent">true</Parameter>
+    <Parameter name="geometry_field">way</Parameter>
+    <Parameter name="srid">900913</Parameter>
+    '>
+
+]>
+
+<Map srs="&srs900913;" minimum_version="0.7.0">
+
+  <Stylesheet src='land.mss' />  <!-- Land cover, land use. Includes water. -->
+
+  <Stylesheet src='road.mss' />  <!-- Routes primarily/exclusively for motorvehicles -->
+  <Stylesheet src='path.mss' />  <!-- Routes primarily/exlusively for non-motor vehicles -->
+  <Stylesheet src='rail.mss' />  <!-- All types of railed transport -->
+  <Stylesheet src='aero.mss' />  <!-- Airports, helipads etc. -->
+
+  <Stylesheet src='boundary.mss' />  <!-- Administrative borders -->
+
+  <Stylesheet src='place-label.mss' />  <!-- Admin-names, cities, towns, etc -->
+  <Stylesheet src='road-label.mss' />   <!-- route labels -->
+  <Stylesheet src='poi.mss' />          <!-- Points of interest, amenities, etc -->
+
+  <!-- == Areas ============================================================ -->
+  
+  <Layer class="land" srs="&srs900913;" status="on">
+    <Datasource>
+      <Parameter name="file">./processed_p/processed_p</Parameter>
+      <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="builtup" srs="&srsMerc;" status="off">
+    <Datasource>
+      <Parameter name="file">./world_boundaries/builtup_area</Parameter>
+      <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="education" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_polygon
+          WHERE "amenity" IN ('kindergarten','school','college','library','university')
+          ORDER BY z_order asc ) AS education
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="transportation" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_polygon
+          WHERE "aeroway" IN ('aerodrome')
+            OR "highway" IN ('services','platform')
+            OR "landuse" IN ('garages','railway')
+          ORDER BY z_order asc ) AS education
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="park" srs="&srs900913;" status="on">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT *, (CASE 
+            WHEN way_area >= 10000000 THEN 'huge'
+            WHEN way_area >= 1000000 THEN 'large'
+            WHEN way_area >= 100000 THEN 'medium'
+            ELSE 'small' END) AS size  FROM planet_osm_polygon
+          WHERE "leisure" IN ('dog_park', 'golf_course', 'pitch', 'park',
+            'playground', 'garden', 'common')
+            OR "landuse" IN ('allotments', 'cemetery','recreation_ground', 'village_green')
+          ORDER BY z_order asc ) AS park
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="agriculture" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_polygon
+          WHERE "landuse" IN ('allotments','farm','farmland','farmyard',
+            'orchard','vineyard')
+          ORDER BY z_order asc ) AS agriculture
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="grass" srs="&srs900913;" status="on">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT *, (CASE 
+            WHEN way_area >= 10000000 THEN 'huge'
+            WHEN way_area >= 1000000 THEN 'large'
+            WHEN way_area >= 100000 THEN 'medium'
+            ELSE 'small' END) AS size FROM planet_osm_polygon
+          WHERE "landuse" IN ('grass', 'greenfield', 'meadow')
+            OR "natural" IN ('fell', 'heath', 'scrub')
+          ORDER BY z_order asc ) AS park
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="sand" srs="&srs900913;" status="on">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT *, (CASE 
+            WHEN way_area >= 10000000 THEN 'huge'
+            WHEN way_area >= 1000000 THEN 'large'
+            WHEN way_area >= 100000 THEN 'medium'
+            ELSE 'small' END) AS size FROM planet_osm_polygon
+          WHERE "natural" IN ('beach')
+          ORDER BY z_order asc ) AS park
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="wood" srs="&srs900913;" status="on">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT *, (CASE 
+            WHEN way_area >= 10000000 THEN 'huge'
+            WHEN way_area >= 1000000 THEN 'large'
+            WHEN way_area >= 100000 THEN 'medium'
+            ELSE 'small' END) AS size FROM planet_osm_polygon
+          WHERE "natural" IN ('wood') OR "landuse" IN ('forest','wood')
+          ORDER BY z_order asc ) AS park
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="water" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_polygon
+          WHERE "natural" IN ('lake','water')
+            OR "waterway" IN ('canal','mill_pond','riverbank')
+            OR "landuse" IN ('basin','reservoir','water')
+          ORDER BY z_order asc ) AS water
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="water-line" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT way,waterway,disused,lock,name,
+          CASE WHEN tunnel IN ('yes','true','1') THEN 'yes'::text
+          ELSE tunnel END AS tunnel FROM planet_osm_polygon
+          WHERE "waterway" IN ('weir','river','canal','derelict_canal','stream','drain')
+          ORDER BY z_order asc ) AS water_line
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="wetland" srs="&srs900913;" status="on">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_polygon
+          WHERE "natural" IN ('marsh', 'wetland')
+          ORDER BY z_order asc ) AS park
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="cliff" srs="&srs900913;" status="on">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "natural" IN ('cliff')
+          ORDER BY z_order asc ) AS cliff
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="nature_reserve" srs="&srs900913;" status="on">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT *, (CASE 
+            WHEN way_area >= 100000000 THEN 'huge'
+            WHEN way_area >= 10000000 THEN 'large'
+            WHEN way_area >= 1000000 THEN 'medium'
+            ELSE 'small' END) AS size
+          FROM planet_osm_polygon
+          WHERE "leisure" IN ('nature_reserve')
+            OR "boundary" IN ('national_park')
+          ORDER BY z_order asc ) AS water
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="building" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_polygon
+          WHERE ("building" IS NOT NULL
+            AND "building" != 'no')
+            OR "aeroway" IN ('terminal')
+          ORDER BY z_order asc ) AS building
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+
+  <!-- == Roads, Railways, Paths, & Trails ================================= -->
+  
+  <Layer class="road-lowzoom" srs="&srs900913;">
+    <!-- Should speed up rendering by pulling only what we need -->
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "highway" IN ('motorway','trunk')
+          ORDER BY z_order asc ) AS road_lowzoom
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="aero line outer" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "aeroway" IS NOT NULL
+          ORDER BY z_order asc ) AS aero_line_outer
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="aero line main" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "aeroway" IN ('apron','runway','taxiway')
+          ORDER BY z_order asc ) AS aero_line_main
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="aero poly" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_polygon
+          WHERE "aeroway" IN ('apron','runway','taxiway')
+          ORDER BY z_order asc ) AS aero_poly
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="rail line main" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "railway" IS NOT NULL
+          ORDER BY z_order asc ) AS route
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="path fill" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "foot" IS NOT NULL
+            OR "highway" IN ('footway','path','pedestrian','steps','trail')
+          ORDER BY z_order asc ) AS route
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+
+  <Layer class="road outline" srs="&srs900913;" status="on">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "highway" IS NOT NULL
+          ORDER BY z_order asc ) AS route_outline
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="road fill" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "highway" IS NOT NULL
+          ORDER BY z_order asc ) AS route
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+
+  <Layer class="road fill bridge" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "highway" IS NOT NULL
+            AND "bridge" NOT IN ('no','false','0')
+          ORDER BY z_order ) AS roads
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <!-- == Boundaries ======================================================= -->
+  
+  <Layer class="boundary admin-2" srs="&srs900913;" status="on">
+      <Datasource>
+        &db_info;
+        <Parameter name="table"><![CDATA[
+          ( SELECT * FROM planet_osm_line
+            WHERE "boundary" = 'administrative'
+              AND "admin_level" = '2'
+          ) AS boundary
+        ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="boundary admin-4" srs="&srs900913;" status="on">
+      <Datasource>
+        &db_info;
+        <Parameter name="table"><![CDATA[
+          ( SELECT * FROM planet_osm_line
+            WHERE "boundary" = 'administrative'
+              AND "admin_level" = '4'
+          ) AS boundary
+        ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <!-- == Labels =========================================================== -->
+  
+  <Layer class="directions" status="on" srs="&srs900913;">
+      <Datasource>
+        &db_info;
+        <Parameter name="table"><![CDATA[
+          ( SELECT way,
+            CASE WHEN oneway IN ('yes','true','1') THEN 'yes'::text
+              ELSE oneway END AS oneway
+            FROM planet_osm_line
+            WHERE "oneway" IS NOT NULL
+              AND ("highway" IS NOT NULL
+              OR "railway" IS NOT NULL
+              OR "waterway" IS NOT NULL)
+          ) AS directions
+        ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="place big" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT way,place, TRANSLATE(UPPER(name),
+            'àáâãäåæçèéêëìíîïñòóôõöùúûüý',
+            'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'
+          ) AS name FROM planet_osm_point
+          WHERE "place" IN ('country','state')
+          ORDER BY z_order asc ) AS place_big
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="place medium" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT way,place,name FROM planet_osm_point
+          WHERE "place" IN ('metropolis','city','large_town','town','small_town')
+          ORDER BY z_order asc ) AS placename
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="place small" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT way,place,name FROM planet_osm_point
+          WHERE "place" IN ('large_village','village','hamlet','suburb','locality','island')
+          ORDER BY z_order asc ) AS placename
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+    <Layer class="road label" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT *, CHAR_LENGTH(ref) AS length FROM planet_osm_line
+          WHERE "highway" IS NOT NULL
+          ORDER BY z_order asc ) AS route_label
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="amenity" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_point
+          WHERE "amenity" IS NOT NULL
+          ORDER BY z_order asc ) AS amenity
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="aero label" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT way,aeroway,name FROM planet_osm_point
+          WHERE "aeroway" IN ('aerodrome','helipad')
+          ORDER BY z_order asc ) AS airport
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+  <Layer class="aero label" srs="&srs900913;">
+    <Datasource>
+      &db_info;
+      <Parameter name="table"><![CDATA[
+        ( SELECT way,aeroway,name FROM planet_osm_polygon
+          WHERE "aeroway" IN ('aerodrome','helipad')
+          ORDER BY z_order asc ) AS airport
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+  
+</Map>
