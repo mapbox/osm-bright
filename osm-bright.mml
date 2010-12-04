@@ -33,19 +33,6 @@
   <!-- Common projection for shapefiles -->
   <!ENTITY srs4326 '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'>
 
-  <!-- Database settings -->
-  <!ENTITY db_info '
-    <Parameter name="type">postgis</Parameter>
-    <Parameter name="password">$POSTGIS_PASSWORD</Parameter>
-    <Parameter name="host">localhost</Parameter>
-    <Parameter name="port">5434</Parameter>
-    <Parameter name="user">$POSTGIS_USER</Parameter>
-    <Parameter name="dbname">gis</Parameter>
-    <Parameter name="estimate_extent">true</Parameter>
-    <Parameter name="geometry_field">way</Parameter>
-    <Parameter name="srid">900913</Parameter>
-    '>
-
 ]>
 
 <Map srs="&srs900913;" minimum_version="0.7.0">
@@ -63,25 +50,35 @@
   <Stylesheet src='road-label.mss' />   <!-- route labels -->
   <Stylesheet src='poi.mss' />          <!-- Points of interest, amenities, etc -->
 
+  <!-- == DATASOURCE TEMPLATES ============================================= -->
+
+  <Datasource name='osm_shp'>
+    <Parameter name='type'>shape</Parameter>
+    <Parameter name='base'>osm_shapefiles_dir</Parameter>
+  </Datasource>
+
+  <Datasource name='pgsql'>
+    <Parameter name="type">postgis</Parameter>
+    <Parameter name="host">localhost</Parameter>
+    <Parameter name="port">5432</Parameter>
+    <Parameter name="dbname">osm_ontario</Parameter>
+    <Parameter name="user">gis</Parameter>
+    <Parameter name="password">gis</Parameter>
+    <Parameter name="estimate_extent">true</Parameter>
+    <Parameter name="geometry_field">way</Parameter>
+    <Parameter name="srid">900913</Parameter>
+  </Datasource>
+
   <!-- == Areas ============================================================ -->
   
   <Layer class="land" srs="&srs900913;" status="on">
-    <Datasource>
-      <Parameter name="file">./processed_p/processed_p</Parameter>
-      <Parameter name="type">shape</Parameter>
-    </Datasource>
-  </Layer>
-  
-  <Layer class="builtup" srs="&srsMerc;" status="off">
-    <Datasource>
-      <Parameter name="file">./world_boundaries/builtup_area</Parameter>
-      <Parameter name="type">shape</Parameter>
+    <Datasource base='osm_shp'>
+      <Parameter name="file">processed_p</Parameter>
     </Datasource>
   </Layer>
   
   <Layer class="education" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_polygon
           WHERE "amenity" IN ('kindergarten','school','college','library','university')
@@ -91,8 +88,7 @@
   </Layer>
   
   <Layer class="transportation" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_polygon
           WHERE "aeroway" IN ('aerodrome')
@@ -104,8 +100,7 @@
   </Layer>
   
   <Layer class="park" srs="&srs900913;" status="on">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT *, (CASE 
             WHEN way_area >= 10000000 THEN 'huge'
@@ -121,8 +116,7 @@
   </Layer>
   
   <Layer class="agriculture" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_polygon
           WHERE "landuse" IN ('allotments','farm','farmland','farmyard',
@@ -133,8 +127,7 @@
   </Layer>
   
   <Layer class="grass" srs="&srs900913;" status="on">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT *, (CASE 
             WHEN way_area >= 10000000 THEN 'huge'
@@ -149,8 +142,7 @@
   </Layer>
   
   <Layer class="sand" srs="&srs900913;" status="on">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT *, (CASE 
             WHEN way_area >= 10000000 THEN 'huge'
@@ -164,8 +156,7 @@
   </Layer>
   
   <Layer class="wood" srs="&srs900913;" status="on">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT *, (CASE 
             WHEN way_area >= 10000000 THEN 'huge'
@@ -179,8 +170,7 @@
   </Layer>
   
   <Layer class="water" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_polygon
           WHERE "natural" IN ('lake','water')
@@ -192,8 +182,7 @@
   </Layer>
   
   <Layer class="water-line" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT way,waterway,disused,lock,name,
           CASE WHEN tunnel IN ('yes','true','1') THEN 'yes'::text
@@ -205,8 +194,7 @@
   </Layer>
   
   <Layer class="wetland" srs="&srs900913;" status="on">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_polygon
           WHERE "natural" IN ('marsh', 'wetland')
@@ -216,8 +204,7 @@
   </Layer>
   
   <Layer class="cliff" srs="&srs900913;" status="on">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "natural" IN ('cliff')
@@ -227,8 +214,7 @@
   </Layer>
   
   <Layer class="nature_reserve" srs="&srs900913;" status="on">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT *, (CASE 
             WHEN way_area >= 100000000 THEN 'huge'
@@ -244,8 +230,7 @@
   </Layer>
   
   <Layer class="building" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_polygon
           WHERE ("building" IS NOT NULL
@@ -260,8 +245,7 @@
   
   <Layer class="road-lowzoom" srs="&srs900913;">
     <!-- Should speed up rendering by pulling only what we need -->
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "highway" IN ('motorway','trunk')
@@ -271,8 +255,7 @@
   </Layer>
   
   <Layer class="aero line outer" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "aeroway" IS NOT NULL
@@ -282,8 +265,7 @@
   </Layer>
   
   <Layer class="aero line main" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "aeroway" IN ('apron','runway','taxiway')
@@ -293,8 +275,7 @@
   </Layer>
   
   <Layer class="aero poly" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_polygon
           WHERE "aeroway" IN ('apron','runway','taxiway')
@@ -304,8 +285,7 @@
   </Layer>
   
   <Layer class="rail line main" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "railway" IS NOT NULL
@@ -315,8 +295,7 @@
   </Layer>
   
   <Layer class="path fill" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "foot" IS NOT NULL
@@ -327,8 +306,7 @@
   </Layer>
 
   <Layer class="road outline" srs="&srs900913;" status="on">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "highway" IS NOT NULL
@@ -338,8 +316,7 @@
   </Layer>
   
   <Layer class="road fill" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "highway" IS NOT NULL
@@ -349,8 +326,7 @@
   </Layer>
 
   <Layer class="road fill bridge" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_line
           WHERE "highway" IS NOT NULL
@@ -363,20 +339,18 @@
   <!-- == Boundaries ======================================================= -->
   
   <Layer class="boundary admin-2" srs="&srs900913;" status="on">
-      <Datasource>
-        &db_info;
-        <Parameter name="table"><![CDATA[
-          ( SELECT * FROM planet_osm_line
-            WHERE "boundary" = 'administrative'
-              AND "admin_level" = '2'
-          ) AS boundary
-        ]]></Parameter>
+    <Datasource base='pgsql'>
+      <Parameter name="table"><![CDATA[
+        ( SELECT * FROM planet_osm_line
+          WHERE "boundary" = 'administrative'
+            AND "admin_level" = '2'
+        ) AS boundary
+      ]]></Parameter>
     </Datasource>
   </Layer>
   
   <Layer class="boundary admin-4" srs="&srs900913;" status="on">
-      <Datasource>
-        &db_info;
+    <Datasource base='pgsql'>
         <Parameter name="table"><![CDATA[
           ( SELECT * FROM planet_osm_line
             WHERE "boundary" = 'administrative'
@@ -389,25 +363,23 @@
   <!-- == Labels =========================================================== -->
   
   <Layer class="directions" status="on" srs="&srs900913;">
-      <Datasource>
-        &db_info;
-        <Parameter name="table"><![CDATA[
-          ( SELECT way,
-            CASE WHEN oneway IN ('yes','true','1') THEN 'yes'::text
-              ELSE oneway END AS oneway
-            FROM planet_osm_line
-            WHERE "oneway" IS NOT NULL
-              AND ("highway" IS NOT NULL
-              OR "railway" IS NOT NULL
-              OR "waterway" IS NOT NULL)
-          ) AS directions
-        ]]></Parameter>
+    <Datasource base='pgsql'>
+      <Parameter name="table"><![CDATA[
+        ( SELECT way,
+          CASE WHEN oneway IN ('yes','true','1') THEN 'yes'::text
+            ELSE oneway END AS oneway
+          FROM planet_osm_line
+          WHERE "oneway" IS NOT NULL
+            AND ("highway" IS NOT NULL
+            OR "railway" IS NOT NULL
+            OR "waterway" IS NOT NULL)
+        ) AS directions
+      ]]></Parameter>
     </Datasource>
   </Layer>
   
   <Layer class="place big" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT way,place, TRANSLATE(UPPER(name),
             'àáâãäåæçèéêëìíîïñòóôõöùúûüý',
@@ -420,8 +392,7 @@
   </Layer>
   
   <Layer class="place medium" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT way,place,name FROM planet_osm_point
           WHERE "place" IN ('metropolis','city','large_town','town','small_town')
@@ -431,8 +402,7 @@
   </Layer>
   
   <Layer class="place small" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT way,place,name FROM planet_osm_point
           WHERE "place" IN ('large_village','village','hamlet','suburb','locality','island')
@@ -441,9 +411,8 @@
     </Datasource>
   </Layer>
   
-    <Layer class="road label" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+  <Layer class="road label" srs="&srs900913;">
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT *, CHAR_LENGTH(ref) AS length FROM planet_osm_line
           WHERE "highway" IS NOT NULL
@@ -453,8 +422,7 @@
   </Layer>
   
   <Layer class="amenity" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT * FROM planet_osm_point
           WHERE "amenity" IS NOT NULL
@@ -464,8 +432,7 @@
   </Layer>
   
   <Layer class="aero label" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT way,aeroway,name FROM planet_osm_point
           WHERE "aeroway" IN ('aerodrome','helipad')
@@ -475,8 +442,7 @@
   </Layer>
   
   <Layer class="aero label" srs="&srs900913;">
-    <Datasource>
-      &db_info;
+    <Datasource base='pgsql'>
       <Parameter name="table"><![CDATA[
         ( SELECT way,aeroway,name FROM planet_osm_polygon
           WHERE "aeroway" IN ('aerodrome','helipad')
