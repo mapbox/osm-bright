@@ -9,13 +9,13 @@
  *   5. Aeroways
  */
 
-/* = 1. ROAD COLORS & LINE STYLES ================================= */
+/* == 1. ROAD COLORS & LINE STYLES ================================== */
 
 /* Note that the ordering of certain styles in this section is
    important to the rendered result. ::line should rendered below
    ::case which should be rendered below ::fill.
 
-/* ---- Bridge Setup ---------------------------------------------- */
+/* ---- Bridge Setup ------------------------------------------------ */
 /* Bridges appear above roads, but complex multi-level layering 
    does not work properly yet. */
 #bridge::case {
@@ -26,8 +26,9 @@
     line-width:0;
   }
 }
+#bridge::fill { line-width:0; }
 
-/* ---- Colors by road type --------------------------------------- */
+/* ---- Colors by road type ----------------------------------------- */
 /* Roads - including tunnels */
 #roads_low[zoom>=5][zoom<=7],
 #roads_med[zoom>=8][zoom<=10], 
@@ -74,13 +75,13 @@
     line-color:@motorway_fill;
   }
   [type='trunk'], [type='trunk_link'] {
-    line-color:@motorway_fill;
+    line-color:@trunk_fill;
   }
   [type='primary'], [type='primary_link'] {
     line-color:@primary_fill;
   }
   [type='secondary'], [type='secondary_link'] {
-    line-color:@primary_fill;
+    line-color:@secondary_fill;
   }
   [type='tertiary'], [type='tertiary_link'],
   [type='residential'], [type='living_street'],
@@ -90,6 +91,21 @@
   [type='service'] {
     line-color:@standard_fill;
   }
+}
+/* turning circles - note that the style perhaps unsafely assumes that 
+ * these are not on major roads, bridges, or tunnels.
+ */
+#turning_circle_case[zoom>=14] {
+  marker-fill:@standard_fill;
+  marker-line-color:@standard_case;
+  marker-line-width:2;
+  marker-allow-overlap:true;
+}
+#turning_circle_fill[zoom>=14] {
+  marker-fill:@standard_fill;
+  marker-line-width:0;
+  marker-line-opacity:0;
+  marker-allow-overlap:true;
 }
 
 /* = 2. ROAD WIDTHS =============================================== */
@@ -234,10 +250,7 @@
   [type='road'], [type='unclassified'], [type='unknown'] {
     ::line { line-width: 1; }
   }
-  [type='secondary_link'] {
-    ::case { line-width: 2+2; }
-    ::fill { line-width: 2; }
-  }
+  [type='secondary_link'],
   [type='primary_link'] {
     ::case { line-width: 1+2; }
     ::fill { line-width: 1; }
@@ -277,13 +290,10 @@
     ::case { line-width: 2+1.5; }
     ::fill { line-width: 2; }
   }
-  [type='secondary_link'] {
-    ::case { line-width: 2+2; }
-    ::fill { line-width: 2; }
-  }
+  [type='secondary_link'],
   [type='primary_link'] {
-    ::case { line-width: 2+2; }
-    ::fill { line-width: 2; }
+    ::case { line-width: 1.5+2; }
+    ::fill { line-width: 1.5; }
   }
   [type='trunk_link'] {
     ::case { line-width: 3+2; }
@@ -307,50 +317,73 @@
     ::fill { line-width: 3; }
   }
 }
+#turning_circle_case,
+#turning_circle_fill { [zoom=14] { marker-width:2; } }
 
 /* ---- Zoom level 15 --------------------------------------------- */
 #roads_high[zoom=15],
 #bridge[zoom=15] {
-    [type='tertiary'], [type='tertiary_link'],
-    [type='residential'], [type='living_street'],
-    [type='road'], [type='unclassified'], [type='unknown'] {
-      ::case { line-width:2+2; }
-      ::fill { line-width:2; }
-    }
-    [type='secondary_link'] {
-      ::case { line-width:2+2; }
-      ::fill { line-width:2; }
-    }
-    [type='primary_link'] {
-      ::case { line-width:2+2; }
-      ::fill { line-width:2; }
-    }
-    [type='trunk_link'] {
-      ::case { line-width:3+2; }
-      ::fill { line-width:3; }
-    }
-    [type='motorway_link'] {
-      ::case { line-width:3+2; }
-      ::fill { line-width:3; }
-    }
-    [type='secondary'] {
-      ::case { line-width:4+2; }
-      ::fill { line-width:4; }
-    }
-    [type='primary'] {
-      ::case { line-width:5+2; }
-      ::fill { line-width:5; }
-    }
-    [type='trunk'],
-    [type='motorway'] {
-      ::case { line-width:6+2; }
-      ::fill { line-width:6; }
-    }
+  [type='service'] {
+    ::line { line-width:1.5; }
+  }
+  [type='tertiary'], [type='tertiary_link'],
+  [type='residential'], [type='living_street'],
+  [type='road'], [type='unclassified'], [type='unknown'] {
+    ::case { line-width:2+2; }
+    ::fill { line-width:2; }
+  }
+  [type='secondary_link'],
+  [type='primary_link'] {
+    ::case { line-width:1.5+2; }
+    ::fill { line-width:1.5; }
+  }
+  [type='trunk_link'] {
+    ::case { line-width:3+2; }
+    ::fill { line-width:3; }
+  }
+  [type='motorway_link'] {
+    ::case { line-width:3+2; }
+    ::fill { line-width:3; }
+  }
+  [type='secondary'] {
+    ::case { line-width:4+2; }
+    ::fill { line-width:4; }
+  }
+  [type='primary'] {
+    ::case { line-width:5+2; }
+    ::fill { line-width:5; }
+  }
+  [type='trunk'],
+  [type='motorway'] {
+    ::case { line-width:6+2; }
+    ::fill { line-width:6; }
+  }
 }
+.turning_circle[zoom=15] { marker-width:2.5; }
 
 /* ---- Zoom level 16 --------------------------------------------- */
 #roads_high[zoom=16],
 #bridge[zoom=16] {
+  [type='service'] {
+    ::case { line-width: 1.5+2; }
+    ::fill { line-width: 1.5; }
+  }
+  [type='tertiary'], [type='tertiary_link'],
+  [type='residential'], [type='living_street'],
+  [type='road'], [type='unclassified'], [type='unknown'] {
+    ::case { line-width:4+2; }
+    ::fill { line-width:4; }
+  }
+  [type='secondary_link'],
+  [type='primary_link'] {
+    ::case { line-width: 3+2.5; }
+    ::fill { line-width: 3; }
+  }
+  [type='trunk_link'],
+  [type='motorway_link'] {
+    ::case { line-width:4+2; }
+    ::fill { line-width:4; }
+  }
   [type='secondary'] {
     ::case { line-width: 6+2.5; }
     ::fill { line-width: 6; }
@@ -365,10 +398,26 @@
     ::fill { line-width: 8; }
   }
 }
+.turning_circle[zoom=16] { marker-width:4; }
 
 /* ---- Zoom level 17 --------------------------------------------- */
 #roads_high[zoom=17],
 #bridge[zoom=17] {
+  [type='service'] {
+    ::case { line-width: 3+2; }
+    ::fill { line-width: 3; }
+  }
+  [type='tertiary'], [type='tertiary_link'],
+  [type='residential'], [type='living_street'],
+  [type='road'], [type='unclassified'], [type='unknown'] {
+    ::case { line-width:8+2; }
+    ::fill { line-width:8; }
+  }
+  [type='secondary_link'],
+  [type='primary_link'] {
+    ::case { line-width: 6+3; }
+    ::fill { line-width: 6; }
+  }
   [type='secondary'] {
     ::case { line-width: 8+3; }
     ::fill { line-width: 8; }
@@ -383,10 +432,22 @@
     ::fill { line-width: 10; }
   }
 }
+.turning_circle[zoom=17] { marker-width:6; }
 
 /* ---- Zoom level 18 --------------------------------------------- */
 #roads_high[zoom>=18],
 #bridge[zoom>=18] {
+  [type='tertiary'], [type='tertiary_link'],
+  [type='residential'], [type='living_street'],
+  [type='road'], [type='unclassified'], [type='unknown'] {
+    ::case { line-width:10+2; }
+    ::fill { line-width:10; }
+  }
+  [type='secondary_link'],
+  [type='primary_link'] {
+    ::case { line-width: 14+3; }
+    ::fill { line-width: 14; }
+  }
   [type='secondary'] {
     ::case { line-width: 16+3; }
     ::fill { line-width: 16; }
@@ -401,13 +462,14 @@
     ::fill { line-width: 20; }
   }
 }
+.turning_circle[zoom>=18] { marker-width:5; }
 
-/* == 3. ROAD LABELS ============================================== *
+/* == 3. ROAD LABELS ============================================== */
 
 #motorway_label[type='motorway'][zoom>9],
 #motorway_label[type='trunk'][zoom>9] {
   text-name:'[ref]';
-  text-face-name:@sans_bd;
+  text-face-name:@sans_bold;
   text-placement:line;
   text-fill:#777;
   text-min-distance:60;
@@ -434,6 +496,7 @@
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:line;
+  text-size:9;
   text-fill:#444;
   text-halo-fill:#fff;
   text-halo-radius:1;
@@ -443,8 +506,9 @@
 
 /* == 4. RAILWAYS ================================================= */
 
+/* TODO: fancier railway styling with casing, thicker lines */
 #rail[zoom>7] {
-  line-color:@rail;
+  line-color:@rail_line;
   line-dasharray:3,2;
   line-width:0.5;
   [tunnel=1] { line-opacity:0.5; }

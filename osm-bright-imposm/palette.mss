@@ -1,12 +1,19 @@
-/* **************************************************************** */
-/* OSM BRIGHT for ImpOSM                                            */
-/* **************************************************************** */
+/* ****************************************************************** */
+/* OSM BRIGHT for ImpOSM                                              */
+/* ****************************************************************** */
 
 /* For basic style customization you can simply edit the colors and
-   fonts defined in this file. For more detailed / advanced 
-   adjustments explore the other files. */
+ * fonts defined in this file. For more detailed / advanced
+ * adjustments explore the other files.
+ *
+ * GENERAL NOTES
+ *
+ * There is a slight performance cost in rendering line-caps.  An
+ * effort has been made to restrict line-cap definitions to styles
+ * where the results will be visible (lines at least 2 pixels thick).
+ */
 
-/* == FONTS ======================================================= */
+/* == 1. FONTS ====================================================== */
 
 /* We're only using @sans so far. TODO: more type variety. */
 @sans:              "Arial Regular","DejaVu Sans Book";
@@ -14,9 +21,9 @@
 @sans_italic:       "Arial Italic", "DejaVu Sans Oblique";
 @sans_bold_italic:  "Arial Bold Italic", " DejaVu Sans Bold Oblique";
 
-/* == COLOR PALETTE =============================================== */
+/* == 2. COLOR PALETTE ============================================== */
 
-/* ---- Lancover & Landuse ---------------------------------------- */
+/* ---- Lancover & Landuse ------------------------------------------ */
 
 @land:              #fcfbe7;
 @water:             #c4dff2;
@@ -30,25 +37,27 @@
 @hospital:          rgb(229,198,195);
 @industrial:        rgb(209,208,205);
 @park:              lighten(@forest,10);
+@parking:           #eee;
 @residential:       darken(@land,5);
 @school:            #FEA;
 @sports:            #DED1AB;
 @transport:         rgb(200,200,200);
 
-/* ---- Roads ----------------------------------------------------- */
+/* ---- Roads ------------------------------------------------------- */
 /* For each class of road there are three color variables:
-   - line: for lower zoomlevels when the road is represented by a
-           single solid line.
-   - case: for higher zoomlevels, this color is for the road's
-           casing (outline).
-   - fill: for higher zoomlevels, this color is for the road's
-           inner fill (inline). */
+ * - line: for lower zoomlevels when the road is represented by a
+ *         single solid line.
+ * - case: for higher zoomlevels, this color is for the road's
+ *         casing (outline).
+ * - fill: for higher zoomlevels, this color is for the road's
+ *         inner fill (inline).
+ */
 
-@motorway_line:     #12975e;
-@motorway_fill:     lighten(@motorway_line,5);
-@motorway_case:     darken(@motorway_line,5);
+@motorway_line:     #4e91ee;
+@motorway_fill:     lighten(@motorway_line,10);
+@motorway_case:     darken(@motorway_line,10);
 
-@trunk_line:        #e12631;
+@trunk_line:        #3cc75b;
 @trunk_fill:        lighten(@trunk_line,10);
 @trunk_case:        darken(@trunk_line,5);
 
@@ -66,12 +75,16 @@
 
 @pedestrian_line:   @standard_line;
 @pedestrian_fill:   #FAFAF5;
+@pedestrian_case:   @standard_case;
 
-@bridge_case:       #666;
+@bridge_case:       rgba(0,0,0,0.33);
 
 @track:             #aaa;
 
-@rail:              #999;
+@rail_line:         #999;
+@rail_fill:         #fff;
+@rail_case:         #999;
+
 @aeroway:           rgb(180,180,180);
 
-/* **************************************************************** */
+/* ****************************************************************** */
