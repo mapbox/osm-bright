@@ -35,13 +35,14 @@ import json
 from sys import path
 from os.path import join
 
-mml = join(path[0], 'osm-bright-imposm/osm-bright-imposm.mml')
+template = join(path[0], 'osm-bright.imposm.mml')
+output = join(path[0], 'osm-bright', 'osm-bright.mml')
 
-with open(mml, 'r') as f:
+with open(template, 'r') as f:
   newf = json.loads(f.read())
 f.closed
 
-with open(mml, 'w') as f:
+with open(output, 'w') as f:
   for layer in newf["Layer"]:
     if layer["id"] == "shoreline_300":
       layer["Datasource"]["file"] = shoreline_300
