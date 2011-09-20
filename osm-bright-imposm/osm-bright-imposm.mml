@@ -2,6 +2,8 @@
   "Layer": [
     {
       "Datasource": {
+        "dbname": "osm", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-land.zip", 
         "id": "land", 
         "project": "foss4g-2011", 
@@ -17,9 +19,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "landuse_gen0", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
@@ -37,9 +38,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "landuse_gen1", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
@@ -57,9 +57,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "landuse", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
@@ -77,9 +76,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "waterway", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -97,9 +95,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "water_gen0", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -117,9 +114,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "water_gen1", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -137,9 +133,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "water", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -157,9 +152,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "landuse_overlays", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
@@ -175,9 +169,40 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
+        "geometry_field": "", 
+        "id": "admin", 
+        "key_field": "", 
+        "project": "osm-bright-imposm", 
+        "table": "osm_admin", 
+        "type": "postgis"
+      }, 
+      "class": "", 
+      "geometry": "polygon", 
+      "id": "admin", 
+      "name": "admin", 
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+    }, 
+    {
+      "Datasource": {
+        "dbname": "osm", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
+        "key_field": "", 
+        "table": "(select type, name, geometry from osm_buildings) as foo", 
+        "type": "postgis"
+      }, 
+      "class": "", 
+      "geometry": "polygon", 
+      "id": "buildings", 
+      "name": "buildings", 
+      "srs": "+init=epsg:3785"
+    }, 
+    {
+      "Datasource": {
+        "dbname": "osm", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
+        "geometry_field": "geometry", 
         "id": "transport_areas", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -195,9 +220,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "aeroway", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -215,9 +239,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "rail", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -235,7 +258,7 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
         "key_field": "", 
         "table": "(select geometry from osm_transport_points where type = 'turning_circle') as foo", 
@@ -250,7 +273,7 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "", 
         "key_field": "", 
         "table": "( select geometry, type, tunnel from osm_roads where type in \n('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'primary_link', 'secondary', 'secondary_link', 'tertiary', 'tertiary_link', 'road', 'residential', 'unknown', 'unclassified', 'living_street', 'service')\norder by z_order) as road", 
@@ -265,7 +288,7 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "", 
         "key_field": "", 
         "table": "(select geometry, type,bridge,tunnel from osm_roads_gen1) as road", 
@@ -280,7 +303,7 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
         "key_field": "", 
         "table": "(select geometry, type,bridge,tunnel from osm_roads_gen0) as road", 
@@ -296,7 +319,7 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
         "key_field": "", 
         "table": "(select geometry from osm_transport_points where type = 'turning_circle') as foo", 
@@ -311,9 +334,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "bridge", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
@@ -331,9 +353,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "place", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -351,9 +372,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "motorway_label", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -371,9 +391,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "mainroad_label", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -391,9 +410,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "minorroad_label", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -411,9 +429,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "landuse_label", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -431,9 +448,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "water_label", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -451,9 +467,8 @@
     {
       "Datasource": {
         "dbname": "osm", 
-        "extent": "-12178939.4676848,4354107.45296023,-11359191.3507561,5097334.13614238", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
-        "host": "localhost", 
         "id": "waterway_label", 
         "key_field": "", 
         "project": "foss4g-2011", 
@@ -467,21 +482,6 @@
       "name": "waterway_label", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
       "status": "on"
-    }, 
-    {
-      "Datasource": {
-        "dbname": "osm", 
-        "extent": "", 
-        "geometry_field": "geometry", 
-        "key_field": "", 
-        "table": "(select type, name, geometry from osm_buildings) as foo", 
-        "type": "postgis"
-      }, 
-      "class": "", 
-      "geometry": "polygon", 
-      "id": "buildings", 
-      "name": "buildings", 
-      "srs": "+init=epsg:4326"
     }
   ], 
   "Stylesheet": [
@@ -497,9 +497,9 @@
     85.05112877980659
   ], 
   "center": [
-    0.0, 
-    15.0, 
-    2
+    30.116695761685623, 
+    -14.692413617572019, 
+    5
   ], 
   "format": "png", 
   "interactivity": false, 

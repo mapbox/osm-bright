@@ -10,15 +10,42 @@
   text-size:10;
 }
 
-#place::country[type='country'][zoom>1][zoom<9] {
+#place::country[type='country'][zoom>3][zoom<9] {
   text-name:'[name]';
-  text-face-name:@sans;
+  text-face-name:@sans_bold;
   text-placement:point;
-  text-fill:rgb(100,100,100);
-  text-size:10;
+  text-fill:@country_text;
+  text-halo-fill: @country_halo;
+  text-halo-radius: 1;
+  [zoom=3] {
+    text-size:10 + @text_adjust;
+    text-wrap-width: 40;
+  }
+  [zoom=4] {
+    text-size:11 + @text_adjust;
+    text-wrap-width: 50;
+  }
+  [zoom>4] {
+    text-halo-radius: 2;
+  }
+  [zoom=5] {
+    text-size:11 + @text_adjust;
+    text-wrap-width: 50;
+    text-line-spacing: 1;
+  }
+  [zoom=6] {
+    text-size:12 + @text_adjust;
+    text-character-spacing: 1;
+    text-wrap-width: 80;
+    text-line-spacing: 2;
+  }
+  [zoom=7] {
+    text-size:14 + @text_adjust;
+    text-character-spacing: 2;
+  }
 }
 
-#place::city[type='city'][zoom>2][zoom<16] {
+#place::city[type='city'][zoom>4][zoom<16] {
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;

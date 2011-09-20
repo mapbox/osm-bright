@@ -1,37 +1,41 @@
 #!/usr/bin/env python
 
-## FOSS4G BENCHMARK 2011 ##
-## MAPNIK CARTO CONFIGURATION OPTIONS ##
+## OSM BRIGHT CARTO TEMPLATE CONFIGURATION OPTIONS #############################
+
+config = { "postgis": {} }
 
 # PostGIS connection setup
-host     = "localhost"
-port     = "5432"
-dbname   = "gis"
-user     = "gis"
-password = "gis"
+# Leave empty for Mapnik defaults.
+config["postgis"]["host"]     = ""
+config["postgis"]["port"]     = ""
+config["postgis"]["dbname"]   = "osm"
+config["postgis"]["user"]     = ""
+config["postgis"]["password"] = ""
+
+# Increase performance if you are only rendering a particular area by
+# specifying a bounding box to restrict queries. Format is "XMIN,YMIN,XMAX,YMAX"
+# in the same units as the database (probably spherical mercator meters). The
+# whole world is "-20037508.34 -20037508.34 20037508.34 20037508.34".
+# Leave blank to let Mapnik estimate.
+config["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34"
 
 # Land shapefiles required for the style. If you have already downloaded
 # these or wish to use different versions, specify their paths here.
-# The latest versions can be downloaded from osm.org:
+# OSM land shapefiles from MapBox are indexed for Mapnik and have blatant 
+# errors corrected (eg triangles along the 180 E/W line), but are updated
+# infrequently. The latest versions can be downloaded from osm.org:
 # - http://tile.openstreetmap.org/processed_p.tar.bz2
 # - http://tile.openstreetmap.org/shoreline_300.tar.bz2
 processed_p = "http://tilemill-data.s3.amazonaws.com/osm/processed_p.zip"
 shoreline_300 = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
 
-# Increase performance if you are only rendering a particular area by
-# specifying a bounding box to restrict queries. Format is "XMIN,YMIN,XMAX,YMAX" in the
-# same units as the database (probably spherical mercator meters). The
-# whole world is "-20037508.34,-20037508.34,20037508.34,20037508.34".
-# Leave blank to let Mapnik estimate.
-extent = "-12166787.538553 4546474.4417774 -11288984.705885 4942723.9963367"
-
-#################################
+################################################################################
 
 import json
 from sys import path
 from os.path import join
 
-mml = join(path[0], 'foss4g-2011/foss4g-2011.mml')
+mml = join(path[0], 'osm-bright-imposm/osm-bright-imposm.mml')
 
 with open(mml, 'r') as f:
   newf = json.loads(f.read())
@@ -39,15 +43,18 @@ f.closed
 
 with open(mml, 'w') as f:
   for layer in newf["Layer"]:
-    layer["Datasource"]["host"] = host
-    layer["Datasource"]["port"] = port
-    layer["Datasource"]["dbname"] = dbname
-    layer["Datasource"]["user"] = user
-    layer["Datasource"]["password"] = password
-    layer["Datasource"]["extent"] = extent
     if layer["id"] == "shoreline_300":
       layer["Datasource"]["file"] = shoreline_300
     elif (layer["id"] == "processed_p") or (layer["id"] == "processed_p_outline"):
       layer["Datasource"]["file"] = processed_p
-  f.write(json.dumps(newf, indent=2))
+    else:
+      # Assume all other layers are PostGIS layers
+      for opt, val in config["postgis"].iteritems():
+        if (val == ""):
+          if (opt in layer["Datasource"]):
+            del layer["Datasource"][opt]
+        else:
+          layer["Datasource"][opt] = val
+  f.write(json.dumps(newf, sort_keys=True, indent=2))
 f.closed
+

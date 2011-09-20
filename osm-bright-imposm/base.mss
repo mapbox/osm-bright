@@ -5,6 +5,7 @@
  * 4. Landuse & landcover labels
  * 5. Water area labels
  * 6. Water way labels
+ * 7. Administrative Boundaries
  *
  */
 
@@ -171,7 +172,7 @@ Map { background-color: @water; }
 /* ---- BUILDINGS ---- */
 /* Transparent buildings account for situations where routes go
    in or under them */
-#building[zoom>10][zoom<17] {
+#buildings[zoom>10][zoom<17] {
   polygon-fill:@building,8;
   [zoom=11] { polygon-opacity:0.1; }
   [zoom=12] { polygon-opacity:0.2; }
@@ -186,10 +187,20 @@ Map { background-color: @water; }
     line-width:0.4;
   }
 }
-#building[zoom>=17] {
+#buildings[zoom>=17] {
   building-fill:lighten(@building,4);
   building-fill-opacity: 0.8;
   building-height:1.2;
+}
+
+/* == 7. ADMINISTRATIVE BOUNDARIES ================================== */
+
+#admin[admin_level=2][zoom>1] {
+  line-color:@admin_2;
+  line-width:0.5;
+  [zoom=2] { line-opacity: 0.25; }
+  [zoom=3] { line-opacity: 0.3; }
+  [zoom=4] { line-opacity: 0.4; }
 }
 
 /* ****************************************************************** */

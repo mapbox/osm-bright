@@ -21,6 +21,10 @@
 @sans_italic:       "Arial Italic", "DejaVu Sans Oblique";
 @sans_bold_italic:  "Arial Bold Italic", " DejaVu Sans Bold Oblique";
 
+/* Some fonts are larger or smaller than others. Use this variable to
+   globally increase or decrease the font sizes. */
+@text_adjust: 0;
+
 /* == 2. COLOR PALETTE ============================================== */
 
 /* ---- Lancover & Landuse ------------------------------------------ */
@@ -54,15 +58,15 @@
  */
 
 @motorway_line:     #4e91ee;
-@motorway_fill:     lighten(@motorway_line,10);
-@motorway_case:     darken(@motorway_line,10);
+@motorway_fill:     lighten(@motorway_line,10%);
+@motorway_case:     darken(@motorway_line,10%);
 
 @trunk_line:        #3cc75b;
-@trunk_fill:        lighten(@trunk_line,10);
-@trunk_case:        darken(@trunk_line,5);
+@trunk_fill:        lighten(@trunk_line,12%);
+@trunk_case:        darken(@trunk_line,12%);
 
-@primary_line:      darken(#f8cd67,20);
-@primary_fill:      lighten(#f8cd67,10);
+@primary_line:      darken(#f8cd67,20%);
+@primary_fill:      lighten(#f8cd67,10%);
 @primary_case:      @primary_line;
 
 @secondary_line:    @primary_line;
@@ -71,7 +75,7 @@
 
 @standard_line:     @land * 0.9;
 @standard_fill:     #fff;
-@standard_case:     fadeout(#000,85);
+@standard_case:     fadeout(#000,85%);
 
 @pedestrian_line:   @standard_line;
 @pedestrian_fill:   #FAFAF5;
@@ -86,5 +90,16 @@
 @rail_case:         #999;
 
 @aeroway:           rgb(180,180,180);
+
+/* ---- Boundaries -------------------------------------------------- */
+
+@admin_2:           #324;
+
+/* ---- Places ------------------------------------------------------ */
+
+@default_halo:      fadeout(#fff,25%);
+
+@country_text:      #435;
+@country_halo:      @default_halo;
 
 /* ****************************************************************** */
