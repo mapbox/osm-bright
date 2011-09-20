@@ -27,7 +27,7 @@ You will need an OSM database extract in one of the following formats:
 
 You can find appropriate data extracts for a variety of regions at
 <http://download.geofabrik.de/osm> or <http://downloads.cloudmade.com>. See
-also [the OSM wiki][3] for information about (very large) full-planet
+also [the OSM wiki][2] for information about (very large) full-planet
 downloads.
 
 OSM Bright requires a PostGIS database imported with [ImpOSM][]. Support for
@@ -37,16 +37,16 @@ A basic ImpOSM import command looks like:
 
     imposm --read --write --deploy-production-tables -U <user> -d <db> <data.osm.pbf>
 
-See `imposm --help` or the [online documentation][2] for more details.
+See `imposm --help` or the [online documentation][3] for more details.
 
 Note that if you use a custom database prefix or want to see the style on a
 tables that have not been "deployed to production" (ie. have an `osm_new_`
 prefix) you will have to manually update the SQL queries in the MML file to
 reflect this.
 
-[3]: http://wiki.openstreetmap.org/wiki/Planet
+[2]: http://wiki.openstreetmap.org/wiki/Planet
 [ImpOSM]: http://imposm.org/
-[1]: http://imposm.org/
+[3]: http://imposm.org/
 
 ### 3. Run configure.py ###
 
