@@ -10,7 +10,7 @@ Setup Instructions
 ### 1. Set up PostgreSQL & PostGIS ###
 
 If you don't already, you need to have [PostgreSQL][] installed & running with
-a [PostGIS][] database setup withing it. See the [PostGIS documentation][1] for
+a [PostGIS][] database setup within it. See the [PostGIS documentation][1] for
 full information on how to do this
 
 [PostgreSQL]: http://postgresql.org/
