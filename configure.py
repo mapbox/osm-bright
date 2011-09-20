@@ -5,7 +5,7 @@
 config = { "postgis": {} }
 
 # PostGIS connection setup
-# Leave empty for Mapnik defaults.
+# Leave empty for Mapnik defaults. The only required parameter is dbname.
 config["postgis"]["host"]     = ""
 config["postgis"]["port"]     = ""
 config["postgis"]["dbname"]   = "osm"
