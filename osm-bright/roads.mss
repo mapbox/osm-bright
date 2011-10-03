@@ -256,12 +256,12 @@
     ::fill { line-width: 1; }
   }
   [type='trunk_link'] {
-    ::case { line-width: 3+2; }
-    ::fill { line-width: 3; }
+    ::case { line-width: 1+2; }
+    ::fill { line-width: 1; }
   }
   [type='motorway_link'] {
-    ::case { line-width: 3+2; }
-    ::fill { line-width: 3; }
+    ::case { line-width: 1+2; }
+    ::fill { line-width: 1; }
   }
   [type='secondary'] {
     ::case { line-width: 1.2+2; }
@@ -296,12 +296,12 @@
     ::fill { line-width: 1.5; }
   }
   [type='trunk_link'] {
-    ::case { line-width: 3+2; }
-    ::fill { line-width: 3; }
+    ::case { line-width: 2+2; }
+    ::fill { line-width: 2; }
   }
   [type='motorway_link'] {
-    ::case { line-width: 3+2; }
-    ::fill { line-width: 3; }
+    ::case { line-width: 2+2; }
+    ::fill { line-width: 2; }
   }
   [type='secondary'] {
     ::case { line-width: 2.6+2; }
@@ -404,17 +404,22 @@
 #roads_high[zoom=17],
 #bridge[zoom=17] {
   [type='service'] {
-    ::case { line-width: 3+2; }
+    ::case { line-width: 3+3; }
     ::fill { line-width: 3; }
   }
   [type='tertiary'], [type='tertiary_link'],
   [type='residential'], [type='living_street'],
   [type='road'], [type='unclassified'], [type='unknown'] {
-    ::case { line-width:8+2; }
+    ::case { line-width:8+3; }
     ::fill { line-width:8; }
   }
   [type='secondary_link'],
   [type='primary_link'] {
+    ::case { line-width: 6+3; }
+    ::fill { line-width: 6; }
+  }
+  [type='trunk_link'],
+  [type='motorway_link'] {
     ::case { line-width: 6+3; }
     ::fill { line-width: 6; }
   }
@@ -445,6 +450,11 @@
   }
   [type='secondary_link'],
   [type='primary_link'] {
+    ::case { line-width: 14+3; }
+    ::fill { line-width: 14; }
+  }
+  [type='trunk_link'],
+  [type='motorway_link'] {
     ::case { line-width: 14+3; }
     ::fill { line-width: 14; }
   }

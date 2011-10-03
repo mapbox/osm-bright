@@ -39,10 +39,10 @@
 @forest:            #c7e6a8;
 @grass:             lighten(@forest,5);
 @hospital:          rgb(229,198,195);
-@industrial:        rgb(209,208,205);
+@industrial:        #e8e8e8;
 @park:              lighten(@forest,10);
 @parking:           #eee;
-@residential:       darken(@land,5);
+@residential:       desaturate(darken(@land,5),10);
 @school:            #FEA;
 @sports:            #DED1AB;
 @transport:         rgb(200,200,200);
@@ -57,16 +57,16 @@
  *         inner fill (inline).
  */
 
-@motorway_line:     #4e91ee;
+@motorway_line:     #4888d8;
 @motorway_fill:     lighten(@motorway_line,10%);
-@motorway_case:     darken(@motorway_line,10%);
+@motorway_case:     darken(@motorway_line,20%);
 
-@trunk_line:        #3cc75b;
-@trunk_fill:        lighten(@trunk_line,12%);
-@trunk_case:        darken(@trunk_line,12%);
+@trunk_line:        @motorway_line;
+@trunk_fill:        @motorway_fill;
+@trunk_case:        @motorway_case;
 
-@primary_line:      darken(#f8cd67,20%);
-@primary_fill:      lighten(#f8cd67,10%);
+@primary_line:      darken(#f9cf66,20%);
+@primary_fill:      lighten(#f9cf66,20%);
 @primary_case:      @primary_line;
 
 @secondary_line:    @primary_line;
@@ -75,7 +75,7 @@
 
 @standard_line:     @land * 0.9;
 @standard_fill:     #fff;
-@standard_case:     fadeout(#000,85%);
+@standard_case:     fadeout(#000,90%);
 
 @pedestrian_line:   @standard_line;
 @pedestrian_fill:   #FAFAF5;
