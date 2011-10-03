@@ -11,7 +11,9 @@
 
 /* == 1. LANDUSE & LANDCOVER ======================================== */
 
-#land {
+#land[zoom>=0][zoom<6],
+#shoreline_300[zoom>=6][zoom<10],
+#processed_p[zoom>=10] {
   polygon-fill: @land;
   polygon-gamma: 0.75;
 }
