@@ -77,12 +77,19 @@
 @standard_fill:     #fff;
 @standard_case:     fadeout(#000,90%);
 
-@pedestrian_line:   @standard_line;
+@pedestrian_line:   #e4e0e0;
 @pedestrian_fill:   #FAFAF5;
 @pedestrian_case:   @standard_case;
 
+@cycle_line:        rgb(229,198,195);
+@cycle_fill:        #FAFAF5;
+@cycle_case:        fadeout(@cycle_line, 20%);
+
+
 @bridge_case:       rgba(0,0,0,0.33);
 
+@minorbridge_case:  lighten(@bridge_case,40%);
+  
 @track:             #aaa;
 
 @rail_line:         #999;
