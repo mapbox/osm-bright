@@ -45,12 +45,12 @@
   }
 }
 
-#place::city[type='city'][zoom>4][zoom<16] {
+#place::city[type='city'][zoom>4] {
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
   text-fill:rgb(68,68,68);
-  text-size:10;
+  text-size:11;
   text-halo-fill:#fff;
   text-halo-radius:1;
   text-wrap-width: 50;
