@@ -126,7 +126,7 @@ Map { background-color: @water; }
 
 /* == 5. WATER AREA LABELS ========================================== */
 
-#water_label[zoom>10][area>1600000],
+#water_label[zoom>10][area>16000000],
 #water_label[zoom>11][area>4000000],
 #water_label[zoom>12][area>1000000],
 #water_label[zoom>13][area>500000],
@@ -136,7 +136,7 @@ Map { background-color: @water; }
 #water_label[zoom>17] {
   text-name: '[name]';
   text-face-name: @sans;
-  text-fill: darken(@water,30);
+  text-fill: darken(@water,40);
   text-halo-fill: #fff;
   text-halo-radius: 2;
   text-placement: interior;
@@ -149,7 +149,7 @@ Map { background-color: @water; }
 #waterway_label[type='stream'][zoom>11] {
   text-name: '[name]';
   text-face-name: @sans;
-  text-fill: darken(@water,20);
+  text-fill: darken(@water,30);
   text-halo-fill: #fff;
   text-halo-radius: 2;
   text-placement: line;
