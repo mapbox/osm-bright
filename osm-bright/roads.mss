@@ -201,8 +201,7 @@
   }
   [type='trunk'],
   [type='motorway'] {
-    ::case { line-width: 1+1.8; }
-    ::fill { line-width: 1; }
+    ::line { line-width: 1.4; }
   }
 }
 
