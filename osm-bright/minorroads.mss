@@ -139,13 +139,13 @@
 #minorbridge[zoom=17] {
   [type='path'], [type='track'],
   [type='footway'], [type='pedestrian'] {
-    ::case { line-width:4+2; }
-    ::fill { line-width:3; }
+    ::case { line-width:2+2; }
+    ::fill { line-width:2; }
 
   }
   [type='cycleway'] {
-    ::case { line-width: 6+2.6; }
-    ::fill { line-width: 6; }
+    ::case { line-width: 4+2.6; }
+    ::fill { line-width: 4; }
   }
 }
 .turning_circle[zoom=17] { marker-width:6; }
@@ -155,12 +155,13 @@
 #minorbridge[zoom>=18] {
   [type='path'], [type='track'],
   [type='footway'], [type='pedestrian'] {
-    ::case { line-width:6+2; }
-    ::fill { line-width:5; }
+     ::case { line-width:3+2; }
+    ::fill { line-width:2.6; }
+
   }
   [type='cycleway'] {
-    ::case { line-width: 8+3; }
-    ::fill { line-width: 8; }
+    ::case { line-width: 4+2.6; }
+    ::fill { line-width: 4; }
   }
 }
 .turning_circle[zoom>=18] { marker-width:5; }
