@@ -38,6 +38,8 @@
   [type='stadium']       { polygon-fill: @sports; }
   [type='university']    { polygon-fill: @school; }
   [type='wood']          { polygon-fill: @forest; }
+  [type='farm']          { polygon-fill: @farm; }
+  [type='grass']         { polygon-fill: @grass; }
 }
 
 #landuse_overlays[type='nature_reserve'][zoom>6] {
