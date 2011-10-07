@@ -66,17 +66,17 @@
   text-face-name:@sans;
   text-placement:point;
   text-fill:#666;
-  text-size:10;
+  text-size:9;
   text-halo-fill:#fff;
   text-halo-radius:1;
   text-wrap-width: 50;
-  [zoom>8] { text-halo-radius:2; }
+  [zoom>8] { text-size: 10; text-halo-radius:2; }
   [zoom>10]{ text-size:11; text-fill:#000; }
   [zoom>11]{ text-size:12; }
   [zoom>14]{ text-size:13; }
 }
 
-#place::village[type='village'][zoom>10] {
+#place::village[type='village'][zoom>11] {
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
