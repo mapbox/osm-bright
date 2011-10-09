@@ -156,7 +156,7 @@
   }
 }
 
-.amenity[zoom>=15][amenity='hospital'] name {
+.amenity[zoom>=15][type='hospital'] name {
   text-allow-overlap: false;
   text-face-name: 'Arial Regular';
   text-fill: #999;
@@ -169,16 +169,16 @@
 /* Education */
 .amenity[zoom>=15][amenity='college'] { point-file: url(./res/school-college-10.png); }
 .amenity[zoom>=15][amenity='kindergarten'] { point-file: url(./res/school-elementary-10.png); }
-.amenity[zoom>=15][amenity='library'] { point-file: url(./res/library-10.png); }
-.amenity[zoom>=15][amenity='school'] { point-file: url(./res/school-elementary-10.png); }
-.amenity[zoom>=15][amenity='university'] { point-file: url(./res/school-college-10.png); }
+.amenity[zoom>=15][type='library'] { point-file: url(./res/library-10.png); }
+.amenity[zoom>=15][type='school'] { point-file: url(./res/school-elementary-10.png); }
+.amenity[zoom>=15][type='university'] { point-file: url(./res/school-college-10.png); }
 
 /* Health */
 .amenity[zoom>=16][amenity='baby_hatch'] {  }
 .amenity[zoom>=16][amenity='dentist'] {  }
 .amenity[zoom>=16][amenity='doctors'] {  }
-.amenity[zoom>=15][amenity='hospital'] { point-file: url(./res/medical-10.png); }
-.amenity[zoom>=16][amenity='hospital'] { point-file: url(./res/medical-15.png); }
+.amenity[zoom>=15][type='hospital'] { point-file: url(./res/medical-10.png); }
+.amenity[zoom>=16][type='hospital'] { point-file: url(./res/medical-15.png); }
 .amenity[zoom>=16][amenity='pharmacy'] {  }
 .amenity[zoom>=16][amenity='veterinary'] {  }
 
@@ -190,7 +190,7 @@
 .amenity[zoom>=15][amenity='car_sharing'] {  }
 .amenity[zoom>=15][amenity='car_wash'] {  }
 .amenity[zoom>=15][amenity='ferry_terminal'] { point-file: url(./res/port-10.png); }
-.amenity[zoom>=15][amenity='fuel'] { point-file: url(./res/fuel-10.png); }
+.amenity[zoom>=15][type='fuel'] { point-file: url(./res/fuel-10.png); }
 .amenity[zoom>=15][amenity='grit_bin'] {  }
 .amenity[zoom>=15][amenity='taxi'] {  }
 
@@ -220,15 +220,15 @@
 
 /* Public */
 .amenity[zoom>=16][amenity='courthouse'] {  }
-.amenity[zoom>=16][amenity='fire_station'] {  }
+.amenity[zoom>=16][type='fire_station'] {  }
 .amenity[zoom>=16][amenity='grave_yard'] {  }
 .amenity[zoom>=16][amenity='place_of_worship'] {  }
-.amenity[zoom>=16][amenity='police'] {  }
+.amenity[zoom>=16][type='police'] {  }
 .amenity[zoom>=16][amenity='post_office'] { point-file: url(./res/post-10.png); }
 .amenity[zoom>=16][amenity='prison'] {  }
 .amenity[zoom>=16][amenity='public_building'] {  }
 .amenity[zoom>=16][amenity='shelter'] {  }
-.amenity[zoom>=16][amenity='townhall'] { point-file: url(./res/town-hall-10.png); }
+.amenity[zoom>=16][type='townhall'] { point-file: url(./res/town-hall-10.png); }
 
 /* Public - small */
 .amenity[zoom>=17][amenity='bench'] {  }
