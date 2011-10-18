@@ -156,10 +156,11 @@
   }
 }
 
-.amenity[zoom>=15][amenity='hospital'] name {
+.amenity[zoom>=15][amenity='hospital'] {
   text-allow-overlap: false;
   text-face-name: 'Arial Regular';
   text-fill: #999;
+  text-name: '[name]';
   text-halo-fill: #fff;
   text-halo-radius: 1;
   text-min-distance: 20;
