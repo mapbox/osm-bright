@@ -201,8 +201,7 @@
   }
   [type='trunk'],
   [type='motorway'] {
-    ::case { line-width: 1+1.8; }
-    ::fill { line-width: 1; }
+    ::line { line-width: 1.4; }
   }
 }
 
@@ -482,6 +481,8 @@
   text-face-name:@sans_bold;
   text-placement:line;
   text-fill:#777;
+  text-halo-fill:#fff;
+  text-halo-radius:1;
   text-min-distance:60;
   text-size:10;
   [zoom=11] { text-min-distance:70; }
