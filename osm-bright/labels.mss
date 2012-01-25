@@ -515,9 +515,26 @@
 /* ROAD LABELS
 /* ================================================================== */
 
+#motorway_label[zoom>=11][zoom<=14][reflen<=6] {
+  shield-name: "[ref]";
+  shield-size: 9;
+  shield-face-name: @sans_bold;
+  shield-fill: @motorway_case;
+  shield-file: url(img/shield-small-light-1.png);
+  [reflen=2] { shield-file: url(img/shield-small-light-2.png); }
+  [reflen=3] { shield-file: url(img/shield-small-light-3.png); }
+  [reflen=4] { shield-file: url(img/shield-small-light-4.png); }
+  [reflen=5] { shield-file: url(img/shield-small-light-5.png); }
+  [reflen=6] { shield-file: url(img/shield-small-light-6.png); }
+  [zoom=11] { shield-min-distance: 80; }
+  [zoom=12] { shield-min-distance: 100; }
+  [zoom=13] { shield-min-distance: 140; }
+  [zoom=14] { shield-min-distance: 200; }
+}
+
 #motorway_label[type='motorway'][zoom>9],
 #motorway_label[type='trunk'][zoom>9] {
-  text-name:'[ref]';
+  text-name:"[name]";
   text-face-name:@sans_bold;
   text-placement:line;
   text-fill:#777;
