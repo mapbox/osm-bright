@@ -15,7 +15,7 @@ config["postgis"]["password"] = ""
 
 config["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34"
 
-processed_p = "http://tilemill-data.s3.amazonaws.com/osm/processed_p.zip"
+processed_p = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
 shoreline_300 = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
 
 import json
@@ -23,7 +23,7 @@ from sys import path
 from os.path import join
 
 output = join(path[0], 'osm-bright.imposm.mml')
-template = join(path[0], 'osm-bright', 'osm-bright.mml')
+template = join(path[0], 'osm-bright', 'project.mml')
 
 with open(template, 'r') as f:
   newf = json.loads(f.read())

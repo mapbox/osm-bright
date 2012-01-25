@@ -26,7 +26,7 @@ config["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34
 # infrequently. The latest versions can be downloaded from osm.org:
 # - http://tile.openstreetmap.org/processed_p.tar.bz2
 # - http://tile.openstreetmap.org/shoreline_300.tar.bz2
-processed_p = "http://tilemill-data.s3.amazonaws.com/osm/processed_p.zip"
+processed_p = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
 shoreline_300 = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
 
 ################################################################################
@@ -36,7 +36,7 @@ from sys import path
 from os.path import join
 
 template = join(path[0], 'osm-bright.imposm.mml')
-output = join(path[0], 'osm-bright', 'osm-bright.mml')
+output = join(path[0], 'osm-bright', 'project.mml')
 
 with open(template, 'r') as f:
   newf = json.loads(f.read())
