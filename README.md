@@ -39,10 +39,10 @@ You can find appropriate data extracts for a variety of regions at
 of select metropolitan areas are available at <http://metro.teczno.com>. See
 [the OSM wiki][2] for information about (very large) full-planet downloads.
 
-OSM Bright requires a PostGIS database imported with [ImpOSM][] using the 
+OSM Bright requires a PostGIS database imported with [Imposm][] using the 
 [included mapping configuration](https://github.com/mapbox/osm-bright/blob/master/imposm-mapping.py)
 
-The ImpOSM import command looks like this:
+The Imposm import command looks like this:
 
     imposm -U <postgres_user> -d <postgis_database> \
       -m /path/to/osm-bright/imposm-mapping.py --read --write \
@@ -56,7 +56,7 @@ prefix) you will have to manually update the SQL queries in the MML file to
 reflect this.
 
 [2]: http://wiki.openstreetmap.org/wiki/Planet
-[ImpOSM]: http://imposm.org/
+[Imposm]: http://imposm.org/
 [3]: http://imposm.org/
 
 ### 3. Run configure.py ###
