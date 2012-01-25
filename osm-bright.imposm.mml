@@ -379,7 +379,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, name, z_order, population\nfrom osm_places\norder by z_order, population desc\n) as places", 
+        "table": "( SELECT geometry, type, name, z_order, population\n  FROM osm_places\n  ORDER BY z_order, population DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -387,6 +387,7 @@
       "id": "place", 
       "name": "place", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {

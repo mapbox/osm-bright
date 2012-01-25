@@ -107,4 +107,17 @@ Map { font-directory: url(./fonts); }
 @country_text:      #435;
 @country_halo:      @default_halo;
 
+@state_text:        #546;
+@state_halo:        @default_halo;
+
+@city_text:         #444;
+@city_halo:         @default_halo;
+
+@town_text:         #666;
+@town_halo:         @default_halo;
+
+/* Also used for other small places: hamlets, suburbs, localities */
+@village_text:      #888;
+@village_halo:      @default_halo;
+
 /* ****************************************************************** */
