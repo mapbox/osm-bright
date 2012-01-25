@@ -35,16 +35,18 @@ You will need an OSM database extract in one of the following formats:
 - .osm (xml)
 
 You can find appropriate data extracts for a variety of regions at
-<http://download.geofabrik.de/osm> or <http://downloads.cloudmade.com>. See
-also [the OSM wiki][2] for information about (very large) full-planet
-downloads.
+<http://download.geofabrik.de/osm> or <http://downloads.cloudmade.com>. Exracts
+of select metropolitan areas are available at <http://metro.teczno.com>. See
+[the OSM wiki][2] for information about (very large) full-planet downloads.
 
-OSM Bright requires a PostGIS database imported with [ImpOSM][]. Support for
-OSM2PGSQL is planned but not yet implemented.
+OSM Bright requires a PostGIS database imported with [ImpOSM][] using the 
+[included mapping configuration](https://github.com/mapbox/osm-bright/blob/master/imposm-mapping.py)
 
-A basic ImpOSM import command looks like:
+The ImpOSM import command looks like this:
 
-    imposm --read --write --deploy-production-tables -U <user> -d <db> <data.osm.pbf>
+    imposm -U <postgres_user> -d <postgis_database> \
+      -m /path/to/osm-bright/imposm-mapping.py --read --write \
+      --optimize --deploy-production-tables <data.osm.pbf>
 
 See `imposm --help` or the [online documentation][3] for more details.
 
