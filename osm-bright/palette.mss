@@ -13,7 +13,9 @@
  * where the results will be visible (lines at least 2 pixels thick).
  */
 
-/* == 1. FONTS ====================================================== */
+/* ================================================================== */
+/* FONTS
+/* ================================================================== */
 
 /* directory to load fonts from in addition to the system directories */
 Map { font-directory: url(./fonts); }
@@ -30,9 +32,9 @@ Map { font-directory: url(./fonts); }
 /* Note this is only implemented for certain things so far */
 @text_adjust: 0;
 
-/* == 2. COLOR PALETTE ============================================== */
-
-/* ---- Lancover & Landuse ------------------------------------------ */
+/* ================================================================== */
+/* LANDUSE & LANDCOVER COLORS
+/* ================================================================== */
 
 @land:              #fcfbe7;
 @water:             #c4dff2;
@@ -52,7 +54,10 @@ Map { font-directory: url(./fonts); }
 @sports:            #DED1AB;
 @transport:         rgb(200,200,200);
 
-/* ---- Roads ------------------------------------------------------- */
+/* ================================================================== */
+/* ROAD COLORS
+/* ================================================================== */
+
 /* For each class of road there are three color variables:
  * - line: for lower zoomlevels when the road is represented by a
  *         single solid line.
@@ -96,28 +101,37 @@ Map { font-directory: url(./fonts); }
 
 @aeroway:           rgb(180,180,180);
 
-/* ---- Boundaries -------------------------------------------------- */
+/* ================================================================== */
+/* BOUNDARY COLORS
+/* ================================================================== */
 
 @admin_2:           #324;
 
-/* ---- Places ------------------------------------------------------ */
+/* ================================================================== */
+/* LABEL COLORS
+/* ================================================================== */
 
-@default_halo:      fadeout(#fff,25%);
+/* We set up a default halo color for places so you can edit them all
+   at once or override each individually. */
+@place_halo:        fadeout(#fff,25%);
 
 @country_text:      #435;
-@country_halo:      @default_halo;
+@country_halo:      @place_halo;
 
 @state_text:        #546;
-@state_halo:        @default_halo;
+@state_halo:        @place_halo;
 
 @city_text:         #444;
-@city_halo:         @default_halo;
+@city_halo:         @place_halo;
 
 @town_text:         #666;
-@town_halo:         @default_halo;
+@town_halo:         @place_halo;
 
 /* Also used for other small places: hamlets, suburbs, localities */
 @village_text:      #888;
-@village_halo:      @default_halo;
+@village_halo:      @place_halo;
+
+@water_text:        #fff;
+@water_halo:        @water;
 
 /* ****************************************************************** */

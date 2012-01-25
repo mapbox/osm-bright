@@ -141,21 +141,6 @@ Map { background-color: @water; }
   text-size: 11;
   text-wrap-width: 20;
 }
-
-#waterway_label[type='river'][zoom>5],
-#waterway_label[type='canal'][zoom>9],
-#waterway_label[type='stream'][zoom>11] {
-  text-name: '[name]';
-  text-face-name: @sans;
-  text-fill: darken(@water,20);
-  text-halo-fill: #fff;
-  text-halo-radius: 2;
-  text-placement: line;
-  text-min-distance: 400;
-  text-size: 10;
-}
-
-/* ---- CAMPUSES ---- */
 /* Note that amenity=school, amenity=hospital, etc are ideally polygons of the
    *campus*, but are occasionally applied to the physical building instead. */
 @campus: #ECF;
