@@ -209,7 +209,7 @@
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
         "key_field": "", 
-        "table": "(select type, name, geometry from osm_buildings) as foo", 
+        "table": "(select type, name, geometry from osm_buildings order by ymin(envelope(geometry)) desc) as foo", 
         "type": "postgis"
       }, 
       "class": "", 
