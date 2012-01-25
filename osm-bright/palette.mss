@@ -66,31 +66,35 @@ Map { font-directory: url(./fonts); }
  *         inner fill (inline).
  */
 
-@motorway_line:     #4888d8;
+@motorway_line:     #E65C5C;
 @motorway_fill:     lighten(@motorway_line,10%);
-@motorway_case:     darken(@motorway_line,20%);
+@motorway_case:     @motorway_line * 0.9;
 
-@trunk_line:        @motorway_line;
-@trunk_fill:        @motorway_fill;
-@trunk_case:        @motorway_case;
+@trunk_line:        #E68A5C;
+@trunk_fill:        lighten(@trunk_line,10%);
+@trunk_case:        @trunk_line * 0.9;
 
-@primary_line:      darken(#f9cf66,20%);
-@primary_fill:      lighten(#f9cf66,20%);
-@primary_case:      @primary_line;
+@primary_line:      #FFC859;
+@primary_fill:      lighten(@primary_line,10%);
+@primary_case:      @primary_line * 0.9;
 
-@secondary_line:    @primary_line;
-@secondary_fill:    @primary_fill;
-@secondary_case:    @primary_case;
+@secondary_line:    #FFE873;
+@secondary_fill:    lighten(@secondary_line,10%);
+@secondary_case:    @secondary_line * 0.9;
 
-@standard_line:     @land * 0.9;
+@standard_line:     @land * 0.85;
 @standard_fill:     #fff;
-@standard_case:     fadeout(#000,90%);
+@standard_case:     @land * 0.9;
 
 @pedestrian_line:   @standard_line;
 @pedestrian_fill:   #FAFAF5;
 @pedestrian_case:   @standard_case;
 
-@bridge_case:       rgba(0,0,0,0.33);
+@cycle_line:        @standard_line;
+@cycle_fill:        #FAFAF5;
+@cycle_case:        @standard_case;
+
+@bridge_case:       #444;
 
 @track:             #aaa;
 

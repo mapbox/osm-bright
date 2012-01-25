@@ -424,7 +424,7 @@
 
 #area_label[type='water'][zoom>=10] {
   text-name: "''";
-  text-fill: @water * 0.6;
+  text-fill: @water * 0.75;
   text-halo-fill: fadeout(@water,25%);
   text-halo-radius: 2;
   text-face-name:@sans_italic;
@@ -487,7 +487,7 @@
 #waterway_label[type='stream'][zoom>=17] {
   text-name: '[name]';
   text-face-name: @sans_italic;
-  text-fill: @water * 0.6;
+  text-fill: @water * 0.75;
   text-halo-fill: fadeout(@water,25%);
   text-halo-radius: 2;
   text-placement: line;
