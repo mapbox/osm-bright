@@ -4,7 +4,6 @@
  * CONTENTS:
  *   1. Road Colors & Line Styles
  *   2. Road Widths
- *   3. Road Labels
  *   4. Railways
  *   5. Aeroways
  */
@@ -473,46 +472,6 @@
   }
 }
 .turning_circle[zoom>=18] { marker-width:5; }
-
-/* == 3. ROAD LABELS ============================================== */
-
-#motorway_label[type='motorway'][zoom>9],
-#motorway_label[type='trunk'][zoom>9] {
-  text-name:'[ref]';
-  text-face-name:@sans_bold;
-  text-placement:line;
-  text-fill:#777;
-  text-min-distance:60;
-  text-size:10;
-  [zoom=11] { text-min-distance:70; }
-  [zoom=12] { text-min-distance:80; }
-  [zoom=13] { text-min-distance:100; }
-}
-
-#mainroad_label[type='primary'][zoom>12],
-#mainroad_label[type='secondary'][zoom>13],
-#mainroad_label[type='tertiary'][zoom>13] {
-  text-name:'[name]';
-  text-face-name:@sans;
-  text-placement:line;
-  text-fill:#555;
-  text-halo-fill:#fff;
-  text-halo-radius:1;
-  text-min-distance:60;
-  text-size:11;
-}
-
-#minorroad_label[zoom>14] {
-  text-name:'[name]';
-  text-face-name:@sans;
-  text-placement:line;
-  text-size:9;
-  text-fill:#444;
-  text-halo-fill:#fff;
-  text-halo-radius:1;
-  text-min-distance:60;
-  text-size:11;
-}
 
 /* == 4. RAILWAYS ================================================= */
 

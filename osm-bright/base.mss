@@ -122,25 +122,6 @@ Map { background-color: @water; }
 }
 
 
-/* == 5. WATER AREA LABELS ========================================== */
-
-#water_label[zoom>10][area>1600000],
-#water_label[zoom>11][area>4000000],
-#water_label[zoom>12][area>1000000],
-#water_label[zoom>13][area>500000],
-#water_label[zoom>14][area>250000],
-#water_label[zoom>15][area>125000],
-#water_label[zoom>16][area>612500],
-#water_label[zoom>17] {
-  text-name: '[name]';
-  text-face-name: @sans;
-  text-fill: darken(@water,30);
-  text-halo-fill: #fff;
-  text-halo-radius: 2;
-  text-placement: interior;
-  text-size: 11;
-  text-wrap-width: 20;
-}
 /* Note that amenity=school, amenity=hospital, etc are ideally polygons of the
    *campus*, but are occasionally applied to the physical building instead. */
 @campus: #ECF;

@@ -43,7 +43,7 @@ Map { font-directory: url(./fonts); }
 @beach:             #ffeec7;
 @building:          #e4e0e0;
 @cemetery:          #d1d1d1;
-@forest:            #c7e6a8;
+@forest:            #C3D9AD;
 @grass:             lighten(@forest,5);
 @hospital:          rgb(229,198,195);
 @industrial:        #e8e8e8;
@@ -130,8 +130,5 @@ Map { font-directory: url(./fonts); }
 /* Also used for other small places: hamlets, suburbs, localities */
 @village_text:      #888;
 @village_halo:      @place_halo;
-
-@water_text:        #fff;
-@water_halo:        @water;
 
 /* ****************************************************************** */
