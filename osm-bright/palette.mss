@@ -15,14 +15,19 @@
 
 /* == 1. FONTS ====================================================== */
 
-/* We're only using @sans so far. TODO: more type variety. */
-@sans:              "Arial Regular","DejaVu Sans Book";
-@sans_bold:         "Arial Bold", "DejaVu Sans Bold";
-@sans_italic:       "Arial Italic", "DejaVu Sans Oblique";
-@sans_bold_italic:  "Arial Bold Italic", " DejaVu Sans Bold Oblique";
+/* directory to load fonts from in addition to the system directories */
+Map { font-directory: url(./fonts); }
+
+/* set up font sets for various weights and styles */
+@sans_lt:           "Open Sans Regular","DejaVu Sans Book","unifont Medium";
+@sans:              "Open Sans Semibold","DejaVu Sans Book","unifont Medium";
+@sans_bold:         "Open Sans Bold","DejaVu Sans Bold","unifont Medium";
+@sans_italic:       "Open Sans Semibold Italic","DejaVu Sans Italic","unifont Medium";
+@sans_bold_italic:  "Open Sans Bold Italic","DejaVu Sans Bold Italic","unifont Medium";
 
 /* Some fonts are larger or smaller than others. Use this variable to
    globally increase or decrease the font sizes. */
+/* Note this is only implemented for certain things so far */
 @text_adjust: 0;
 
 /* == 2. COLOR PALETTE ============================================== */
