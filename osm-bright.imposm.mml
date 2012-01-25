@@ -209,7 +209,7 @@
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
         "key_field": "", 
-        "table": "(select type, name, geometry from osm_buildings order by ymin(envelope(geometry)) desc) as foo", 
+        "table": "( SELECT * FROM (\n    SELECT geometry, type, name, ROUND(ST_Area(geometry)) AS area \n    FROM osm_buildings\n    UNION\n    SELECT geometry, type, name, ROUND(ST_Area(geometry)) AS area\n    FROM osm_transport_areas\n    WHERE type IN ('station','terminal')\n  ) AS areas\n  ORDER BY ST_YMin(ST_Envelope(geometry)) DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -218,25 +218,6 @@
       "name": "buildings", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
       "srs-name": "900913"
-    }, 
-    {
-      "Datasource": {
-        "dbname": "osm", 
-        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
-        "id": "transport_areas", 
-        "key_field": "", 
-        "project": "foss4g-2011", 
-        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type\nfrom osm_transport_areas\n) as transport", 
-        "type": "postgis"
-      }, 
-      "class": "", 
-      "geometry": "polygon", 
-      "id": "transport_areas", 
-      "name": "transport_areas", 
-      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-      "status": "on"
     }, 
     {
       "Datasource": {

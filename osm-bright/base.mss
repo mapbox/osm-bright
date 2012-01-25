@@ -1,15 +1,14 @@
 /* BASE.MSS CONTENTS
- * 1. Landuse & landcover
- * 2. Water areas
- * 3. Water ways
- * 4. Landuse & landcover labels
- * 5. Water area labels
- * 6. Water way labels
- * 7. Administrative Boundaries
+ * - Landuse & landcover
+ * - Water areas
+ * - Water ways
+ * - Administrative Boundaries
  *
  */
 
-/* == 1. LANDUSE & LANDCOVER ======================================== */
+/* ================================================================== */
+/* LANDUSE & LANDCOVER
+/* ================================================================== */
 
 #land[zoom>=0][zoom<6],
 #shoreline_300[zoom>=6][zoom<10],
@@ -26,6 +25,7 @@
   [type='commercial']    { polygon-fill: @industrial; }
   [type='forest']        { polygon-fill: @forest; }
   [type='golf_course']   { polygon-fill: @park; }
+  [type='grass']         { polygon-fill: @park; }
   [type='hospital']      { polygon-fill: @hospital; }
   [type='industrial']    { polygon-fill: @industrial; }
   [type='park']          { polygon-fill: @park; }
@@ -54,11 +54,45 @@
   [zoom>=12] { line-width: 2.0; }
 }
 
-#transport_areas[zoom>3] {
-  polygon-fill: @transport;
+/* Note that amenity=school, amenity=hospital, etc are ideally polygons of the
+   *campus*, but are occasionally applied to the physical building instead. */
+@campus: #ECF;
+#campus[zoom>10] {
+  polygon-opacity:0.2;
+  polygon-fill:@campus;
+  [zoom>12] {
+    line-opacity:0.4;
+    line-color:spin(darken(@campus,20),20);
+  }
+  [zoom=13] { line-width:0.3; }
+  [zoom=14] { line-width:0.5; }
+  [zoom=15] { line-width:0.7; }
+  [zoom=16] { line-width:0.8; }
+  [zoom=17] { line-width:0.9; }
+  [zoom=18] { line-width:1.0; }
 }
 
-/* == 2. WATER AREAS ================================================ */
+/* ---- BUILDINGS ---- */
+#buildings[zoom>10][zoom<=16] {
+  polygon-fill:@building;
+  [zoom>13] {
+    line-color:darken(@building,5);
+    line-width:0.2;
+  }
+  [zoom>15] {
+    line-color:darken(@building,10);
+    line-width:0.4;
+  }
+}
+/* At the highest zoom levels, render buildings in fancy pseudo-3D */
+#buildings[zoom>=17] {
+  building-fill:@building;
+  building-height:1.25;
+}
+
+/* ================================================================== */
+/* WATER AREAS
+/* ================================================================== */
 
 Map { background-color: @water; }
 
@@ -68,7 +102,9 @@ Map { background-color: @water; }
   polygon-fill: @water;
 }
 
-/* == 3. WATER WAYS ================================================= */
+/* ================================================================== */
+/* WATER WAYS
+/* ================================================================== */
 
 #waterway[type='river'][zoom>5] {
   line-color: @water;
@@ -119,49 +155,6 @@ Map { background-color: @water; }
   [zoom=16]{ line-width: 8; }
   [zoom=17]{ line-width: 16; }
   [zoom>17]{ line-width: 30; }
-}
-
-
-/* Note that amenity=school, amenity=hospital, etc are ideally polygons of the
-   *campus*, but are occasionally applied to the physical building instead. */
-@campus: #ECF;
-#campus[zoom>10] {
-  polygon-opacity:0.2;
-  polygon-fill:@campus;
-  [zoom>12] {
-    line-opacity:0.4;
-    line-color:spin(darken(@campus,20),20);
-  }
-  [zoom=13] { line-width:0.3; }
-  [zoom=14] { line-width:0.5; }
-  [zoom=15] { line-width:0.7; }
-  [zoom=16] { line-width:0.8; }
-  [zoom=17] { line-width:0.9; }
-  [zoom=18] { line-width:1.0; }
-}
-
-/* ---- BUILDINGS ---- */
-/* Transparent buildings account for situations where routes go
-   in or under them */
-#buildings[zoom>10][zoom<17] {
-  polygon-fill:@building,8;
-  [zoom=11] { polygon-opacity:0.1; }
-  [zoom=12] { polygon-opacity:0.2; }
-  [zoom=13] { polygon-opacity:0.3; }
-  [zoom>13] {
-    polygon-opacity:0.4;
-    line-color:darken(@building,5);
-    line-width:0.2;
-  }
-  [zoom>15] {
-    line-color:darken(@building,10);
-    line-width:0.4;
-  }
-}
-#buildings[zoom>=17] {
-  building-fill:lighten(@building,4);
-  building-fill-opacity: 0.8;
-  building-height:1.2;
 }
 
 /* == 7. ADMINISTRATIVE BOUNDARIES ================================== */

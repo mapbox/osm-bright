@@ -39,7 +39,7 @@ Map { font-directory: url(./fonts); }
 @land:              #fcfbe7;
 @water:             #c4dff6;
 
-@agriculture:       #f4f0e0;
+@agriculture:       #F2E8B6;
 @beach:             #ffeec7;
 @building:          #e4e0e0;
 @cemetery:          #D6DED2;
@@ -49,10 +49,9 @@ Map { font-directory: url(./fonts); }
 @industrial:        #e8e8e8;
 @park:              lighten(@forest,10);
 @parking:           #eee;
-@residential:       desaturate(darken(@land,5),10);
-@school:            #FEA;
-@sports:            #DED1AB;
-@transport:         rgb(200,200,200);
+@residential:       @land * 0.97;
+@school:            #FFF5CC;
+@sports:            #B8E6B8;
 
 /* ================================================================== */
 /* ROAD COLORS
@@ -99,7 +98,7 @@ Map { font-directory: url(./fonts); }
 @rail_fill:         #fff;
 @rail_case:         #999;
 
-@aeroway:           rgb(180,180,180);
+@aeroway:           #ddd;
 
 /* ================================================================== */
 /* BOUNDARY COLORS
