@@ -37,12 +37,12 @@ Map { font-directory: url(./fonts); }
 /* ================================================================== */
 
 @land:              #fcfbe7;
-@water:             #c4dff2;
+@water:             #c4dff6;
 
 @agriculture:       #f4f0e0;
 @beach:             #ffeec7;
 @building:          #e4e0e0;
-@cemetery:          #d1d1d1;
+@cemetery:          #D6DED2;
 @forest:            #C3D9AD;
 @grass:             lighten(@forest,5);
 @hospital:          rgb(229,198,195);
