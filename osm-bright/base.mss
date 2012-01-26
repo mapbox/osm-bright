@@ -54,24 +54,6 @@
   [zoom>=12] { line-width: 2.0; }
 }
 
-/* Note that amenity=school, amenity=hospital, etc are ideally polygons of the
-   *campus*, but are occasionally applied to the physical building instead. */
-@campus: #ECF;
-#campus[zoom>10] {
-  polygon-opacity:0.2;
-  polygon-fill:@campus;
-  [zoom>12] {
-    line-opacity:0.4;
-    line-color:spin(darken(@campus,20),20);
-  }
-  [zoom=13] { line-width:0.3; }
-  [zoom=14] { line-width:0.5; }
-  [zoom=15] { line-width:0.7; }
-  [zoom=16] { line-width:0.8; }
-  [zoom=17] { line-width:0.9; }
-  [zoom=18] { line-width:1.0; }
-}
-
 /* ---- BUILDINGS ---- */
 #buildings[zoom>10][zoom<=16] {
   polygon-fill:@building;
