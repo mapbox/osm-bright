@@ -36,22 +36,24 @@ Map { font-directory: url(./fonts); }
 /* LANDUSE & LANDCOVER COLORS
 /* ================================================================== */
 
-@land:              #fcfbe7;
-@water:             #c4dff6;
-
-@agriculture:       #F2E8B6;
-@beach:             #ffeec7;
-@building:          #e4e0e0;
+@land:              #FCFBE7;
+@water:             #C4DFF6;
+@grass:             #E6F2C1;
+@beach:             #FFEEC7;
+@park:              #DAF2C1;
 @cemetery:          #D6DED2;
-@forest:            #C3D9AD;
-@grass:             lighten(@forest,5);
+@wooded:            #C3D9AD;
+@agriculture:       #F2E8B6;
+
+@building:          #E4E0E0;
 @hospital:          rgb(229,198,195);
-@industrial:        #e8e8e8;
-@park:              lighten(@forest,10);
-@parking:           #eee;
-@residential:       @land * 0.97;
 @school:            #FFF5CC;
 @sports:            #B8E6B8;
+
+@residential:       @land * 0.98;
+@commercial:        @land * 0.97;
+@industrial:        @land * 0.96;
+@parking:           #EEE;
 
 /* ================================================================== */
 /* ROAD COLORS
@@ -88,19 +90,17 @@ Map { font-directory: url(./fonts); }
 
 @pedestrian_line:   @standard_line;
 @pedestrian_fill:   #FAFAF5;
-@pedestrian_case:   @standard_case;
+@pedestrian_case:   @land;
 
 @cycle_line:        @standard_line;
 @cycle_fill:        #FAFAF5;
-@cycle_case:        @standard_case;
-
-@bridge_case:       #444;
+@cycle_case:        @land;
 
 @track:             #aaa;
 
 @rail_line:         #999;
 @rail_fill:         #fff;
-@rail_case:         #999;
+@rail_case:         @land;
 
 @aeroway:           #ddd;
 

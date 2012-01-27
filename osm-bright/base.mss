@@ -23,7 +23,7 @@
   [type='cemetery']      { polygon-fill: @cemetery; }
   [type='college']       { polygon-fill: @school; }
   [type='commercial']    { polygon-fill: @industrial; }
-  [type='forest']        { polygon-fill: @forest; }
+  [type='forest']        { polygon-fill: @wooded; }
   [type='golf_course']   { polygon-fill: @park; }
   [type='grass']         { polygon-fill: @park; }
   [type='hospital']      { polygon-fill: @hospital; }
@@ -37,14 +37,14 @@
   [type='sports_center'] { polygon-fill: @sports; }
   [type='stadium']       { polygon-fill: @sports; }
   [type='university']    { polygon-fill: @school; }
-  [type='wood']          { polygon-fill: @forest; }
+  [type='wood']          { polygon-fill: @wooded; }
 }
 
 #landuse_overlays[type='nature_reserve'][zoom>6] {
-  line-color: darken(@forest,25%);
+  line-color: darken(@wooded,25%);
   line-opacity:  0.3;
   line-dasharray: 1,1;
-  polygon-fill: darken(@forest,25%);
+  polygon-fill: darken(@wooded,25%);
   polygon-opacity: 0.1;
   [zoom=7] { line-width: 0.4; }
   [zoom=8] { line-width: 0.6; }

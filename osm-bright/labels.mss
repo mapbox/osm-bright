@@ -349,8 +349,8 @@
 #area_label[type='hospital'][zoom>=10] {
   text-name: "''";
   text-fill: @hospital * 0.6;
-/*  text-halo-fill: fadeout(@hospital,25%);
-  text-halo-radius: 2;*/
+  text-halo-fill: fadeout(lighten(@hospital,10%),50%);
+  text-halo-radius: 2;
   text-face-name:@sans;
   text-wrap-width:30;
   [zoom=14][area>320000],
@@ -388,8 +388,8 @@
 #area_label[type='university'][zoom>=10] {
   text-name: "''";
   text-fill: @school * 0.6;
-/*  text-halo-fill: fadeout(@school,25%);
-  text-halo-radius: 2;*/
+  text-halo-fill: fadeout(lighten(@school,10%),50%);
+  text-halo-radius: 2;
   text-face-name:@sans;
   text-wrap-width:30;
   [zoom=14][area>320000],
@@ -425,8 +425,8 @@
 #area_label[type='water'][zoom>=10] {
   text-name: "''";
   text-fill: @water * 0.75;
-  text-halo-fill: fadeout(@water,25%);
-  text-halo-radius: 2;
+  text-halo-fill: fadeout(lighten(@water,5%),25%);
+  text-halo-radius: 1;
   text-face-name:@sans_italic;
   text-wrap-width:30;
   [zoom=10][area>102400000],
@@ -488,8 +488,8 @@
   text-name: '[name]';
   text-face-name: @sans_italic;
   text-fill: @water * 0.75;
-  text-halo-fill: fadeout(@water,25%);
-  text-halo-radius: 2;
+  text-halo-fill: fadeout(lighten(@water,5%),25%);
+  text-halo-radius: 1;
   text-placement: line;
   text-min-distance: 400;
   text-size: 10;

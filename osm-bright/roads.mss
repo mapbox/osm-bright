@@ -65,7 +65,8 @@ come in as well.
 #tunnel::outline[zoom>=11][zoom<=20],
 #bridge[render='1_outline'][zoom>=11][zoom<=20]{
   /* -- colors & styles -- */
-  line-cap: butt;
+  line-cap: round;
+  [bridge=1] { line-cap: butt; }
   line-join: round;
   line-color: @standard_case;
   [bridge=1] { line-color: @standard_case * 0.8; }
@@ -87,6 +88,10 @@ come in as well.
   [type='secondary'],
   [type='secondary_link'] {
     line-color: @secondary_case;
+    [bridge=1] { line-color: @secondary_case * 0.8; }
+  }
+  [stylegroup='railway'] {
+    line-color: fadeout(@land,50%);
     [bridge=1] { line-color: @secondary_case * 0.8; }
   }
   [tunnel=1] { line-dasharray: 3,3; }
@@ -155,7 +160,7 @@ come in as well.
     [stylegroup='motorway'] { line-width: @rdz18_maj + 4; }
     [stylegroup='mainroad'] { line-width: @rdz18_med + 4; }
     [stylegroup='minorroad']{ line-width: @rdz18_min + 3.5; }
-    [stylegroup='service']  { line-width: @rdz18_min / 3 + 3; }
+    [stylegroup='service']  { line-width: @rdz18_min / 3 + 3.5; }
     [stylegroup='noauto']   { line-width: @rdz18_min / 4 + 6; }
     [stylegroup='railway']  { line-width: 4 + 6; }
   }
