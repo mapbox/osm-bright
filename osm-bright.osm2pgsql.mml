@@ -210,9 +210,9 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "key_field": "", 
-        "table": "( SELECT * FROM (\n    SELECT geometry, type, name, ROUND(ST_Area(geometry)) AS area \n    FROM osm_buildings\n    UNION\n    SELECT geometry, type, name, ROUND(ST_Area(geometry)) AS area\n    FROM osm_transport_areas\n    WHERE type IN ('station','terminal')\n  ) AS areas\n  ORDER BY ST_YMin(ST_Envelope(geometry)) DESC\n) AS data", 
+        "table": "( SELECT way\n  FROM planet_osm_polygon\n  WHERE building NOT IN ('0','false', 'no')\n  ORDER BY ST_YMin(ST_Envelope(way)) DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
