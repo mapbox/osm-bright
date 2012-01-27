@@ -9,32 +9,35 @@
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
       }, 
-      "class": "", 
+      "class": "shp", 
       "geometry": "polygon", 
       "id": "land", 
       "name": "land", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
       "Datasource": {
         "file": "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
       }, 
-      "class": "", 
+      "class": "shp", 
       "geometry": "polygon", 
       "id": "processed_p", 
       "name": "processed_p", 
-      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913"
     }, 
     {
       "Datasource": {
         "file": "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
       }, 
-      "class": "", 
+      "class": "shp", 
       "geometry": "polygon", 
       "id": "shoreline_300", 
       "name": "shoreline_300", 
-      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913"
     }, 
     {
       "Datasource": {
@@ -78,12 +81,12 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "id": "landuse", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, round(st_area(geometry)) as area\nfrom osm_landusages\norder by area desc) as landusages", 
+        "table": "( SELECT way, way_area AS area, COALESCE(landuse, leisure, \"natural\", highway, amenity, tourism) AS type\n  FROM planet_osm_polygon\n  ORDER BY way_area DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -91,18 +94,19 @@
       "id": "landuse", 
       "name": "landuse", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "id": "waterway", 
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type\nfrom osm_waterways\n) as waterway", 
+        "table": "( SELECT way, waterway AS type\n  FROM planet_osm_line\n  WHERE waterway IS NOT NULL\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -110,6 +114,7 @@
       "id": "waterway", 
       "name": "waterway", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -176,18 +181,20 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "id": "landuse_overlays", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, round(st_area(geometry)) as area\nfrom osm_landusages\norder by area desc) as landusages", 
+        "table": "( SELECT way, way_area AS area, COALESCE(leisure) AS type\n  FROM planet_osm_polygon\n  WHERE leisure = 'nature_reserve'\n  ORDER BY way_area DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
+      "geometry": "polygon", 
       "id": "landuse_overlays", 
       "name": "landuse_overlays", 
-      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913"
     }, 
     {
       "Datasource": {
@@ -226,12 +233,12 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "id": "aeroway", 
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type from osm_aeroways\n) as aeroway", 
+        "table": "( SELECT way, aeroway AS type\n  FROM planet_osm_line\n  WHERE aeroway IN ('apron', 'runway', 'taxiway')\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -239,15 +246,16 @@
       "id": "aeroway", 
       "name": "aeroway", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "key_field": "", 
-        "table": "( SELECT geometry, type, 0 as bridge, access, render, layer, tunnel,\n  CASE\n    WHEN type IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN type IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN type IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN type IN ('service', 'track') THEN 'service'\n    WHEN type IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN type IN ('light_rail', 'subway', 'narrow_guage', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM (\n    SELECT *, '1_outline' AS render FROM osm_roads WHERE tunnel = 1\n    UNION\n    SELECT *, '2_line' AS render FROM osm_roads WHERE tunnel = 1\n    UNION\n    SELECT *, '3_inline' AS render FROM osm_roads WHERE tunnel = 1\n  ) AS tunnels\n  ORDER BY layer ASC, render ASC\n) AS data", 
+        "table": "( SELECT way, highway AS type, 0 AS bridge, access, render, layer, 1 as tunnel,\n  CASE\n    WHEN highway IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN highway IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN highway IN ('service', 'track') THEN 'service'\n    WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN highway IN ('light_rail', 'subway', 'narrow_guage', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM (\n    SELECT *, '1_outline' AS render FROM planet_osm_line\n    WHERE bridge NOT IN ('', '0', 'no')\n    UNION\n    SELECT *, '2_line' AS render FROM planet_osm_line\n    WHERE bridge NOT IN ('', '0', 'no')\n    UNION\n    SELECT *, '3_inline' AS render FROM planet_osm_line\n    WHERE tunnel NOT IN ('', '0', 'no')\n  ) AS tunnels\n  ORDER BY layer ASC, render ASC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -261,9 +269,12 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
+        "id": "turning_circle_case", 
         "key_field": "", 
-        "table": "( SELECT geometry \n  FROM osm_transport_points \n  WHERE type = 'turning_circle'\n) AS data", 
+        "project": "osm-bright-master", 
+        "srs": null, 
+        "table": "( SELECT way \n  FROM planet_osm_point \n  WHERE highway = 'turning_circle'\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -277,9 +288,12 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "", 
+        "geometry_field": "way", 
+        "id": "roads_high", 
         "key_field": "", 
-        "table": "( SELECT geometry, type, tunnel, bridge, access, 'fill' AS render,\n  CASE\n    WHEN type IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN type IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN type IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN type IN ('service', 'track') THEN 'service'\n    WHEN type IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN type IN ('light_rail', 'subway', 'narrow_guage', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM osm_roads\n  WHERE bridge = 0\n    AND tunnel = 0\n  ORDER BY z_order\n) AS data", 
+        "project": "osm-bright-master", 
+        "srs": null, 
+        "table": "( SELECT way, highway AS type, 0 AS tunnel, 0 AS bridge, access, 'fill' AS render,\n  CASE\n    WHEN highway IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN highway IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN highway IN ('service', 'track') THEN 'service'\n    WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN highway IN ('light_rail', 'subway', 'narrow_guage', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM planet_osm_line\n  WHERE highway IS NOT NULL\n    AND tunnel IS NULL\n    AND bridge IS NULL\n  ORDER BY z_order\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -342,12 +356,12 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "id": "bridge", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "( SELECT geometry, type, bridge, access, render, layer, 0 as tunnel,\n  CASE\n    WHEN type IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN type IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN type IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN type IN ('service', 'track') THEN 'service'\n    WHEN type IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN type IN ('light_rail', 'subway', 'narrow_guage', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM (\n    SELECT *, '1_outline' AS render FROM osm_roads WHERE bridge = 1\n    UNION\n    SELECT *, '2_line' AS render FROM osm_roads WHERE bridge = 1\n    UNION\n    SELECT *, '3_inline' AS render FROM osm_roads WHERE bridge = 1\n  ) as bridges\n  ORDER BY layer ASC, render ASC\n) AS data", 
+        "table": "( SELECT way, highway AS type, 1 AS bridge, access, render, layer, 0 as tunnel,\n  CASE\n    WHEN highway IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN highway IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN highway IN ('service', 'track') THEN 'service'\n    WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN highway IN ('light_rail', 'subway', 'narrow_guage', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM (\n    SELECT *, '1_outline' AS render FROM planet_osm_line\n    WHERE bridge NOT IN ('', '0', 'no')\n    UNION\n    SELECT *, '2_line' AS render FROM planet_osm_line\n    WHERE bridge NOT IN ('', '0', 'no')\n    UNION\n    SELECT *, '3_inline' AS render FROM planet_osm_line\n    WHERE bridge NOT IN ('', '0', 'no')\n  ) AS bridges\n  ORDER BY layer ASC, render ASC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
