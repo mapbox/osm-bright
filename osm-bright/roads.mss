@@ -66,7 +66,10 @@ come in as well.
 #bridge[render='1_outline'][zoom>=11][zoom<=20]{
   /* -- colors & styles -- */
   line-cap: round;
-  [bridge=1] { line-cap: butt; }
+  [bridge=1],
+  [tunnel=1] {
+    line-cap: butt;
+  }
   line-join: round;
   line-color: @standard_case;
   [bridge=1] { line-color: @standard_case * 0.8; }
