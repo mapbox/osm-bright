@@ -43,38 +43,40 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "id": "landuse_gen0", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, round(st_area(geometry)) as area\nfrom osm_landusages_gen0\norder by area desc) as landusages", 
+        "table": "( SELECT way, way_area AS area, COALESCE(landuse, leisure, \"natural\", highway, amenity, tourism) AS type\n  FROM planet_osm_polygon\n  WHERE way_area > 100000\n  ORDER BY way_area DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
-      "geometry": "polygon", 
+      "geometry": "multipolygon", 
       "id": "landuse_gen0", 
       "name": "landuse_gen0", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "id": "landuse_gen1", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, round(st_area(geometry)) as area\nfrom osm_landusages_gen1\norder by area desc) as landusages", 
+        "table": "( SELECT way, way_area AS area, COALESCE(landuse, leisure, \"natural\", highway, amenity, tourism) AS type\n  FROM planet_osm_polygon\n  WHERE way_area > 10000\n  ORDER BY way_area DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
-      "geometry": "polygon", 
+      "geometry": "multipolygon", 
       "id": "landuse_gen1", 
       "name": "landuse_gen1", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -200,18 +202,19 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "", 
+        "geometry_field": "way", 
         "id": "admin", 
         "key_field": "", 
         "project": "osm-bright-imposm", 
-        "table": "osm_admin", 
+        "table": "( SELECT way, admin_level\n  FROM planet_osm_line\n  WHERE boundary = 'administrative'\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
-      "geometry": "polygon", 
+      "geometry": "linestring", 
       "id": "admin", 
       "name": "admin", 
-      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913"
     }, 
     {
       "Datasource": {
@@ -310,9 +313,9 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "", 
+        "geometry_field": "way", 
         "key_field": "", 
-        "table": "( SELECT geometry, type, bridge, tunnel,\n    CASE\n      WHEN type IN ('motorway', 'trunk') THEN 'major'\n      WHEN type IN ('primary', 'secondary', 'motorway_link', 'trunk_link') THEN 'medium'\n      WHEN type IN ('tertiary') THEN 'minor'\n      ELSE 'none' END AS stylegroup\n    FROM osm_roads_gen1\n) AS data", 
+        "table": "( SELECT way, highway AS type, bridge, tunnel,\n    CASE\n      WHEN highway IN ('motorway', 'trunk') THEN 'major'\n      WHEN highway IN ('primary', 'secondary', 'motorway_link', 'trunk_link') THEN 'medium'\n      WHEN highway IN ('tertiary') THEN 'minor'\n      ELSE 'none' END AS stylegroup\n    FROM planet_osm_roads\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -326,9 +329,9 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "geometry_field": "geometry", 
+        "geometry_field": "way", 
         "key_field": "", 
-        "table": "( SELECT geometry, type\n  FROM osm_roads_gen0\n) AS data", 
+        "table": "( SELECT way, highway AS type, bridge, tunnel\n    FROM planet_osm_roads\n    WHERE highway IN ('motorway', 'trunk')\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
