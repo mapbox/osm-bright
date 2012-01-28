@@ -41,10 +41,14 @@ You can find appropriate data extracts for a variety of regions at
 of select metropolitan areas are available at <http://metro.teczno.com>. See
 [the OSM wiki][2] for information about (very large) full-planet downloads.
 
-OSM Bright requires a PostGIS database imported with [Imposm][] using the 
-[included mapping configuration](https://github.com/mapbox/osm-bright/blob/master/imposm-mapping.py)
+OSM Bright requires a PostGIS database imported with [Imposm][] or 
+[osm2pgsql][]. 
 
-The Imposm import command looks like this:
+#### Using ImpOSM
+
+If you are using ImpOSM, you should use the [included mapping configuration][4]
+which includes a few important tags compared to the default. The Imposm import 
+command looks like this:
 
     imposm -U <postgres_user> -d <postgis_database> \
       -m /path/to/osm-bright/imposm-mapping.py --read --write \
@@ -52,18 +56,42 @@ The Imposm import command looks like this:
 
 See `imposm --help` or the [online documentation][3] for more details.
 
-Note that if you use a custom database prefix or want to see the style on a
-tables that have not been "deployed to production" (ie. have an `osm_new_`
-prefix) you will have to manually update the SQL queries in the MML file to
-reflect this.
+#### Using osm2pgsql
+
+If you are using osm2pgsql the default style file should work well. The 
+osm2pgsql import command looks like this:
+
+    osm2pgsql -c -G -U <postgres_user> -d <postgis_database> <data.osm.pbf>
+
+See `man osm2pgsql` or the [online documentation][5] for more details.
 
 [2]: http://wiki.openstreetmap.org/wiki/Planet
 [Imposm]: http://imposm.org/
 [3]: http://imposm.org/
+[4]: https://github.com/mapbox/osm-bright/blob/master/imposm-mapping.py
+[osm2pgsql]: http://wiki.openstreetmap.org/wiki/Osm2pgsql
+[5]: http://wiki.openstreetmap.org/wiki/Osm2pgsql
 
 ### 3. Run configure.py ###
 
 Included in with this style is a configuration script to help you adjust
-parameters such as the database connection information and a few other things.
+parameters such as the database connection information and a few other things. 
+Open up `configure.py` in a text editor and make any necessary adjustments;
+the comments within this file explain what the various parameters are.
 
-TODO: go on...
+- Make sure the "importer" option matches the program you used to import your 
+  data (either "imposm" or "osm2pgsql"). 
+- Make any adjustments to the PostgreSQL connection settings. Your database
+  may be set up so that you require a password or different user name.
+- Optionally adjust the extent parameter.
+- Optionally adjust the coastline file paths. These can be URLs or local file
+  paths to \*.shp files. 
+
+### 4. Copy the project to your MapBox folder ###
+
+After running `configure.py` the `osm-bright` subdirectory will be a usable
+TileMill project. To enable it in the TileMill interface, copy or symlink this
+folder into your MapBox project folder (Mac/Linux default: 
+`~/Documents/MapBox/project`; Windows default: `%UserProfile%\MapBox\project`).
+
+You're now ready to start editing the template in TileMill!

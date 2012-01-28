@@ -2,7 +2,10 @@
 
 ## OSM BRIGHT CARTO TEMPLATE CONFIGURATION OPTIONS #############################
 
-config = { "postgis": {} }
+config = {
+  "importer": "imposm", # either 'imposm' or 'osm2pgsql'
+  "postgis": {}
+}
 
 # PostGIS connection setup
 # Leave empty for Mapnik defaults. The only required parameter is dbname.
@@ -35,7 +38,7 @@ import json
 from sys import path
 from os.path import join
 
-template = join(path[0], 'osm-bright.imposm.mml')
+template = join(path[0], 'osm-bright.' + config["importer"] + '.mml')
 output = join(path[0], 'osm-bright', 'project.mml')
 
 with open(template, 'r') as f:
