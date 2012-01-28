@@ -42,13 +42,13 @@ of select metropolitan areas are available at <http://metro.teczno.com>. See
 [the OSM wiki][2] for information about (very large) full-planet downloads.
 
 You need to process this data and import it to your PostGIS database. You can
-do this with either [ImpOSM][] or [osm2pgsql][]; see their respective websites
+do this with either [Imposm][] or [osm2pgsql][]; see their respective websites
 for installation instructions.
 
-#### Using ImpOSM
+#### Using Imposm
 
-If you are using ImpOSM, you should use the [included mapping configuration][4]
-which includes a few important tags compared to the default. The ImpOSM import 
+If you are using Imposm, you should use the [included mapping configuration][4]
+which includes a few important tags compared to the default. The Imposm import 
 command looks like this:
 
     imposm -U <postgres_user> -d <postgis_database> \
