@@ -41,8 +41,9 @@ You can find appropriate data extracts for a variety of regions at
 of select metropolitan areas are available at <http://metro.teczno.com>. See
 [the OSM wiki][2] for information about (very large) full-planet downloads.
 
-OSM Bright requires a PostGIS database imported with [Imposm][] or 
-[osm2pgsql][]. 
+You need to process this data and import it to your PostGIS database. You can
+do this with either [Imposm][] or [osm2pgsql][]; see their respective websites
+for installation instructions.
 
 #### Using ImpOSM
 
