@@ -85,8 +85,11 @@ the comments within this file explain what the various parameters are.
 - Make any adjustments to the PostgreSQL connection settings. Your database
   may be set up so that you require a password or different user name.
 - Optionally adjust the extent parameter.
-- Optionally adjust the coastline file paths. These can be URLs or local file
-  paths to \*.shp files. 
+- Optionally adjust the coastline file paths. These can be URLs to zipped
+  shapefiles or local file paths to \*.shp files. **Note:** the coastline zips
+  total about 350MB and will be downloaded the first time you load the OSM
+  Bright TileMill project, unless you specify local versions you've already
+  downloaded.
 
 ### 4. Copy the project to your MapBox folder ###
 
