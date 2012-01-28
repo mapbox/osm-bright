@@ -62,7 +62,7 @@ come in as well.
 /* ---- Casing ----------------------------------------------- */
 
 #roads_high::outline[zoom>=11][zoom<=20],
-#tunnel::outline[zoom>=11][zoom<=20],
+#tunnel[render='1_outline'][zoom>=11][zoom<=20],
 #bridge[render='1_outline'][zoom>=11][zoom<=20]{
   /* -- colors & styles -- */
   line-cap: round;
