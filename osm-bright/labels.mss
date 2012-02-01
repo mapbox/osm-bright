@@ -87,27 +87,6 @@
 
 /* ---- Cities ------------------------------------------------------ */
 
-#ne_place {
-  [zoom=4][SCALERANK<=2],
-  [zoom=5][SCALERANK<=4],
-  [zoom=6][SCALERANK<=6],
-  [zoom=7][SCALERANK<=9] {
-    text-name:'[NAME]';
-    text-face-name:@sans;
-    text-placement:point;
-    text-fill:#888;
-    text-halo-fill:fadeout(#fff,10);
-    text-halo-radius:1;
-    text-dx: 5;
-    text-dy: 3;
-    text-placement-type: simple;
-    text-placements: "E,W,NE,SW,NW,NE,N,S";
-    marker-width: 2;
-    marker-fill: #666;
-    marker-line-color: #fff;
-  }
-}
-
 #place::city[type='city'][zoom>=8][zoom<=15] {
   text-name:'[name]';
   text-face-name:@sans;
@@ -235,9 +214,9 @@
     text-character-spacing: 2;
     text-wrap-width: 120;
     text-line-spacing: 2;
-  }
+  } 
   [zoom>=17] {
-    text-size:13;
+    text-size:13; 
     text-character-spacing: 3;
     text-wrap-width: 160;
     text-line-spacing: 4;
@@ -486,7 +465,7 @@
     text-wrap-width: 180;
   }
 }
-
+   
 #poi[type='university'][zoom>=15],
 #poi[type='hospital'][zoom>=16],
 #poi[type='school'][zoom>=17],
@@ -495,7 +474,7 @@
   text-face-name:@sans;
   text-size:10;
   text-wrap-width:30;
-  text-fill: #686260;
+  text-fill: @poi_text;
 }
 
 
@@ -562,9 +541,9 @@
     [reflen=7] { shield-file: url(img/shield-trunk-7.png); }
     [reflen=8] { shield-file: url(img/shield-trunk-8.png); }
   }
-  [zoom=11] { shield-min-distance: 50; }
-  [zoom=12] { shield-min-distance: 60; }
-  [zoom=13] { shield-min-distance: 120; }
+  [zoom=11] { shield-min-distance: 60; } //50
+  [zoom=12] { shield-min-distance: 80; } //60
+  [zoom=13] { shield-min-distance: 120; } //120
   [zoom=14] { shield-min-distance: 180; }
 }
 
@@ -573,8 +552,8 @@
   text-name:"[name]";
   text-face-name:@sans_bold;
   text-placement:line;
-  text-fill:#444;
-  text-halo-fill:#fff;
+  text-fill:#555;
+  text-halo-fill:@road_halo;
   text-halo-radius:1;
   text-min-distance:60;
   text-size:10;
@@ -589,8 +568,8 @@
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:line;
-  text-fill:#555;
-  text-halo-fill:#fff;
+  text-fill:#666;
+  text-halo-fill:@road_halo;
   text-halo-radius:1;
   text-min-distance:60;
   text-size:11;
@@ -601,8 +580,8 @@
   text-face-name:@sans;
   text-placement:line;
   text-size:9;
-  text-fill:#666;
-  text-halo-fill:#fff;
+  text-fill:#777;
+  text-halo-fill:@road_halo;
   text-halo-radius:1;
   text-min-distance:60;
   text-size:11;

@@ -128,6 +128,10 @@ Map { font-directory: url(./fonts); }
 @town_text:         #666;
 @town_halo:         @place_halo;
 
+@poi_text:          @poi_text;  
+
+@road_halo:         #fff; 
+
 /* Also used for other small places: hamlets, suburbs, localities */
 @village_text:      #888;
 @village_halo:      @place_halo;
