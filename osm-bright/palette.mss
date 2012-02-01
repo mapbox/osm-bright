@@ -96,8 +96,6 @@ Map { font-directory: url(./fonts); }
 @cycle_fill:        #FAFAF5;
 @cycle_case:        @land;
 
-@track:             #aaa;
-
 @rail_line:         #999;
 @rail_fill:         #fff;
 @rail_case:         @land;
@@ -116,7 +114,7 @@ Map { font-directory: url(./fonts); }
 
 /* We set up a default halo color for places so you can edit them all
    at once or override each individually. */
-@place_halo:        fadeout(#fff,25%);
+@place_halo:        fadeout(#fff,34%);
 
 @country_text:      #435;
 @country_halo:      @place_halo;

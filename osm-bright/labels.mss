@@ -142,9 +142,9 @@
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
-  text-fill:#666;
+  text-fill:@town_text;
   text-size:9;
-  text-halo-fill:#fff;
+  text-halo-fill:@town_halo;
   text-halo-radius:1;
   text-wrap-width: 50;
   [zoom>=10] {
@@ -206,7 +206,7 @@
     text-halo-radius: 2;
     text-transform: uppercase;
     text-character-spacing: 1;
-    text-wrap-width: 60;
+    text-wrap-width: 60; 
     text-line-spacing: 1;
   }
   [zoom>=16] {
