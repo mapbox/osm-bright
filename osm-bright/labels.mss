@@ -87,6 +87,27 @@
 
 /* ---- Cities ------------------------------------------------------ */
 
+#ne_place {
+  [zoom=4][SCALERANK<=2],
+  [zoom=5][SCALERANK<=4],
+  [zoom=6][SCALERANK<=6],
+  [zoom=7][SCALERANK<=9] {
+    text-name:'[NAME]';
+    text-face-name:@sans;
+    text-placement:point;
+    text-fill:#888;
+    text-halo-fill:fadeout(#fff,10);
+    text-halo-radius:1;
+    text-dx: 5;
+    text-dy: 3;
+    text-placement-type: simple;
+    text-placements: "E,W,NE,SW,NW,NE,N,S";
+    marker-width: 2;
+    marker-fill: #666;
+    marker-line-color: #fff;
+  }
+}
+
 #place::city[type='city'][zoom>=8][zoom<=15] {
   text-name:'[name]';
   text-face-name:@sans;
