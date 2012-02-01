@@ -191,9 +191,9 @@
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
-  text-fill:#888;
+  text-fill:@other_text;
   text-size:10;
-  text-halo-fill:#fff;
+  text-halo-fill:@other_halo;
   text-halo-radius:1;
   text-wrap-width: 30;
   [zoom>=14] {
@@ -232,9 +232,9 @@
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
-  text-fill:#aaa;
+  text-fill:@locality_text;
   text-size:9;
-  text-halo-fill:@land;
+  text-halo-fill:@locality_halo;
   text-halo-radius:1;
   text-wrap-width: 30;
   [zoom>=16] {
@@ -552,7 +552,7 @@
   text-name:"[name]";
   text-face-name:@sans_bold;
   text-placement:line;
-  text-fill:#555;
+  text-fill:#777;
   text-halo-fill:@road_halo;
   text-halo-radius:1;
   text-min-distance:60;
@@ -568,7 +568,7 @@
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:line;
-  text-fill:#666;
+  text-fill:#777;
   text-halo-fill:@road_halo;
   text-halo-radius:1;
   text-min-distance:60;

@@ -130,7 +130,13 @@ Map { font-directory: url(./fonts); }
 
 @poi_text:          @poi_text;  
 
-@road_halo:         #fff; 
+@road_halo:         #fff;
+
+@other_text:        #888;
+@other_halo:        @place_halo;
+
+@locality_text:     #aaa;
+@locality_halo:     @land;
 
 /* Also used for other small places: hamlets, suburbs, localities */
 @village_text:      #888;

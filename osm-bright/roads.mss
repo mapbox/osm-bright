@@ -6,8 +6,8 @@
 and trunks. */
 
 #roads_low[zoom>=5][zoom<=8] {
-  [type='motorway'] { line-color: lighten(@motorway_line, 10); }
-  [type='trunk'] { line-color: lighten(@trunk_line, 10); }
+  [type='motorway'] { line-color: @motorway_line; }
+  [type='trunk'] { line-color: @trunk_line; }
   [zoom=5] {
     [type='motorway'] { line-width: 0.4; }
     [type='trunk'] { line-width: 0.2; } }
@@ -97,7 +97,7 @@ come in as well.
     line-color: fadeout(@land,50%);
     [bridge=1] { line-color: @secondary_case * 0.8; }
   }
-  [tunnel=1] { line-dasharray: 3,3; }
+  [tunnel=1] { line-dasharray: 3,3; }        
   /* -- widths -- */
   [zoom=11] {
     [stylegroup='motorway'] { line-width: @rdz11_maj + 2; }
@@ -157,7 +157,7 @@ come in as well.
     [stylegroup='minorroad']{ line-width: @rdz17_min + 2; }
     [stylegroup='service']  { line-width: @rdz17_min / 3 + 2; }
     [stylegroup='noauto']   { line-width: @rdz17_min / 4 + 4; }
-    [stylegroup='railway']  { line-width: 3 + 4; }
+    [stylegroup='railway']  { line-width: 3 + 4; } // 3 + 4
   }
   [zoom>=18] {
     [stylegroup='motorway'] { line-width: @rdz18_maj + 4; }
