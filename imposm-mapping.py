@@ -1,4 +1,4 @@
- Copyright 2011 Omniscale (http://omniscale.com)
+# Copyright 2011 Omniscale (http://omniscale.com)
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -223,8 +223,10 @@ railways = LineStrings(
 waterways = LineStrings(
     name = 'waterways',
     mapping = {  
-        'barrier': ('ditch',),
-	 'waterway': (
+        'barrier': (
+            'ditch',
+        ),
+	    'waterway': (
             'stream',
             'river',
             'canal',
@@ -543,3 +545,4 @@ roads_gen0 = UnionView(
         ('access', None),
     ),
     mappings = [railways_gen0, mainroads_gen0, motorways_gen0],
+)
