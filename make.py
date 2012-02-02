@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import json
-from os import unlink, mkdir, listdir, chdir, getcwd
-from sys import path
+from os import unlink
 from glob import glob
 from shutil import copytree, rmtree
-from os.path import join, isdir, split
+from os.path import join, isdir
 
 from configure import config, processed_p, shoreline_300
 
