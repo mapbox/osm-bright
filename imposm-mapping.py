@@ -1,4 +1,4 @@
-# Copyright 2011 Omniscale (http://omniscale.com)
+ Copyright 2011 Omniscale (http://omniscale.com)
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -141,7 +141,14 @@ buildings = Polygons(
     mapping = {
         'building': (
             '__any__',
-    )}
+        ),
+	'barrier': (
+            'city_wall',
+            'fence',
+            'retaining_wall',
+            'spikes',
+        ),
+   }
 )
 
 minorroads = Highway(
@@ -215,12 +222,14 @@ railways = LineStrings(
 
 waterways = LineStrings(
     name = 'waterways',
-    mapping = {
-        'waterway': (
+    mapping = {  
+        'barrier': ('ditch',),
+	 'waterway': (
             'stream',
             'river',
             'canal',
             'drain',
+            'ditch',
     )},
     field_filter = (
         ('tunnel', Bool()),
@@ -235,8 +244,51 @@ waterareas = Polygons(
     mapping = {
         'waterway': ('riverbank',),
         'natural': ('water',),
-        'landuse': ('basin', 'reservoir'),
+        'landuse': ('basin', 'reservoir'), 
     },
+)
+
+barrierpoints = Points(
+    name = 'barrierpoints',
+    mapping = {
+        'barrier': (
+            'block',
+            'bollard',
+            'cattle_grid',
+            'chain',
+            'cycle_barrier',
+            'entrance',
+            'horse_stile',
+            'gate',
+            'spikes',
+            'lift_gate',
+            'kissing_gate',
+            'fence',
+            'yes',
+            'wire_fence',
+            'toll_booth',
+            'stile	',
+    )}
+)
+barrierways = LineStrings(
+    name = 'barrierways',
+    mapping = {
+        'barrier': (
+            'city_wall',
+            'ditch',
+            'fence',
+            'hedge',
+            'retaining_wall',
+            'wall',
+            'bollard',
+            'gate',
+            'spikes',
+            'lift_gate',
+            'kissing_gate',
+            'embankment',
+            'yes',
+            'wire_fence',
+    )}
 )
 
 aeroways = LineStrings(
@@ -366,6 +418,9 @@ landusages = Polygons(
         'place': (
             'island',
         ),
+        'barrier': (
+            'hedge',
+        ),
         'tourism': (
             'zoo',
         ),
@@ -488,4 +543,3 @@ roads_gen0 = UnionView(
         ('access', None),
     ),
     mappings = [railways_gen0, mainroads_gen0, motorways_gen0],
-)
