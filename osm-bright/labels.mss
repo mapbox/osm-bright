@@ -552,7 +552,7 @@
   text-name:"[name]";
   text-face-name:@sans_bold;
   text-placement:line;
-  text-fill:#777;
+  text-fill:@road_text;
   text-halo-fill:@road_halo;
   text-halo-radius:1;
   text-min-distance:60;
@@ -568,7 +568,7 @@
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:line;
-  text-fill:#777;
+  text-fill:@road_text;
   text-halo-fill:@road_halo;
   text-halo-radius:1;
   text-min-distance:60;
@@ -580,11 +580,34 @@
   text-face-name:@sans;
   text-placement:line;
   text-size:9;
-  text-fill:#777;
+  text-fill:@road_text;
   text-halo-fill:@road_halo;
   text-halo-radius:1;
   text-min-distance:60;
   text-size:11;
 }
 
+#motorway_label[oneway!=0][zoom>=16]{
+  marker-placement:line;
+  marker-width:3;
+  marker-fill: #555;
+  marker-line-opacity:0;
+  marker-spacing: 250;
+}
+
+#mainroad_label[oneway!=0][zoom>=16]{
+  marker-placement:line;
+  marker-height:3;
+  marker-fill: #888;  
+  marker-line-opacity:0;
+  marker-spacing: 250;
+}
+
+#minorroad_label[oneway!=0][zoom>=16]{
+  marker-placement:line;
+  marker-height:1;
+  marker-fill: #bbb;
+  marker-line-opacity:0;
+  marker-spacing: 250;
+}
 /* ****************************************************************** */
