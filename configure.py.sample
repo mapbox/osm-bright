@@ -29,5 +29,8 @@ config["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34
 # infrequently. The latest versions can be downloaded from osm.org:
 # - http://tile.openstreetmap.org/processed_p.tar.bz2
 # - http://tile.openstreetmap.org/shoreline_300.tar.bz2
-processed_p = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
-shoreline_300 = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
+config["processed_p"] = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
+config["shoreline_300"] = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
+
+# The name given to the style
+config["name"] = "OSM Bright"

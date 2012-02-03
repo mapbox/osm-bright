@@ -6,7 +6,7 @@ from glob import glob
 from shutil import copytree, rmtree
 from os.path import join, isdir
 
-from configure import config, processed_p, shoreline_300
+from configure import config
 
 def clean():
   if isdir("build"):
@@ -29,9 +29,9 @@ def build():
   #fill in the project template
   for layer in template["Layer"]:
     if layer["id"] == "shoreline_300":
-      layer["Datasource"]["file"] = shoreline_300
+      layer["Datasource"]["file"] = config["shoreline_300"]
     elif layer["id"] in ("processed_p", "processed_p_outline"):
-      layer["Datasource"]["file"] = processed_p
+      layer["Datasource"]["file"] = config["processed_p"]
     else:
       # Assume all other layers are PostGIS layers
       for opt, val in config["postgis"].iteritems():
@@ -40,6 +40,8 @@ def build():
             del layer["Datasource"][opt]
         else:
           layer["Datasource"][opt] = val
+
+  template["name"] = config["name"]
 
   #dump the filled-in project template to the build dir
   with open(join('build', 'project.mml'), 'w') as output:
