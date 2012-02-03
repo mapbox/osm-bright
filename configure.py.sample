@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 
-## OSM BRIGHT CARTO TEMPLATE CONFIGURATION OPTIONS #############################
+from collections import defaultdict
+config = defaultdict(defaultdict)
 
-config = {
-  "importer": "imposm", # either 'imposm' or 'osm2pgsql'
-  "postgis": {}
-}
+config["importer"] = "osm2pgsql" # either 'imposm' or 'osm2pgsql'
 
 # PostGIS connection setup
 # Leave empty for Mapnik defaults. The only required parameter is dbname.
@@ -34,3 +32,6 @@ config["shoreline_300"] = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_3
 
 # The name given to the style
 config["name"] = "OSM Bright"
+
+# The path to your MapBox projects directory
+config["path"] = "/Users/<your_user_name>/Documents/MapBox/project/"
