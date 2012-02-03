@@ -275,7 +275,10 @@
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "", 
+        "id": "roads_high", 
         "key_field": "", 
+        "project": "osm-bright", 
+        "srs": null, 
         "table": "( SELECT geometry, type, tunnel, bridge, access, 'fill' AS render,\n  CASE\n    WHEN type IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN type IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN type IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN type IN ('service', 'track') THEN 'service'\n    WHEN type IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN type IN ('light_rail', 'subway', 'narrow_guage', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM osm_roads\n  WHERE bridge = 0\n    AND tunnel = 0\n  ORDER BY z_order\n) AS data", 
         "type": "postgis"
       }, 
@@ -437,9 +440,9 @@
         "geometry_field": "geometry", 
         "id": "motorway_label", 
         "key_field": "", 
-        "project": "foss4g-2011", 
-        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "( SELECT geometry, type, name, ref, CHAR_LENGTH(ref) AS reflen\n    FROM osm_motorways\n    WHERE type IN ('motorway', 'trunk')\n      AND (name <> '' OR ref <> '')\n) AS data", 
+        "project": "osm-bright", 
+        "srs": null, 
+        "table": "( SELECT geometry, type, name, ref, oneway, CHAR_LENGTH(ref) AS reflen\n    FROM osm_motorways\n    WHERE type IN ('motorway', 'trunk')\n      AND (name <> '' OR ref <> '')\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -457,9 +460,9 @@
         "geometry_field": "geometry", 
         "id": "mainroad_label", 
         "key_field": "", 
-        "project": "foss4g-2011", 
-        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, name, oneway\nfrom osm_mainroads\nwhere name is not null or oneway = 1\n) as label", 
+        "project": "osm-bright", 
+        "srs": null, 
+        "table": "(select geometry, type, name, oneway\nfrom osm_mainroads\nwhere name is not null or oneway <> 0\n) as label", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -467,6 +470,7 @@
       "id": "mainroad_label", 
       "name": "mainroad_label", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -478,7 +482,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, name, oneway\nfrom osm_minorroads\nwhere name is not null or oneway = 1\n) as label", 
+        "table": "(select geometry, type, name, oneway\nfrom osm_minorroads\nwhere name is not null or oneway <> 0\n) as label", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -486,6 +490,7 @@
       "id": "minorroad_label", 
       "name": "minorroad_label", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {

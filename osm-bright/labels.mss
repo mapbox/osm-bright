@@ -587,7 +587,7 @@
   text-size:11;
 }
 
-#motorway_label[zoom>=16]{
+#motorway_label[oneway!=0][zoom>=16]{
   marker-placement:line;
   marker-width:3;
   marker-fill: #555;
@@ -595,7 +595,7 @@
   marker-spacing: 250;
 }
 
-#mainroad_label[zoom>=16]{
+#mainroad_label[oneway!=0][zoom>=16]{
   marker-placement:line;
   marker-height:3;
   marker-fill: #888;  
@@ -603,7 +603,7 @@
   marker-spacing: 250;
 }
 
-#minorroad_label[zoom>=16]{
+#minorroad_label[oneway!=0][zoom>=16]{
   marker-placement:line;
   marker-height:1;
   marker-fill: #bbb;
