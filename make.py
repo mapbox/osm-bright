@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+import re
 from os import unlink
 from glob import glob
 from shutil import copytree, rmtree
@@ -47,6 +48,14 @@ def build():
   with open(join('build', 'project.mml'), 'w') as output:
     output.write(json.dumps(template, sort_keys=True, indent=2))
 
+def install():
+  assert isdir(config["path"]), "Config.path does not point to your mapbox projects directory; please fix and re-run"
+  sanitized_name = re.sub("[^\w]", "", config["name"])
+  output_dir = join(config["path"], sanitized_name)
+  print "installing to %s" % output_dir
+  copytree("build", output_dir)
+
 if __name__ == "__main__":
   clean()
   build()
+  install()
