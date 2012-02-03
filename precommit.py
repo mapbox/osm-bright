@@ -22,7 +22,7 @@ import json
 from sys import path
 from os.path import join
 
-output = join('owm-bright', 'osm-bright.imposm.mml')
+output = join('osm-bright', 'osm-bright.imposm.mml')
 template = join('build', 'project.mml')
 
 with open(template, 'r') as f:
