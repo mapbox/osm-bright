@@ -360,6 +360,41 @@
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
+        "key_field": "", 
+        "table": "(select geometry, type,\n\tCASE\n\t\tWHEN type IN ('toll_booth', 'stile', 'gate', 'horse_stile','lift_gate', 'kissing_gate','cattle_grid','entrance') THEN 'gate'\n\t\tWHEN type IN ('block', 'bollard', 'chain', 'cycle_barrier', 'spikes', 'fence', 'wire_fence','yes') THEN 'divider'\n\tEND AS stylegroup\nFROM osm_barrierpoints\n) AS data", 
+        "type": "postgis"
+      }, 
+      "class": "", 
+      "geometry": "point", 
+      "id": "barrier_points", 
+      "name": "barrier_points", 
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913"
+    }, 
+    {
+      "Datasource": {
+        "dbname": "osm", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
+        "geometry_field": "geometry", 
+        "id": "barrier_lines", 
+        "key_field": "", 
+        "project": "osm-bright", 
+        "srs": null, 
+        "table": "(SELECT geometry, type,\n\tCASE \n\t\tWHEN type IN ('city_wall', 'fence', 'retaining_wall', 'wall', 'wire_fence', 'yes') THEN 'fence'\n\t\tWHEN type IN ('gate', 'spikes', 'bollard', 'lift_gate', 'kissing_gate') THEN 'gate'\n\t\tWHEN type IN ('hedge') THEN 'hedge'\n\tEND AS stylegroup\nFROM osm_barrierways\n) AS data", 
+        "type": "postgis"
+      }, 
+      "class": "", 
+      "geometry": "linestring", 
+      "id": "barrier_lines", 
+      "name": "barrier_lines", 
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913"
+    }, 
+    {
+      "Datasource": {
+        "dbname": "osm", 
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
+        "geometry_field": "geometry", 
         "id": "place", 
         "key_field": "", 
         "project": "foss4g-2011", 

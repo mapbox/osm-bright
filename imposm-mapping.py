@@ -226,7 +226,7 @@ waterways = LineStrings(
         'barrier': (
             'ditch',
         ),
-	    'waterway': (
+	'waterway': (
             'stream',
             'river',
             'canal',
@@ -269,7 +269,7 @@ barrierpoints = Points(
             'yes',
             'wire_fence',
             'toll_booth',
-            'stile	',
+            'stile',
     )}
 )
 barrierways = LineStrings(
@@ -277,7 +277,6 @@ barrierways = LineStrings(
     mapping = {
         'barrier': (
             'city_wall',
-            'ditch',
             'fence',
             'hedge',
             'retaining_wall',
