@@ -73,7 +73,7 @@ See `man osm2pgsql` or the [online documentation][5] for more details.
 [osm2pgsql]: http://wiki.openstreetmap.org/wiki/Osm2pgsql
 [5]: http://wiki.openstreetmap.org/wiki/Osm2pgsql
 
-### 3. Run configure.py ###
+### 3. Edit configure.py ###
 
 Included with this style is a configuration script to help you adjust
 parameters such as the database connection information and a few other things. 
@@ -91,9 +91,14 @@ the comments within this file explain what the various parameters are.
   Bright TileMill project, unless you specify local versions you've already
   downloaded.
 
-### 4. Copy the project to your MapBox folder ###
+### 4. Run make.py ###
 
-After running `configure.py` the `osm-bright` subdirectory will be a usable
+This will create a new folder called "build" with your new project, customized
+with the variables you set in configure.py
+
+### 4. Copy the build folder to your MapBox folder ###
+
+After running `make.py` the `build` subdirectory will be a usable
 TileMill project. To enable it in the TileMill interface, copy or symlink this
 folder into your MapBox project folder (Mac/Linux default: 
 `~/Documents/MapBox/project`; Windows default: `%UserProfile%\MapBox\project`).

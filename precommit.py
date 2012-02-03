@@ -22,12 +22,11 @@ import json
 from sys import path
 from os.path import join
 
-output = join(path[0], 'osm-bright.imposm.mml')
-template = join(path[0], 'osm-bright', 'project.mml')
+output = join('owm-bright', 'osm-bright.imposm.mml')
+template = join('build', 'project.mml')
 
 with open(template, 'r') as f:
   newf = json.loads(f.read())
-f.closed
 
 with open(output, 'w') as f:
   for layer in newf["Layer"]:
@@ -44,5 +43,3 @@ with open(output, 'w') as f:
         else:
           layer["Datasource"][opt] = val
   f.write(json.dumps(newf, sort_keys=True, indent=2))
-f.closed
-
