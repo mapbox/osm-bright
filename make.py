@@ -64,7 +64,7 @@ def pull():
   #copy the project from mapbox to osm-bright
   sanitized_name = re.sub("[^\w]", "", config["name"])
   output_dir = join(config["path"], sanitized_name)
-  copytree(output_dir, "osm-bright")
+  copy_tree(output_dir, "osm-bright")
 
   #load the project file
   project = loads(open(join("osm-bright", "project.mml")))
