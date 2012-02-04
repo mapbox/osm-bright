@@ -35,5 +35,7 @@ config["shoreline_300"] = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_3
 # in which the project is stored
 config["name"] = "OSM Bright"
 
-# The path to your MapBox projects directory
+# The path to your MapBox projects directory. In Windows, this defaults to
+# %UserProfile%\MapBox\project ; in Mac it's ~/Documents/MapBox/project
+# and in Ubuntu it's /usr/share/mapbox/project/
 config["path"] = "/Users/<your_user_name>/Documents/MapBox/project/"
