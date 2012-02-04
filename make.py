@@ -58,7 +58,7 @@ def install():
   sanitized_name = re.sub("[^\w]", "", config["name"])
   output_dir = join(config["path"], sanitized_name)
   print "installing to %s" % output_dir
-  copytree("build", output_dir)
+  copy_tree("build", output_dir)
 
 def pull():
   #copy the project from mapbox to osm-bright
