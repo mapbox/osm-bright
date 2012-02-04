@@ -30,7 +30,9 @@ config["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34
 config["processed_p"] = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
 config["shoreline_300"] = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
 
-# The name given to the style
+# The name given to the style. This is the name it will have in the TileMill
+# project list, and a sanitized version will be used as the directory name
+# in which the project is stored
 config["name"] = "OSM Bright"
 
 # The path to your MapBox projects directory
