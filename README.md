@@ -77,7 +77,7 @@ See `man osm2pgsql` or the [online documentation][5] for more details.
 
 Included with this style is a configuration script to help you adjust
 parameters such as the database connection information and a few other things. 
-Open up `configure.py` in a text editor and make any necessary adjustments;
+Copy `configure.py.sample` to `configure.py` and make any necessary adjustments;
 the comments within this file explain what the various parameters are.
 
 - Make sure the "importer" option matches the program you used to import your 
