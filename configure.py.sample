@@ -5,6 +5,15 @@ config = defaultdict(defaultdict)
 
 config["importer"] = "osm2pgsql" # either 'imposm' or 'osm2pgsql'
 
+# The name given to the style. This is the name it will have in the TileMill
+# project list, and a sanitized version will be used as the directory name
+# in which the project is stored
+config["name"] = "OSM Bright"
+
+# The path to your MapBox projects directory. In Windows, this defaults to
+# %UserProfile%\MapBox\project ; in Mac & Ubuntu it's ~/Documents/MapBox/project
+config["path"] = "/Users/<your_user_name>/Documents/MapBox/project/"
+
 # PostGIS connection setup
 # Leave empty for Mapnik defaults. The only required parameter is dbname.
 config["postgis"]["host"]     = ""
@@ -29,13 +38,3 @@ config["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34
 # - http://tile.openstreetmap.org/shoreline_300.tar.bz2
 config["processed_p"] = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
 config["shoreline_300"] = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
-
-# The name given to the style. This is the name it will have in the TileMill
-# project list, and a sanitized version will be used as the directory name
-# in which the project is stored
-config["name"] = "OSM Bright"
-
-# The path to your MapBox projects directory. In Windows, this defaults to
-# %UserProfile%\MapBox\project ; in Mac it's ~/Documents/MapBox/project
-# and in Ubuntu it's /usr/share/mapbox/project/
-config["path"] = "/Users/<your_user_name>/Documents/MapBox/project/"
