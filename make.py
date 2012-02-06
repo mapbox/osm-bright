@@ -79,10 +79,11 @@ def pull():
   defaultconfig["postgis"]["user"]     = ""
   defaultconfig["postgis"]["password"] = ""
   defaultconfig["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34"
-  defaultconfig["name"] = "NYC Bright Osm2pgsql"
+  defaultconfig["name"] = "OSM Bright"
   defaultconfig["processed_p"] = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
   defaultconfig["shoreline_300"] = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
 
+  project["name"] = defaultconfig["name"]
   for layer in project["Layer"]:
     if layer["id"] == "shoreline_300":
       layer["Datasource"]["file"] = defaultconfig["shoreline_300"]
@@ -91,12 +92,12 @@ def pull():
     else:
       # Assume all other layers are PostGIS layers
       for opt, val in defaultconfig["postgis"].iteritems():
-        if not val and opt in layer["Datasource"]:
-          del layer["Datasource"][opt]
-        else:
+        if val and opt in layer["Datasource"]:
           layer["Datasource"][opt] = val
+        elif opt in layer["Datasource"]:
+          del layer["Datasource"][opt]
 
-  project_template = open(join("build", "osm-bright.%s.mml") % config["importer"], 'w')
+  project_template = open(join("osm-bright", "osm-bright.%s.mml") % config["importer"], 'w')
   project_template.write(dumps(project, sort_keys=True, indent=2))
 
   #now delete project.mml
