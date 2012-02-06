@@ -96,7 +96,7 @@ the comments within this file explain what the various parameters are.
 This will create a new folder called "build" with your new project, customized
 with the variables you set in configure.py
 
-### 4. Copy the build folder to your MapBox folder ###
+### 5. Copy the build folder to your MapBox folder ###
 
 After running `make.py` the `build` subdirectory will be a usable
 TileMill project. To enable it in the TileMill interface, copy or symlink this
