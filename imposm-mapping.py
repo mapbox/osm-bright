@@ -133,6 +133,7 @@ mainroads = Highway(
             'secondary',
             'secondary_link',
             'tertiary',
+            'tertiary_link',
     )}
 )
 
@@ -332,6 +333,7 @@ landusages = Polygons(
             'wood',
             'meadow',
             'grass',
+            'wetlands',
             'village_green',
             'recreation_ground',
             'garden',
@@ -399,6 +401,7 @@ landusages = Polygons(
             'wood',
             'land',
             'scrub',
+            'wetlands',
         ),
         'highway': (
             'pedestrian',
