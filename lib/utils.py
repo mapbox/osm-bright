@@ -2,7 +2,7 @@ import os
 from distutils.file_util import copy_file
 from distutils.dir_util import mkpath
 
-def copy_tree(src, dst, ignores):
+def copy_tree(src, dst, ignores=()):
     """Copy an entire directory tree 'src' to a new location 'dst'.
 
     Both 'src' and 'dst' must be directory names.  If 'src' is not a
