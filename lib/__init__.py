@@ -8,7 +8,6 @@ from json import loads, dumps
 from glob import glob
 from shutil import rmtree
 from os.path import join, isdir
-from collections import defaultdict
 
 #unlike shutils.copytree, will copy files without disturbing anything that was added
 from distutils.dir_util import copy_tree
@@ -66,10 +65,10 @@ def pull():
   #copy the project from mapbox to osm-bright
   sanitized_name = re.sub("[^\w]", "", config["name"])
   output_dir = join(config["path"], sanitized_name)
-  copy_tree(output_dir, "osm-bright", ("layers", ".thumb.png"))
+  copy_tree(output_dir, "osm-bright")
 
   #load the project file
-  project = loads(open(join("osm-bright", "project.mml")).read())
+  project = loads(open(join("osm-bright", "project.mml")))
 
   #Make sure we reset postgis data in the project file back to its default values
   defaultconfig = defaultdict(defaultdict)
@@ -98,9 +97,6 @@ def pull():
 
   project_template = open(join("build", "osm-bright.%s.mml") % config["importer"], 'w')
   project_template.write(dumps(project, sort_keys=True, indent=2))
-
-  #now delete project.mml
-  unlink(join("osm-bright", "project.mml"))
 
 if __name__ == "__main__":
   if sys.argv[-1] == "clean":
