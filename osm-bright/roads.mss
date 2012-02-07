@@ -38,11 +38,11 @@ as well. */
   [type='secondary'] { line-color: @secondary_line; }
   [type='tertiary'] { line-color: @standard_line; }
   [zoom=9] {
-    [stylegroup='major'] { line-width: 1.4; }
-    [stylegroup='medium'] { line-width: 0.6; } }
+    [type='motorway'],[type='trunk'] { line-width: 1.4; }
+    [type='motorway_link'],[type='trunk_link'] { line-width: 0.6; } }
   [zoom=10] {
-    [stylegroup='major'] { line-width: 1.8; }
-    [stylegroup='medium'] { line-width: 0.8; } }
+    [type='motorway'],[type='trunk'] { line-width: 1.8; }
+    [type='motorway_link'],[type='trunk_link'] { line-width: 0.8; } }
 }
 
 /* At higher levels the roads become more complex. We're now showing 

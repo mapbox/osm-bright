@@ -333,7 +333,7 @@ landusages = Polygons(
             'wood',
             'meadow',
             'grass',
-            'wetlands',
+            'wetland',
             'village_green',
             'recreation_ground',
             'garden',
@@ -401,7 +401,7 @@ landusages = Polygons(
             'wood',
             'land',
             'scrub',
-            'wetlands',
+            'wetland',
         ),
         'highway': (
             'pedestrian',
