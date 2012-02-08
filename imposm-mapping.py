@@ -27,10 +27,10 @@ from imposm.mapping import (
 import imposm.config
 # 
 # # import relations with missing rings
-imposm.config.import_partial_relations = True
+imposm.config.import_partial_relations = False
 # 
 # # select relation builder: union or contains
-imposm.config.relation_builder = 'union'
+imposm.config.relation_builder = 'contains'
 # 
 # # log relation that take longer than x seconds
 # imposm.config.imposm_multipolygon_report = 60
@@ -142,13 +142,7 @@ buildings = Polygons(
         'building': (
             '__any__',
         ),
-	'barrier': (
-            'city_wall',
-            'fence',
-            'retaining_wall',
-            'spikes',
-        ),
-   }
+    }
 )
 
 minorroads = Highway(
@@ -226,13 +220,14 @@ waterways = LineStrings(
         'barrier': (
             'ditch',
         ),
-	'waterway': (
+        'waterway': (
             'stream',
             'river',
             'canal',
             'drain',
             'ditch',
-    )},
+        ),
+    },
     field_filter = (
         ('tunnel', Bool()),
     ),
@@ -399,6 +394,7 @@ landusages = Polygons(
             'wood',
             'land',
             'scrub',
+            'wetland',
         ),
         'highway': (
             'pedestrian',
@@ -418,9 +414,6 @@ landusages = Polygons(
         ),
         'place': (
             'island',
-        ),
-        'barrier': (
-            'hedge',
         ),
         'tourism': (
             'zoo',
