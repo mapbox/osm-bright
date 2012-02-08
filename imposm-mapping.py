@@ -304,7 +304,7 @@ transport_areas = Polygons(
             'station',
         ),
         'aeroway': (
-            'aerodome',
+            'aerodrome',
             'terminal',
             'helipad',
             'apron',
