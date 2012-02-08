@@ -53,6 +53,11 @@
   [zoom=11] { line-width: 1.5; }
   [zoom>=12] { line-width: 2.0; }
 }
+ 
+#landuse_overlays[type='wetland'][zoom>11] {
+  [zoom>11][zoom<=14] { polygon-pattern-file:url(img/swamp-16.png); }
+  [zoom>14] { polygon-pattern-file:url(img/swamp-32.png);}
+  }
 
 /* ---- BUILDINGS ---- */
 #buildings[zoom>10][zoom<=16] {
@@ -144,9 +149,11 @@ Map { background-color: @water; }
   [zoom>17]{ line-width: 30; }
 }
 
-#waterway[type='ditch'][zoom>=7] {
+#waterway[type='ditch'][zoom>14] {
   line-color: @water;
-  line-width: 32;
+  [zoom=15]{ line-width: .5; }
+  [zoom=16]{ line-width: 1; }
+  [zoom>16]{ line-width: 2; }
 }
 
 /* ================================================================== */
