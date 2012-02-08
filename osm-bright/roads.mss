@@ -39,10 +39,14 @@ as well. */
   [type='tertiary'] { line-color: @standard_line; }
   [zoom=9] {
     [type='motorway'],[type='trunk'] { line-width: 1.4; }
-    [type='motorway_link'],[type='trunk_link'] { line-width: 0.6; } }
+    [type='primary'],[type='secondary'],
+    [type='motorway_link'],[type='trunk_link'] { line-width: 0.6; }
+  }
   [zoom=10] {
     [type='motorway'],[type='trunk'] { line-width: 1.8; }
-    [type='motorway_link'],[type='trunk_link'] { line-width: 0.8; } }
+    [type='primary'],[type='secondary'],
+    [type='motorway_link'],[type='trunk_link'] { line-width: 0.8; }
+  }
 }
 
 /* At higher levels the roads become more complex. We're now showing 

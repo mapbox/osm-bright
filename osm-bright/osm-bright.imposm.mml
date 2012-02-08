@@ -295,7 +295,7 @@
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "", 
         "key_field": "", 
-        "table": "( SELECT geometry, type, bridge, tunnel,\n    CASE\n      WHEN type IN ('motorway', 'trunk') THEN 'major'\n      WHEN type IN ('primary', 'secondary', 'motorway_link', 'trunk_link') THEN 'medium'\n      WHEN type IN ('tertiary') THEN 'minor'\n      ELSE 'none' END AS stylegroup\n    FROM osm_roads_gen1\n) AS data", 
+        "table": "( SELECT geometry, type\n  FROM osm_roads_gen1\n  WHERE type IN ('motorway', 'trunk', 'primary', 'secondary', 'motorway_link', 'trunk_link')\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 

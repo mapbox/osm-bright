@@ -315,7 +315,7 @@
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "way", 
         "key_field": "", 
-        "table": "( SELECT way, highway AS type, bridge, tunnel,\n    CASE\n      WHEN highway IN ('motorway', 'trunk') THEN 'major'\n      WHEN highway IN ('primary', 'secondary', 'motorway_link', 'trunk_link') THEN 'medium'\n      WHEN highway IN ('tertiary') THEN 'minor'\n      ELSE 'none' END AS stylegroup\n    FROM planet_osm_roads\n) AS data", 
+        "table": "( SELECT way, highway AS type\n  FROM planet_osm_roads\n  WHERE highway IN ('motorway', 'trunk', 'primary', 'secondary', 'motorway_link', 'trunk_link')\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
