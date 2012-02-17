@@ -522,7 +522,7 @@
   shield-fill: #fff;
   shield-file: url(img/shield-motorway-1.png);
   [type='motorway'] {
-    [reflen=2] { shield-file: url(img/shield-motorway-1.png); }
+    [reflen=1] { shield-file: url(img/shield-motorway-1.png); }
     [reflen=2] { shield-file: url(img/shield-motorway-2.png); }
     [reflen=3] { shield-file: url(img/shield-motorway-3.png); }
     [reflen=4] { shield-file: url(img/shield-motorway-4.png); }
@@ -532,7 +532,7 @@
     [reflen=8] { shield-file: url(img/shield-motorway-8.png); }
   }
   [type='trunk'] {
-    [reflen=2] { shield-file: url(img/shield-trunk-1.png); }
+    [reflen=1] { shield-file: url(img/shield-trunk-1.png); }
     [reflen=2] { shield-file: url(img/shield-trunk-2.png); }
     [reflen=3] { shield-file: url(img/shield-trunk-3.png); }
     [reflen=4] { shield-file: url(img/shield-trunk-4.png); }
