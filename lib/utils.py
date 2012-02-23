@@ -1,5 +1,5 @@
 import os
-from distutils.file_util import copy_file
+from distutils.file_util import copy_file, DistutilsFileError
 from distutils.dir_util import mkpath
 
 def copy_tree(src, dst, ignores=()):
