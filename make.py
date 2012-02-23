@@ -10,9 +10,6 @@ from shutil import rmtree
 from os.path import join, isdir
 from collections import defaultdict
 
-#unlike shutils.copytree, will copy files without disturbing anything that was added
-from distutils.dir_util import copy_tree
-
 from configure import config
 from lib.utils import copy_tree
 
