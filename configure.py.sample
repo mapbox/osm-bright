@@ -11,7 +11,7 @@ config["importer"] = "osm2pgsql" # either 'imposm' or 'osm2pgsql'
 config["name"] = "OSM Bright"
 
 # The path to your MapBox projects directory. In Windows, this defaults to
-# %UserProfile%\MapBox\project ; in Mac & Ubuntu it's ~/Documents/MapBox/project
+# %UserProfile%\MapBox\project ; in Mac & Ubuntu it's /home/<your_user_name>/Documents/MapBox/project
 config["path"] = "/Users/<your_user_name>/Documents/MapBox/project/"
 
 # PostGIS connection setup
