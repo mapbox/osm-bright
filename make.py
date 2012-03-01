@@ -7,11 +7,13 @@ from os import unlink
 from json import loads, dumps
 from glob import glob
 from shutil import rmtree
-from os.path import join, isdir
+from os.path import join, isdir, expanduser
 from collections import defaultdict
 
 from configure import config
 from lib.utils import copy_tree
+
+config["path"] = expanduser(config["path"])
 
 def clean():
   if isdir("build"):
