@@ -111,11 +111,9 @@ Map { background-color: @water; }
   line-color: @water;
   [type='river'],
   [type='canal'] {
+    line-cap: round;
+    line-join: round;
     [zoom=13]{ line-width: 1; }
-    [zoom>12]{
-      line-cap: round;
-      line-join: round;
-    }
     [zoom=14]{ line-width: 1.5; }
   }
   [type='stream'] {
