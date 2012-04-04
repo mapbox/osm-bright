@@ -7,14 +7,13 @@ from os import unlink
 from json import loads, dumps
 from glob import glob
 from shutil import rmtree
-from os.path import join, isdir
+from os.path import join, isdir, expanduser
 from collections import defaultdict
-
-#unlike shutils.copytree, will copy files without disturbing anything that was added
-from distutils.dir_util import copy_tree
 
 from configure import config
 from lib.utils import copy_tree
+
+config["path"] = expanduser(config["path"])
 
 def clean():
   if isdir("build"):
