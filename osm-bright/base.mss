@@ -98,62 +98,61 @@ Map { background-color: @water; }
 /* WATER WAYS
 /* ================================================================== */
 
-#waterway[type='river'][zoom>5] {
+#waterway_low[zoom>=8][zoom<=12] {
   line-color: @water;
-  [zoom=6] { line-width: 0.15; }
-  [zoom=7] { line-width: 0.25; }
-  [zoom=8] { line-width: 0.5; }
-  [zoom=9] { line-width: 1; }
-  [zoom=10]{ line-width: 1; }
-  [zoom>10]{
-    line-cap: round;
-    line-join: round;
-  }
-  [zoom=11]{ line-width: 2; }
-  [zoom=12]{ line-width: 2; }
-  [zoom=13]{ line-width: 3; }
-  [zoom=14]{ line-width: 3; }
-  [zoom=15]{ line-width: 4; }
-  [zoom=16]{ line-width: 5; }
-  [zoom=17]{ line-width: 6; }
-  [zoom>17]{ line-width: 7; }
+  [zoom=8] { line-width: 0.1; }
+  [zoom=9] { line-width: 0.2; }
+  [zoom=10]{ line-width: 0.4; }
+  [zoom=11]{ line-width: 0.6; }
+  [zoom=12]{ line-width: 0.8; }
 }
 
-#waterway[type='stream'][zoom>9] {
+#waterway_med[zoom>=13][zoom<=14] {
   line-color: @water;
-  [zoom=10]{ line-width: 0.5; }
-  [zoom=11]{ line-width: 0.5; }
-  [zoom=12]{ line-width: 1; }
-  [zoom=13]{ line-width: 1; }
-  [zoom>13]{
-    line-width: 2;
-    line-join: round;
-    line-cap: round;
+  [type='river'],
+  [type='canal'] {
+    [zoom=13]{ line-width: 1; }
+    [zoom>12]{
+      line-cap: round;
+      line-join: round;
+    }
+    [zoom=14]{ line-width: 1.5; }
+  }
+  [type='stream'] {
+    [zoom=13]{ line-width: 0.2; }
+    [zoom=14]{ line-width: 0.4; }
   }
 }
-
-#waterway[type='canal'][zoom>9] {
+  
+#waterway_high[zoom>=15] {
   line-color: @water;
-  [zoom=10]{ line-width: 0.5; }
-  [zoom=11]{ line-width: 0.5; }
-  [zoom=12]{ line-width: 1; }
-  [zoom=13]{ line-width: 1; }
-  [zoom>13]{
+  [type='river'],
+  [type='canal'] {
     line-cap: round;
     line-join: round;
-  } 
-  [zoom=14]{ line-width: 2; }
-  [zoom=15]{ line-width: 4; }
-  [zoom=16]{ line-width: 8; }
-  [zoom=17]{ line-width: 16; }
-  [zoom>17]{ line-width: 30; }
-}
-
-#waterway[type='ditch'][zoom>14] {
-  line-color: @water;
-  [zoom=15]{ line-width: .5; }
-  [zoom=16]{ line-width: 1; }
-  [zoom>16]{ line-width: 2; }
+    [zoom=15]{ line-width: 2; }
+    [zoom=16]{ line-width: 3; }
+    [zoom=17]{ line-width: 4; }
+    [zoom=18]{ line-width: 5; }
+    [zoom=19]{ line-width: 6; }
+    [zoom>19]{ line-width: 7; }
+  }
+  [type='stream'] {
+    [zoom=15]{ line-width: 0.6; }
+    [zoom=16]{ line-width: 0.8; }
+    [zoom=17]{ line-width: 1; }
+    [zoom=18]{ line-width: 1.5; }
+    [zoom>18]{ line-width: 2; }
+  }
+  [type='ditch'],
+  [type='drain'] {
+    [zoom=15]{ line-width: 0.1; }
+    [zoom=16]{ line-width: 0.3; }
+    [zoom=17]{ line-width: 0.5; }
+    [zoom=18]{ line-width: 0.7; }
+    [zoom=19]{ line-width: 1; }
+    [zoom>19]{ line-width: 1.5; }
+  }
 }
 
 /* ================================================================== */
