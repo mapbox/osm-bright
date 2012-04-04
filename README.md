@@ -78,7 +78,7 @@ See `man osm2pgsql` or the [online documentation][5] for more details.
 You'll need to adjust some settings for things like your PostgreSQL connection
 information.
 
-1. Make a copy of `configure.sample.py` and name it `configure.py`.
+1. Make a copy of `configure.py.sample` and name it `configure.py`.
 2. Open `configure.py` in a text editor.
 3. Make sure the "importer" option matches the program you used to import your 
    data (either "imposm" or "osm2pgsql").
