@@ -587,27 +587,21 @@
   text-size:11;
 }
 
-#motorway_label[oneway!=0][zoom>=16]{
+/* ================================================================== */
+/* ONE-WAY ARROWS
+/* ================================================================== */
+
+#motorway_label[oneway!=0][zoom>=16],
+#mainroad_label[oneway!=0][zoom>=16],
+#minorroad_label[oneway!=0][zoom>=16] {
   marker-placement:line;
-  marker-width:3;
-  marker-fill: #555;
-  marker-line-opacity:0;
-  marker-spacing: 250;
+  marker-max-error: 0.5;
+  marker-spacing: 200;
+  marker-file: url(img/icon/oneway.svg);
+  [oneway=-1] { marker-file: url(img/icon/oneway-reverse.svg); }
+  [zoom=16] { marker-transform: "scale(0.5)"; }
+  [zoom=17] { marker-transform: "scale(0.75)"; }
 }
 
-#mainroad_label[oneway!=0][zoom>=16]{
-  marker-placement:line;
-  marker-height:3;
-  marker-fill: #888;  
-  marker-line-opacity:0;
-  marker-spacing: 250;
-}
 
-#minorroad_label[oneway!=0][zoom>=16]{
-  marker-placement:line;
-  marker-height:1;
-  marker-fill: #bbb;
-  marker-line-opacity:0;
-  marker-spacing: 250;
-}
 /* ****************************************************************** */
