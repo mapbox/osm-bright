@@ -45,7 +45,7 @@
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, round(st_area(geometry)) as area\nfrom osm_landusages_gen0\norder by area desc) as landusages", 
+        "table": "( SELECT geometry, type, area\n  FROM osm_landusages_gen0\n  ORDER BY area DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -53,6 +53,7 @@
       "id": "landuse_gen0", 
       "name": "landuse_gen0", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -64,7 +65,7 @@
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, round(st_area(geometry)) as area\nfrom osm_landusages_gen1\norder by area desc) as landusages", 
+        "table": "( SELECT geometry, type, area\n  FROM osm_landusages_gen1\n  ORDER BY area DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -72,6 +73,7 @@
       "id": "landuse_gen1", 
       "name": "landuse_gen1", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -83,7 +85,7 @@
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, round(st_area(geometry)) as area\nfrom osm_landusages\norder by area desc) as landusages", 
+        "table": "( SELECT geometry, type, area\n  FROM osm_landusages\n  ORDER BY area DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -91,6 +93,7 @@
       "id": "landuse", 
       "name": "landuse", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -154,7 +157,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry\nfrom osm_waterareas\nwhere round(st_area(geometry)) > 10000\n) as water", 
+        "table": "( SELECT geometry\n  FROM osm_waterareas\n  WHERE area > 10000\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -162,6 +165,7 @@
       "id": "water_gen0", 
       "name": "water_gen0", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -173,7 +177,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry\nfrom osm_waterareas\nwhere round(st_area(geometry)) > 1000\n) as water", 
+        "table": "( SELECT geometry\n  FROM osm_waterareas\n  WHERE area > 1000\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -181,6 +185,7 @@
       "id": "water_gen1", 
       "name": "water_gen1", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -192,7 +197,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry\nfrom osm_waterareas\n) as water", 
+        "table": "( SELECT geometry\n  FROM osm_waterareas\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -200,6 +205,7 @@
       "id": "water", 
       "name": "water", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -242,7 +248,7 @@
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
         "key_field": "", 
-        "table": "( SELECT * FROM (\n    SELECT geometry, type, name, ROUND(ST_Area(geometry)) AS area \n    FROM osm_buildings\n    UNION\n    SELECT geometry, type, name, ROUND(ST_Area(geometry)) AS area\n    FROM osm_transport_areas\n    WHERE type IN ('station','terminal')\n  ) AS areas\n  ORDER BY ST_YMin(ST_Envelope(geometry)) DESC\n) AS data", 
+        "table": "( SELECT geometry, type, name, area\n    FROM osm_buildings\n  ORDER BY ST_YMin(ST_Envelope(geometry)) DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -261,7 +267,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type from osm_aeroways\n) as aeroway", 
+        "table": "( SELECT geometry, type\n  FROM osm_aeroways\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -269,6 +275,7 @@
       "id": "aeroway", 
       "name": "aeroway", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+      "srs-name": "900913", 
       "status": "on"
     }, 
     {
@@ -277,7 +284,7 @@
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "geometry", 
         "key_field": "", 
-        "table": "( SELECT geometry, type, 0 as bridge, access, render, layer, tunnel,\n  CASE\n    WHEN type IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN type IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN type IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN type IN ('service', 'track') THEN 'service'\n    WHEN type IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN type IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM (\n    SELECT *, '1_outline' AS render FROM osm_roads WHERE tunnel = 1\n    UNION\n    SELECT *, '2_line' AS render FROM osm_roads WHERE tunnel = 1\n    UNION\n    SELECT *, '3_inline' AS render FROM osm_roads WHERE tunnel = 1\n  ) AS tunnels\n  ORDER BY layer ASC, render ASC\n) AS data", 
+        "table": "( SELECT geometry, type, 0 as bridge, access, render, layer, tunnel,\n  CASE\n    WHEN type IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN type IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN type IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN type IN ('service', 'track') THEN 'service'\n    WHEN type IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN type IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM (\n    SELECT *, '1_outline' AS render FROM osm_roads WHERE tunnel = 1\n    UNION ALL\n    SELECT *, '2_line' AS render FROM osm_roads WHERE tunnel = 1\n    UNION ALL\n    SELECT *, '3_inline' AS render FROM osm_roads WHERE tunnel = 1\n  ) AS tunnels\n  ORDER BY layer ASC, render ASC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -380,7 +387,7 @@
         "key_field": "", 
         "project": "osm-bright-imposm", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "( SELECT geometry, type, bridge, access, render, layer, 0 as tunnel,\n  CASE\n    WHEN type IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN type IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN type IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN type IN ('service', 'track') THEN 'service'\n    WHEN type IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN type IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM (\n    SELECT *, '1_outline' AS render FROM osm_roads WHERE bridge = 1\n    UNION\n    SELECT *, '2_line' AS render FROM osm_roads WHERE bridge = 1\n    UNION\n    SELECT *, '3_inline' AS render FROM osm_roads WHERE bridge = 1\n  ) as bridges\n  ORDER BY layer ASC, render ASC\n) AS data", 
+        "table": "( SELECT geometry, type, bridge, access, render, layer, 0 as tunnel,\n  CASE\n    WHEN type IN ('motorway', 'trunk') THEN 'motorway'\n    WHEN type IN ('primary', 'secondary') THEN 'mainroad'\n    WHEN type IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'\n    WHEN type IN ('service', 'track') THEN 'service'\n    WHEN type IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'\n    WHEN type IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'\n    ELSE 'other' END AS stylegroup\n  FROM (\n    SELECT *, '1_outline' AS render FROM osm_roads WHERE bridge = 1\n    UNION ALL\n    SELECT *, '2_line' AS render FROM osm_roads WHERE bridge = 1\n    UNION ALL\n    SELECT *, '3_inline' AS render FROM osm_roads WHERE bridge = 1\n  ) as bridges\n  ORDER BY layer ASC, render ASC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -435,7 +442,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "( SELECT geometry, type, name, z_order, population\n  FROM osm_places\n  ORDER BY z_order, population DESC\n) AS data", 
+        "table": "( SELECT geometry, type, name, z_order, population\n  FROM osm_places\n  ORDER BY z_order, population DESC NULLS LAST\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -455,7 +462,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "( SELECT * FROM (\n\n    SELECT type, name, area, 'land' AS stylegroup,\n      ST_PointOnSurface(geometry) AS geometry\n    FROM osm_landusages\n    WHERE name <> ''\n      AND geometry && !bbox!\n      AND type IN (\n        'cemetery', 'college', 'commercial', 'common', 'garden', 'golf_course',\n        'hospital', 'industrial', 'library', 'park', 'pedestrian', 'place_of_worship',\n        'playground', 'school', 'sports_center', 'stadium', 'theatre', 'university' )\n      AND geometry && !bbox!\n      AND ST_IsValid(geometry)\n\n    UNION\n\n    SELECT type, name, ROUND(ST_Area(geometry)) AS area,\n      'water' AS stylegroup,\n      ST_PointOnSurface(geometry) AS geometry\n    FROM osm_waterareas\n    WHERE name <> ''\n      AND type in ( 'water', 'basin' )\n      AND geometry && !bbox!\n      AND ST_IsValid(geometry)\n\n    UNION\n\n    SELECT 'building' AS type, name, ROUND(ST_Area(geometry)) AS area, \n      'building' AS stylegroup,\n      ST_PointOnSurface(geometry) AS geometry\n    FROM osm_buildings\n    WHERE name <> '' \n      AND geometry && !bbox!\n      AND ST_IsValid(geometry)\n\n    UNION\n\n    SELECT type, name, ROUND(ST_Area(geometry)) AS area, \n      'transport' AS stylegroup,\n      ST_PointOnSurface(geometry) AS geometry\n    FROM osm_transport_areas\n    WHERE name <> '' \n      AND geometry && !bbox!\n      AND ST_IsValid(geometry)\n\n  ) AS subquery\n  ORDER BY area DESC\n) AS data", 
+        "table": "( SELECT type, name, area, 'land' AS stylegroup,\n    ST_PointOnSurface(geometry) AS geometry\n  FROM osm_landusages\n  WHERE name IS NOT NULL\n    AND geometry && !bbox!\n    AND type IN (\n      'cemetery', 'college', 'commercial', 'common', 'garden', 'golf_course',\n      'hospital', 'industrial', 'library', 'park', 'pedestrian', 'place_of_worship',\n      'playground', 'school', 'sports_center', 'stadium', 'theatre', 'university' )\n    AND geometry && !bbox!\n    AND ST_IsValid(geometry)\n\n  UNION ALL\n\n  SELECT type, name, area, 'water' AS stylegroup,\n    ST_PointOnSurface(geometry) AS geometry\n  FROM osm_waterareas\n  WHERE name IS NOT NULL\n    AND type in ( 'water', 'basin' )\n    AND geometry && !bbox!\n    AND ST_IsValid(geometry)\n\n  UNION ALL\n\n  SELECT 'building' AS type, name, area, 'building' AS stylegroup,\n    ST_PointOnSurface(geometry) AS geometry\n  FROM osm_buildings\n  WHERE name IS NOT NULL \n    AND geometry && !bbox!\n    AND ST_IsValid(geometry)\n\n  ORDER BY area DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -475,7 +482,7 @@
         "key_field": "", 
         "project": "osm-bright", 
         "srs": null, 
-        "table": "( SELECT geometry, type, name, ref, oneway, CHAR_LENGTH(ref) AS reflen\n    FROM osm_motorways\n    WHERE type IN ('motorway', 'trunk')\n      AND (name <> '' OR ref <> '')\n) AS data", 
+        "table": "( SELECT geometry, type, name, ref, oneway, CHAR_LENGTH(ref) AS reflen\n    FROM osm_motorways\n    WHERE type IN ('motorway', 'trunk')\n      AND (name IS NOT NULL OR ref IS NOT NULL)\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -495,7 +502,7 @@
         "key_field": "", 
         "project": "osm-bright", 
         "srs": null, 
-        "table": "(select geometry, type, name, oneway\nfrom osm_mainroads\nwhere name is not null or oneway <> 0\n) as label", 
+        "table": "( SELECT geometry, type, name, oneway\n  FROM osm_mainroads\n  WHERE name IS NOT NULL OR oneway <> 0\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -515,7 +522,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "(select geometry, type, name, oneway\nfrom osm_minorroads\nwhere name is not null or oneway <> 0\n) as label", 
+        "table": "( SELECT geometry, type, name, oneway\n  FROM osm_minorroads\n  WHERE name IS NOT NULL OR oneway <> 0\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
@@ -535,7 +542,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "( SELECT geometry, type, name, ROUND(ST_Length(geometry)) AS length\n  FROM osm_waterways\n  WHERE type IN ('canal', 'river', 'stream') \n    AND name <> ''\n) AS data", 
+        "table": "( SELECT geometry, type, name\n  FROM osm_waterways\n  WHERE type IN ('canal', 'river', 'stream') \n    AND name IS NOT NULL\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 

@@ -139,9 +139,18 @@ mainroads = Highway(
 
 buildings = Polygons(
     name = 'buildings',
+    fields = (
+        ('area', PseudoArea()),
+    ),
     mapping = {
         'building': (
             '__any__',
+        ),
+        'railway': (
+            'station',
+        ),
+        'aeroway': (
+            'terminal',
         ),
     }
 )
@@ -297,20 +306,6 @@ aeroways = LineStrings(
     )}
 )
 
-transport_areas = Polygons(
-    name = 'transport_areas',
-    mapping = {
-        'railway': (
-            'station',
-        ),
-        'aeroway': (
-            'aerodrome',
-            'terminal',
-            'helipad',
-            'apron',
-        ),
-})
-
 landusages = Polygons(
     name = 'landusages',
     fields = (
@@ -318,6 +313,9 @@ landusages = Polygons(
         ('z_order', ZOrder([
             'pedestrian',
             'footway',
+            'aerodrome',
+            'helipad',
+            'apron',
             'playground',
             'park',
             'forest',
@@ -419,6 +417,11 @@ landusages = Polygons(
         ),
         'tourism': (
             'zoo',
+        ),
+        'aeroway': (
+            'aerodrome',
+            'helipad',
+            'apron',
         ),
 })
 
