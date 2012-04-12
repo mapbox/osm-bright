@@ -158,7 +158,7 @@ Map { background-color: @water; }
 /* ================================================================== */
 
 
-#admin[admin_level=2][zoom>1] {
+#admin[admin_level='2'][zoom>1] {
   line-color:@admin_2;
   line-width:0.5;
   [zoom=2] { line-opacity: 0.25; }
