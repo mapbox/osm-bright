@@ -55,8 +55,8 @@
 }
  
 #landuse_overlays[type='wetland'][zoom>11] {
-  [zoom>11][zoom<=14] { polygon-pattern-file:url(img/swamp-16.png); }
-  [zoom>14] { polygon-pattern-file:url(img/swamp-32.png);}
+  [zoom>11][zoom<=14] { polygon-pattern-file:url(img/marsh-16.png); }
+  [zoom>14] { polygon-pattern-file:url(img/marsh-32.png);}
   }
 
 /* ---- BUILDINGS ---- */

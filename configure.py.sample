@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from os import path
 from collections import defaultdict
 config = defaultdict(defaultdict)
 
@@ -10,9 +11,9 @@ config["importer"] = "osm2pgsql" # either 'imposm' or 'osm2pgsql'
 # in which the project is stored
 config["name"] = "OSM Bright"
 
-# The path to your MapBox projects directory. In Windows, this defaults to
-# %UserProfile%\MapBox\project ; in Mac & Ubuntu it's ~/Documents/MapBox/project
-config["path"] = "/Users/<your_user_name>/Documents/MapBox/project/"
+# The absolute path to your MapBox projects directory. You should 
+# not need to change this unless you have configured TileMill specially
+config["path"] = path.expanduser("~/Documents/MapBox/project")
 
 # PostGIS connection setup
 # Leave empty for Mapnik defaults. The only required parameter is dbname.
