@@ -23,9 +23,10 @@
   [type='cemetery']      { polygon-fill: @cemetery; }
   [type='college']       { polygon-fill: @school; }
   [type='commercial']    { polygon-fill: @industrial; }
+  [type='common']        { polygon-fill: @park; }
   [type='forest']        { polygon-fill: @wooded; }
-  [type='golf_course']   { polygon-fill: @park; }
-  [type='grass']         { polygon-fill: @park; }
+  [type='golf_course']   { polygon-fill: @sports; }
+  [type='grass']         { polygon-fill: @grass; }
   [type='hospital']      { polygon-fill: @hospital; }
   [type='industrial']    { polygon-fill: @industrial; }
   [type='park']          { polygon-fill: @park; }
@@ -60,18 +61,20 @@
   }
 
 /* ---- BUILDINGS ---- */
-#buildings[zoom>10][zoom<=16] {
+#buildings[zoom>=12][zoom<=16] {
   polygon-fill:@building;
-  [zoom>13] {
+  [zoom>=14] {
     line-color:darken(@building,5);
     line-width:0.2;
   }
-  [zoom>15] {
+  [zoom>=16] {
     line-color:darken(@building,10);
     line-width:0.4;
   }
 }
-/* At the highest zoom levels, render buildings in fancy pseudo-3D */
+// At the highest zoom levels, render buildings in fancy pseudo-3D.
+// Ordering polygons by their Y-position is necessary for this effect
+// so we use a separate layer that does this for us.
 #buildings[zoom>=17][type != 'hedge'] {
   building-fill:@building;
   building-height:1.25;

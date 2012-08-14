@@ -7,8 +7,14 @@ from os import unlink
 from json import loads, dumps
 from glob import glob
 from shutil import rmtree
-from os.path import join, isdir, expanduser
+from os.path import join, isdir, expanduser, exists
 from collections import defaultdict
+
+if not exists('./configure.py'):
+    sys.stderr.write('Error: configure.py does not exist, did you forget to create it from the sample (configure.py.sample)?\n')
+    sys.exit(1)
+elif exists('./configure.pyc'):
+    unlink('./configure.pyc')
 
 from configure import config
 from lib.utils import copy_tree
