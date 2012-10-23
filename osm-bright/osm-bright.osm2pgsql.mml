@@ -452,7 +452,7 @@
         "key_field": "", 
         "project": "foss4g-2011", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-        "table": "( SELECT COALESCE(landuse, leisure, \"natural\", highway, amenity, tourism) AS type,\n    name, way_area AS area,\n    ST_PointOnSurface(way) AS way\n  FROM planet_osm_polygon\n  WHERE name IS NOT NULL\n    AND ST_SetSRID(way,900913) && !bbox!\n    AND ST_IsValid(way)\n\n  UNION ALL\n\n  SELECT 'building' AS type, name, way_area AS area,\n    ST_PointOnSurface(way) AS way\n  FROM planet_osm_polygon\n  WHERE name IS NOT NULL\n    AND building NOT IN ('', 'no', '0', 'false')\n    AND ST_SetSRID(way,900913) && !bbox!\n    AND ST_IsValid(way)\n  ORDER BY area DESC\n) AS data", 
+        "table": "( SELECT\n    CASE WHEN building IS NOT NULL AND building NOT IN ('', 'no', '0', 'false') THEN 'building'\n        ELSE COALESCE(landuse, leisure, \"natural\", highway, amenity, tourism)\n        END AS type,\n    name, way_area AS area,\n    ST_PointOnSurface(way) AS way\n  FROM planet_osm_polygon\n  WHERE name IS NOT NULL\n    AND way && !bbox!\n    AND ST_IsValid(way)\n  ORDER BY area DESC\n) AS data",
         "type": "postgis"
       }, 
       "class": "", 
