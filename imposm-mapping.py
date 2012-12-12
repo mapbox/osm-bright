@@ -80,7 +80,6 @@ places = Points(
             'village',
             'hamlet',
             'suburb',
-            'neighbourhood',
             'locality',
         ),
     },
@@ -95,7 +94,6 @@ places = Points(
             'village',
             'hamlet',
             'suburb',
-            'neighbourhood',
             'locality',
         ])),
         ('population', Integer()),
@@ -110,7 +108,7 @@ admin = Polygons(
         ),
     },
     fields = (
-        ('admin_level', OneOfInt('1 2 3 4 5 6 7 8'.split())),
+        ('admin_level', OneOfInt('1 2 3 4 5 6'.split())),
     ),
 )
 
