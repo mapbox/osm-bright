@@ -187,7 +187,8 @@
 
 #place::small[type='village'][zoom>=13],
 #place::small[type='suburb'][zoom>=13],
-#place::small[type='hamlet'][zoom>=13] {
+#place::small[type='hamlet'][zoom>=13],
+#place::small[type='neighbourhood'][zoom>=13] {
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
