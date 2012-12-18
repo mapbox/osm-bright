@@ -553,7 +553,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "( SELECT way, railway AS type, name, z_order \n  FROM planet_osm_point \n  WHERE railway in ('station', 'subway_entrance', 'tram_stop')\n  ORDER BY z_order NULLS LAST\n) AS DATA \n",
+        "table": "( SELECT way, railway AS type, name, z_order \n  FROM planet_osm_point \n  WHERE railway = 'station'\n  ORDER BY z_order NULLS LAST\n) AS DATA \n",
         "key_field": "",
         "geometry_field": "way",
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34",
