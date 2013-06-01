@@ -281,29 +281,29 @@
     [type='park'][zoom>=10] {
       text-face-name: @sans_lt_italic;
       text-fill: @park * 0.6;
-      text-halo-fill: lighten(@park, 10);
+      text-halo-fill: lighten(@park, 10%);
     }
     [type='golf_course'][zoom>=10] {
       text-fill: @sports * 0.6;
-      text-halo-fill: lighten(@sports, 10);
+      text-halo-fill: lighten(@sports, 10%);
     }
     [type='cemetery'][zoom>=10] {
       text-fill: @cemetery * 0.6;
-      text-halo-fill: lighten(@cemetery, 10);
+      text-halo-fill: lighten(@cemetery, 10%);
     }
     [type='hospital'][zoom>=10] {
       text-fill: @hospital * 0.6;
-      text-halo-fill: lighten(@hospital, 10);
+      text-halo-fill: lighten(@hospital, 10%);
     }
     [type='college'][zoom>=10],
     [type='school'][zoom>=10],
     [type='university'][zoom>=10] {
       text-fill: @school * 0.6;
-      text-halo-fill: lighten(@school, 10);
+      text-halo-fill: lighten(@school, 10%);
     }
     [type='water'][zoom>=10] {
       text-fill: @water * 0.6;
-      text-halo-fill: lighten(@water, 10);
+      text-halo-fill: lighten(@water, 10%);
     }
   }
   [zoom=15][area>1600000],
