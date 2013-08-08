@@ -6,7 +6,7 @@
   [type='city'][zoom<=15] {
     text-name: @name;
     text-face-name: @sans_md;
-    text-fill: #543;
+    text-fill: #846;
     text-size: 16;
     text-wrap-width: 100;
     text-wrap-before: true;
@@ -19,9 +19,12 @@
   [type='town'][zoom<=17] {
     text-name: @name;
     text-face-name: 'Source Sans Pro Regular';
-    text-fill: #333;
+    text-fill: #867;
     text-size: 14;
     text-wrap-width: 100;
+    text-halo-fill: @land;
+    text-halo-radius: 1;
+    text-halo-rasterizer: fast;
     text-wrap-before: true;
     [zoom>=12] { text-size: 16; }
     [zoom>=14] { text-size: 18; }
