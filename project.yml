@@ -25,6 +25,5 @@ source: "mapbox:///mapbox.mapbox-streets-v4"
 styles: 
   - style.mss
   - road.mss
-  - poi.mss
   - labels.mss
 template: ''
