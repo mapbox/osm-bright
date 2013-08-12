@@ -37,7 +37,7 @@ You will need an OSM database extract in one of the following formats:
 - .osm (xml)
 
 You can find appropriate data extracts for a variety of regions at
-<http://download.geofabrik.de/osm> or <http://downloads.cloudmade.com>. Exracts
+<http://download.geofabrik.de> or <http://downloads.cloudmade.com>. Exracts
 of select metropolitan areas are available at <http://metro.teczno.com>. See
 [the OSM wiki][2] for information about (very large) full-planet downloads.
 
