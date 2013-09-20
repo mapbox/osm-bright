@@ -26,7 +26,7 @@ full information on how to do this
 
 [PostgreSQL]: http://postgresql.org/
 [PostGIS]: http://postgis.refractions.net/
-[1]: http://postgis.refractions.net/documentation/manual-1.5/
+[1]: http://postgis.net/documentation
 
 ### 2. Import OpenStreetMap data ###
 
@@ -37,8 +37,7 @@ You will need an OSM database extract in one of the following formats:
 - .osm (xml)
 
 You can find appropriate data extracts for a variety of regions at
-<http://download.geofabrik.de> or <http://downloads.cloudmade.com>. Exracts
-of select metropolitan areas are available at <http://metro.teczno.com>. See
+<http://download.geofabrik.de> or <http://metro.teczno.com>. See
 [the OSM wiki][2] for information about (very large) full-planet downloads.
 
 You need to process this data and import it to your PostGIS database. You can
@@ -79,11 +78,14 @@ You'll need to adjust some settings for things like your PostgreSQL connection
 information.
 
 1. Make a copy of `configure.py.sample` and name it `configure.py`.
+
+    cp configure.py.sample configure.py
+
 2. Open `configure.py` in a text editor.
 3. Make sure the "importer" option matches the program you used to import your 
    data (either "imposm" or "osm2pgsql").
 4. Optionally change the name of your project from the default, 'OSM Bright'.
-5. Adjust the path to point to your MapBox project folder.
+5. Adjust, if needed, the path to point to your MapBox project folder.
 6. Make any adjustments to the PostgreSQL connection settings. Your database
    may be set up so that you require a password or different user name.
 7. Optionally adjust the query extents or shapefile locations. (Refer to the 
@@ -92,9 +94,22 @@ information.
 
 ### 4. Run make.py ###
 
+    ./make.py
+
 This will create a new folder called "build" with your new project, customized
 with the variables you set in `configure.py` and install a copy of this build
 to your MapBox project folder. If you open up TileMill you should see your new
 map in the project listing.
 
-You're now ready to start editing the template in TileMill!
+Click on the map to view it in the editing interface.
+
+### IMPORTANT
+
+Have patience: the first time the project opens it needs to download very large
+shapefiles before the map can render. This can take 5-10 minutes on a fast
+connection and longer on a slow connection. Keep TileMill open and feel free to
+navigate back to the projects view then back to the project editor view to check
+on its loading status. You can also check the TileMill logs to see the download
+status of the remote files.
+
+Once the map tiles show up, you're now ready to start editing the template in TileMill!
