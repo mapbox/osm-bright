@@ -18,7 +18,18 @@ implementation.
 Setup Instructions
 ------------------
 
-### 1. Set up PostgreSQL & PostGIS ###
+### 1. Download shapefiles
+
+OSM Bright depends on several large shapefiles. You should start downloading these
+now so that they are ready later when you need them for rendering.
+
+Download them to the `osm-bright` directory. You can do this with `wget` like:
+
+    wget http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip
+    wget http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip
+    wget http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-land.zip
+
+### 2. Set up PostgreSQL & PostGIS ###
 
 If you don't already, you need to have [PostgreSQL][] installed & running with
 a [PostGIS][] database setup within it. See the [PostGIS documentation][1] for

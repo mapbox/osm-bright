@@ -45,6 +45,8 @@ def build():
       layer["Datasource"]["file"] = config["shoreline_300"]
     elif layer["id"] in ("processed_p", "processed_p_outline"):
       layer["Datasource"]["file"] = config["processed_p"]
+    elif layer["id"] in ("land"):
+      layer["Datasource"]["file"] = config["land"]
     else:
       # Assume all other layers are PostGIS layers
       for opt, val in config["postgis"].iteritems():
@@ -87,6 +89,7 @@ def pull():
   defaultconfig["name"] = "OSM Bright"
   defaultconfig["processed_p"] = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
   defaultconfig["shoreline_300"] = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
+  defaultconfig["land"] = "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-land.zip"
 
   project["name"] = defaultconfig["name"]
   for layer in project["Layer"]:
