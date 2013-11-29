@@ -25,9 +25,9 @@ now so that they are ready later when you need them for rendering.
 
 Download them to the `osm-bright` directory. You can do this with `wget` like:
 
-    wget http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip
-    wget http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip
-    wget http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-land.zip
+    wget http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
+    wget http://data.openstreetmapdata.com/land-polygons-split-3857.zip
+
 
 ### 2. Set up PostgreSQL & PostGIS ###
 
