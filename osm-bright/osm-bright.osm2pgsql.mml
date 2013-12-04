@@ -5,11 +5,11 @@
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "file": "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip", 
-        "id": "land-low", 
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
       }, 
       "class": "shp", 
       "geometry": "polygon", 
+      "id": "land-low", 
       "name": "land-low", 
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
       "srs-name": "900913", 
