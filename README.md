@@ -23,17 +23,30 @@ Setup Instructions
 OSM Bright depends on several large shapefiles. You should start downloading these
 now so that they are ready later when you need them for rendering.
 
-Download them to the `osm-bright` directory. You can do this with `wget` like:
+Download them to the `shp` directory in the osm-bright folder. You can do this with `wget` like:
 
     wget http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
     wget http://data.openstreetmapdata.com/land-polygons-split-3857.zip
 
+Once downloaded, extract them from their zip files. 
+
+### 2. Run the shapefiles through shapeindex
+
+Shapeindex is a tool that improves performance for shapefiles in Tilemill. 
+
+Mac and Linux users already have Shapeindex installed through Tilemill but Windows users will need to download [Shapeindex for Windows][] before continuing. 
+
+To run Shapeindex on Mac and Linux, go to the terminal, move to the shp directory of osm-bright, run shapeindex in each shp subdirectory like: 
+
+shapeindex land-polygons-split-3857.shp
+
+[Shapeindex for Windows]: http://mapnik.s3.amazonaws.com/dist/archive/shapeindex-2.2.0-win-x86_32.zip
 
 ### 2. Set up PostgreSQL & PostGIS ###
 
 If you don't already, you need to have [PostgreSQL][] installed & running with
 a [PostGIS][] database setup within it. See the [PostGIS documentation][1] for
-full information on how to do this
+full information on how to do this.
 
 [PostgreSQL]: http://postgresql.org/
 [PostGIS]: http://postgis.refractions.net/
