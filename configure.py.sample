@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#!/usr/bin/env python
-
 from os import path, getcwd
 from collections import defaultdict
 config = defaultdict(defaultdict)
@@ -35,7 +33,8 @@ config["postgis"]["extent"] = "-20037508.34,-20037508.34,20037508.34,20037508.34
 
 # Land shapefiles required for the style. If you have already downloaded
 # these or wish to use different versions, specify their paths here.
-# These OSM land shapefiles are updated daily and can be downloaded from: 
+# You will need to unzip these files before running make.py
+# These OSM land shapefiles are updated daily and can be downloaded at: 
 # - http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
 # - http://data.openstreetmapdata.com/land-polygons-split-3857.zip
 
