@@ -1,3 +1,10 @@
+// =====================================================================
+// LABELS
+
+// General notes:
+// - `text-halo-rasterizer: fast;` gives a noticeable performance
+//    boost to render times and is recommended for *all* halos.
+
 // ---------------------------------------------------------------------
 // Languages
 
@@ -162,8 +169,11 @@
 }
 
 #road_label {
-  text-placement: line;
-  text-name: @name;
+  // You need to use [name] for road labels if you want English street
+  // prefixes and suffixes to be abbreviated. Translated labels do not
+  // have abbreviations.
+  text-name: [name];
+  text-placement: line;  // text follows line path
   text-face-name: @sans;
   text-fill: #765;
   text-halo-fill: fadeout(#fff, 50%);
