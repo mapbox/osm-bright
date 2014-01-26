@@ -13,7 +13,7 @@ implementation.
 
 [Carto]: http://github.com/mapbox/carto/
 [TileMill]: http://tilemill.com/
-[issue tracker]: http://github.com/developmentseed/osm-bright/issues/
+[issue tracker]: http://github.com/mapbox/osm-bright/issues/
 
 Setup Instructions
 ------------------
