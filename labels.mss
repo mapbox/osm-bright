@@ -153,7 +153,7 @@
 #place_label {
   text-name: @name;
   text-face-name: @sans;
-  text-wrap-width: 100;
+  text-wrap-width: 120;
   text-wrap-before: true;
   text-fill: #333;
   text-halo-fill: fadeout(#fff, 50%);
@@ -163,10 +163,13 @@
   [type='city'][zoom>=8][zoom<=15] {
   	text-face-name: @sans_md;
     text-size: 16;
-    [zoom>=10] { text-size: 18; }
+    [zoom>=10] { 
+      text-size: 18;
+      text-wrap-width: 140;
+    }
     [zoom>=12] { 
       text-size: 24;
-      text-wrap-width: 120;
+      text-wrap-width: 180;
     }
     // Hide at largest scales:
     [zoom>=16] { text-name: "''"; }
