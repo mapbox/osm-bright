@@ -5,7 +5,7 @@
 <Parameters>
   <Parameter name="attribution"><![CDATA[Map data © OpenStreetMap contributors]]></Parameter>
   <Parameter name="bounds">-180,-85.0511,180,85.0511</Parameter>
-  <Parameter name="center">-102.83203125,41.14556973100947,4</Parameter>
+  <Parameter name="center">-122.44660198688507,37.78696111268686,19</Parameter>
   <Parameter name="format">png8:m=h</Parameter>
   <Parameter name="maxzoom">22</Parameter>
   <Parameter name="minzoom">0</Parameter>
@@ -164,14 +164,30 @@
   srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
       </Layer>
 
+<Style name="building-roof" filter-mode="first">
+  <Rule>
+    <MaxScaleDenominator>2500</MaxScaleDenominator>
+    <PolygonSymbolizer fill="#f0e7df" geometry-transform="translate(-1,-1.5)" clip="false" />
+    <LineSymbolizer stroke-width="0.5" stroke="#d3cfcc" geometry-transform="translate(-1,-1.5)" clip="false" />
+  </Rule>
+</Style>
+<Style name="building-wall" filter-mode="first">
+  <Rule>
+    <MaxScaleDenominator>2500</MaxScaleDenominator>
+    <PolygonSymbolizer fill="#d3cfcc" />
+  </Rule>
+</Style>
 <Style name="building" filter-mode="first" opacity="0.1">
   <Rule>
+    <MinScaleDenominator>2500</MinScaleDenominator>
     <PolygonSymbolizer fill="#9f754a" />
   </Rule>
 </Style>
 <Layer name="building"
   srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
-    <StyleName>building</StyleName>  </Layer>
+    <StyleName>building</StyleName>
+    <StyleName>building-wall</StyleName>
+    <StyleName>building-roof</StyleName>  </Layer>
 
 <Layer name="landuse_overlay"
   srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
