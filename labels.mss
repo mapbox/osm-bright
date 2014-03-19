@@ -96,30 +96,59 @@
     text-wrap-width: 120;
     text-character-spacing:	4;
     text-line-spacing:	8;
-    }
+  }
   [labelrank=2] {
     text-size: 14;
-    }
+  }
   [labelrank=3] {
     text-size: 11;
-    }
+  }
   [zoom>=5] {
     text-size: 12;
     [labelrank=1] {
       text-size: 22;
-      }
+     }
     [labelrank=2] {
       text-size: 16;
-      }
+     }
     [labelrank=3] {
       text-size: 14;
       text-character-spacing: 2;
-      }
-    }
+     }
+   }
 }
 
 // ---------------------------------------------------------------------
 // Cities, towns, villages, etc
+
+// City labels with dots for low zoom levels.
+// The separate attachment keeps the size of the XML down.
+#place_label::citydots[type='city'][zoom>=4][zoom<=7] {
+  // explicitly defining all the `ldir` values wer'e going
+  // to use shaves a bit off the final project.xml size
+  [ldir='N'],[ldir='S'],[ldir='E'],[ldir='W'],
+  [ldir='NE'],[ldir='SE'],[ldir='SW'],[ldir='NW'] {
+    text-name: @name;
+    text-size: 14;
+    text-face-name: @sans;
+    text-placement: point;
+    text-fill: #333;
+    text-halo-fill: fadeout(#fff, 50%);
+    text-halo-radius: 1;
+    text-halo-rasterizer: fast;
+    text-min-distance: 2;
+    [ldir='E'] { text-dx: 5; }
+    [ldir='W'] { text-dx: -5; }
+    [ldir='N'] { text-dy: -5; }
+    [ldir='S'] { text-dy: 5; }
+    [ldir='NE'] { text-dx: 4; text-dy: -4; }
+    [ldir='SE'] { text-dx: 4; text-dy: 4; }
+    [ldir='SW'] { text-dx: -4; text-dy: 4; }
+    [ldir='NW'] { text-dx: -4; text-dy: -4; }
+    marker-width: 4;
+    marker-fill: #333;
+  }
+}
 
 #place_label {
   text-name: @name;
@@ -131,11 +160,14 @@
   text-halo-radius: 1;
   text-halo-rasterizer: fast;
   text-size: 10;
-  [type='city'] {
+  [type='city'][zoom>=8][zoom<=15] {
   	text-face-name: @sans_md;
     text-size: 16;
     [zoom>=10] { text-size: 18; }
-    [zoom>=12] { text-size: 24; }
+    [zoom>=12] { 
+      text-size: 24;
+      text-wrap-width: 120;
+    }
     // Hide at largest scales:
     [zoom>=16] { text-name: "''"; }
   }
@@ -155,6 +187,7 @@
   [type='suburb'],
   [type='neighbourhood'] {
     text-fill: #633;
+    text-face-name:	@sans_bd;
     text-transform: uppercase;
     text-character-spacing: 1;
     [zoom>=14] { text-size: 11; }
