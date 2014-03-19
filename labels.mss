@@ -239,16 +239,16 @@
 #road_label[reflen>=1][reflen<=6]::shield {
   // Motorways with a 'ref' tag that is 1-6 characters long have a
   // [ref] value for shield-style labels.
-  text-name: [ref];
-  text-face-name: @sans_bd;
-  text-fill: #fff;
-  text-min-distance: 60;
-  text-halo-fill: mix(@motorway, #800, 50%);
-  text-halo-radius: 1;
-  text-halo-rasterizer: fast;
-  text-size: 10;
-  [zoom>=11] { text-size: 11; }
-  [zoom>=14] { text-min-distance: 100; }
+  shield-name: [ref];
+  shield-face-name: @sans_bd;
+  shield-fill: #765;
+  shield-min-distance: 60;
+  shield-size: 9;
+  shield-file: url('img/motorway_sm_[reflen].png');
+  [zoom>=15] {
+    shield-size: 11;
+    shield-file: url('img/motorway_lg_[reflen].png');
+  }
 }
 
 #road_label {
