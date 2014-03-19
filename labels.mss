@@ -21,10 +21,10 @@
 // Fonts
 
 // All fontsets should have a good fallback that covers as many glyphs
-// as possible. 'Arial Unicode MS Regular' is recommended as a final
-// fallback if you have it available. It supports all the characters
-// used in the MapBox Streets vector tiles.
-@fallback: 'Arial Unicode MS Regular';
+// as possible. 'Arial Unicode MS Regular' and 'Arial Unicode MS Bold' 
+//are recommended as final fallbacks if you have them available. 
+//They support all the characters used in the MapBox Streets vector tiles.
+@fallback: 'Open Sans Regular';
 @sans: 'Open Sans Regular', @fallback;
 @sans_md: 'Open Sans Semibold', @fallback;
 @sans_bd: 'Open Sans Bold', @fallback;
@@ -48,18 +48,19 @@
   text-halo-radius: 2;
   text-halo-rasterizer: fast;
   text-line-spacing: -4;
-  text-size: 12;
+  text-character-spacing: 0.5;
+  text-size: 11;
   [zoom>=3][scalerank=1],
   [zoom>=4][scalerank=2],
   [zoom>=5][scalerank=3],
   [zoom>=6][scalerank>3] {
-    text-size: 14;
+    text-size: 13;
   }
   [zoom>=4][scalerank=1],
   [zoom>=5][scalerank=2],
   [zoom>=6][scalerank=3],
   [zoom>=7][scalerank>3] {
-    text-size: 16;
+    text-size: 15;
   }
 }
 
@@ -70,6 +71,52 @@
   line-opacity: 0.5;
 }
 
+// ---------------------------------------------------------------------
+// Marine
+
+#marine_label {
+  text-name: @name;
+  text-face-name: @sans_it;
+  text-wrap-width: 60;
+  text-wrap-before: true;
+  text-fill: darken(@water, 10);
+  text-halo-fill: fadeout(#fff, 75%);
+  text-halo-radius: 1.5;
+  text-size: 10;
+  text-character-spacing: 1;
+  // Some marine labels should be drawn along a line 
+  // rather than on a point (the default)
+  [placement='line'] {
+    text-placement: line;
+    text-avoid-edges: true;
+  }
+  // Oceans
+  [labelrank=1] { 
+    text-size: 18;
+    text-wrap-width: 120;
+    text-character-spacing:	4;
+    text-line-spacing:	8;
+    }
+  [labelrank=2] {
+    text-size: 14;
+    }
+  [labelrank=3] {
+    text-size: 11;
+    }
+  [zoom>=5] {
+    text-size: 11;
+    [labelrank=1] {
+      text-size: 22;
+      }
+    [labelrank=2] {
+      text-size: 16;
+      }
+    [labelrank=3] {
+      text-size: 12;
+      text-character-spacing: 2;
+      }
+    }
+}
 
 // ---------------------------------------------------------------------
 // Cities, towns, villages, etc
@@ -193,7 +240,7 @@
   [zoom>=17] {
     text-name: @name;
     text-face-name: @sans_it;
-    text-fill: #26c;
+    text-fill: darken(@water, 15);
     text-size: 12;
     text-wrap-width: 100;
     text-wrap-before: true;
