@@ -104,7 +104,7 @@
     text-size: 11;
     }
   [zoom>=5] {
-    text-size: 11;
+    text-size: 12;
     [labelrank=1] {
       text-size: 22;
       }
@@ -112,7 +112,7 @@
       text-size: 16;
       }
     [labelrank=3] {
-      text-size: 12;
+      text-size: 14;
       text-character-spacing: 2;
       }
     }

@@ -10,16 +10,16 @@ bounds:
   - 180
   - 85.0511
 center: 
-  - 11.25
-  - 34.52466147177172
-  - 3
+  - 121.1572265625
+  - 29.171348850951507
+  - 5
 description: ''
 format: "png8:m=h"
 interactivity_layer: ''
 layers: null
 maxzoom: 22
 minzoom: 0
-mtime: 1395262070179
+mtime: 1395263077839
 name: OSM Bright 2
 scale: 1
 source: "mapbox:///mapbox.mapbox-streets-v4"
