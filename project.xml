@@ -5,7 +5,7 @@
 <Parameters>
   <Parameter name="attribution"><![CDATA[Map data © OpenStreetMap contributors]]></Parameter>
   <Parameter name="bounds">-180,-85.0511,180,85.0511</Parameter>
-  <Parameter name="center">-120.21429061889626,46.941121287752985,13</Parameter>
+  <Parameter name="center">-76.8109130859375,39.29179704377487,11</Parameter>
   <Parameter name="format">png8:m=h</Parameter>
   <Parameter name="maxzoom">22</Parameter>
   <Parameter name="minzoom">0</Parameter>
@@ -62,46 +62,46 @@
 <Style name="waterway" filter-mode="first">
   <Rule>
     <MaxScaleDenominator>2500</MaxScaleDenominator>
-    <Filter>([type] = 'stream')</Filter>
+    <Filter>([type] = 'canal')</Filter>
     <LineSymbolizer stroke-width="3" stroke="#90b4d8" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>12500</MaxScaleDenominator>
     <MinScaleDenominator>2500</MinScaleDenominator>
-    <Filter>([type] = 'stream')</Filter>
+    <Filter>([type] = 'canal')</Filter>
     <LineSymbolizer stroke-width="2" stroke="#90b4d8" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>50000</MaxScaleDenominator>
     <MinScaleDenominator>12500</MinScaleDenominator>
-    <Filter>([type] = 'stream')</Filter>
+    <Filter>([type] = 'canal')</Filter>
     <LineSymbolizer stroke-width="1" stroke="#90b4d8" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MinScaleDenominator>50000</MinScaleDenominator>
-    <Filter>([type] = 'stream')</Filter>
+    <Filter>([type] = 'canal')</Filter>
     <LineSymbolizer stroke="#90b4d8" stroke-linecap="round" stroke-width="0.5" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>2500</MaxScaleDenominator>
-    <Filter>([type] = 'canal')</Filter>
+    <Filter>([type] = 'stream')</Filter>
     <LineSymbolizer stroke-width="3" stroke="#90b4d8" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>12500</MaxScaleDenominator>
     <MinScaleDenominator>2500</MinScaleDenominator>
-    <Filter>([type] = 'canal')</Filter>
+    <Filter>([type] = 'stream')</Filter>
     <LineSymbolizer stroke-width="2" stroke="#90b4d8" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MaxScaleDenominator>50000</MaxScaleDenominator>
     <MinScaleDenominator>12500</MinScaleDenominator>
-    <Filter>([type] = 'canal')</Filter>
+    <Filter>([type] = 'stream')</Filter>
     <LineSymbolizer stroke-width="1" stroke="#90b4d8" stroke-linecap="round" />
   </Rule>
   <Rule>
     <MinScaleDenominator>50000</MinScaleDenominator>
-    <Filter>([type] = 'canal')</Filter>
+    <Filter>([type] = 'stream')</Filter>
     <LineSymbolizer stroke="#90b4d8" stroke-linecap="round" stroke-width="0.5" />
   </Rule>
   <Rule>
@@ -156,9 +156,42 @@
     <StyleName>water</StyleName>
     <StyleName>water-blur</StyleName>  </Layer>
 
+<Style name="aeroway" filter-mode="first">
+  <Rule>
+    <MaxScaleDenominator>25000</MaxScaleDenominator>
+    <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway')</Filter>
+    <LineSymbolizer stroke-width="2" stroke="#eeeae6" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>200000</MaxScaleDenominator>
+    <MinScaleDenominator>25000</MinScaleDenominator>
+    <Filter>([mapnik::geometry_type] = 2) and ([type] = 'taxiway')</Filter>
+    <LineSymbolizer stroke-width="1" stroke="#eeeae6" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>200000</MaxScaleDenominator>
+    <Filter>([mapnik::geometry_type] = 3) and ([type] = 'apron')</Filter>
+    <PolygonSymbolizer fill="#f3efeb" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>200000</MaxScaleDenominator>
+    <Filter>([mapnik::geometry_type] = 2) and ([type] = 'runway')</Filter>
+    <LineSymbolizer stroke-width="5" stroke="#eeeae6" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>200000</MaxScaleDenominator>
+    <Filter>([mapnik::geometry_type] = 3)</Filter>
+    <PolygonSymbolizer fill="#eeeae6" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>200000</MaxScaleDenominator>
+    <Filter>([mapnik::geometry_type] = 2)</Filter>
+    <LineSymbolizer stroke="#eeeae6" />
+  </Rule>
+</Style>
 <Layer name="aeroway"
   srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
-      </Layer>
+    <StyleName>aeroway</StyleName>  </Layer>
 
 <Layer name="barrier_line"
   srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">

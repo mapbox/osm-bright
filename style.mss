@@ -43,8 +43,8 @@ Map {
   }
 }
 
-
-// Water Features //
+// ---------------------------------------------------------------------
+// Water Features 
 
 #water {
   polygon-fill: @water - #111;
@@ -84,8 +84,8 @@ Map {
   }
 }
 
-
-// Landuse areas //
+// ---------------------------------------------------------------------
+// Landuse areas 
 
 #landuse {
   // Land-use and land-cover are not well-separated concepts in
@@ -102,6 +102,9 @@ Map {
     [class='wood'] { polygon-fill: #6a4; polygon-gamma: 0.5; }
   }
 }
+
+// ---------------------------------------------------------------------
+// Buildings 
 
 #building [zoom<=17]{
   // At zoom level 13, only large buildings are included in the
@@ -122,5 +125,25 @@ Map {
   line-geometry-transform:translate(-1,-1.5);
   line-clip:false;
  }
+}
+
+// ---------------------------------------------------------------------
+// Aeroways 
+
+#aeroway [zoom>=12] {
+  ['mapnik::geometry_type'=2] {
+    line-color: @land * 0.96;
+    [type='runway'] { line-width: 5; }    
+    [type='taxiway'] {  
+      line-width: 1;
+      [zoom>=15] { line-width: 2; }
+    }
+  }    
+  ['mapnik::geometry_type'=3] {
+    polygon-fill: @land * 0.96;
+    [type='apron'] {
+      polygon-fill: @land * 0.98;  
+    }  
+  }
 }
 
