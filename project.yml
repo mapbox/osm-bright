@@ -22,7 +22,7 @@ minzoom: 0
 mtime: 1395692057103
 name: OSM Bright 2
 scale: 1
-source: "mapbox:///mapbox.mapbox-streets-v4"
+source: "mapbox:///mapbox.mapbox-streets-v42-dev"
 styles: 
   - style.mss
   - road.mss
