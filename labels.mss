@@ -239,6 +239,8 @@
 #road_label[reflen>=1][reflen<=6]::shield {
   // Motorways with a 'ref' tag that is 1-6 characters long have a
   // [ref] value for shield-style labels.
+  // Custom shield png files can be created using make_shields.sh
+  // in _src folder
   shield-name: [ref];
   shield-face-name: @sans_bd;
   shield-fill: #765;

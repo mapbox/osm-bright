@@ -1,8 +1,8 @@
 // Basic color palette, from which variations will be derived.
-@motorway: 			#fc8;
-@main:     			#fea;
-@street:   			#fff;
-@street_limited: 	#f3f3f3;
+@motorway:          #fc8;
+@main:              #fea;
+@street:            #fff;
+@street_limited:    #f3f3f3;
 
 // ---------------------------------------------------------------------
 
@@ -26,7 +26,8 @@
       #tunnel { line-dasharray:3,2; }
       [zoom>=6]  { line-width:0.4; }
       [zoom>=7]  { line-width:0.6; }
-      [zoom>=8]  { line-width:3; }
+      [zoom>=8] { line-width:1.5; }
+      [zoom>=10]  { line-width:3; }
       [zoom>=13] { line-width:3.5;  }
       [zoom>=14] { line-width:5; }
       [zoom>=15] { line-width:7; }
@@ -49,7 +50,8 @@
       #tunnel { line-dasharray:3,2; }
       [zoom>=6] { line-width:0.2; }
       [zoom>=7] { line-width:0.4; }
-      [zoom>=8] { line-width:2.4; }
+      [zoom>=8] { line-width:1.5; }
+      [zoom>=10] { line-width:2.4; }
       [zoom>=13] { line-width:2.5; }
       [zoom>=14] { line-width:4; }
       [zoom>=15] { line-width:5; }
@@ -88,7 +90,8 @@
       #road, #bridge { line-cap:round; }
       line-color:@motorway;
       #tunnel { line-color:lighten(@motorway,4); }
-      [zoom>=8] { line-width:1; }
+      [zoom>=8] { line-width:0.5; }
+      [zoom>=10] { line-width:1; }
       [zoom>=13] { line-width:2; }
       [zoom>=14] { line-width:3.5; }
       [zoom>=15] { line-width:5; }
@@ -108,7 +111,8 @@
       #road, #bridge { line-cap: round; }
       line-color:@main;
       #tunnel { line-color:lighten(@main,4); }
-      [zoom>=8] { line-width:1; }
+      [zoom>=8] { line-width:0.5; }
+      [zoom>=10] { line-width:1; }
       [zoom>=13] { line-width:1.5; }
       [zoom>=14] { line-width:2.5; }
       [zoom>=15] { line-width:3.5; }
