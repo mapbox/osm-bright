@@ -177,7 +177,8 @@
   [type='town'] {
     text-size: 14;
     [zoom>=12] { text-size: 16; }
-    [zoom>=14] { text-size: 18; }
+    [zoom>=14] { text-size: 20; }
+    [zoom>=16] { text-size: 24; }
     // Hide at largest scales:
     [zoom>=18] { text-name: "''"; }
   }
@@ -185,6 +186,7 @@
     text-size: 12;
     [zoom>=12] { text-size: 14; }
     [zoom>=14] { text-size: 18; }
+    [zoom>=16] { text-size: 22; }
   }
   [type='hamlet'],
   [type='suburb'],
@@ -192,10 +194,10 @@
     text-fill: #633;
     text-face-name:	@sans_bd;
     text-transform: uppercase;
-    text-character-spacing: 1;
+    text-character-spacing: 0.5;
     [zoom>=14] { text-size: 11; }
-    [zoom>=15] { text-size: 12; text-character-spacing: 2; }
-    [zoom>=16] { text-size: 14; text-character-spacing: 3; }
+    [zoom>=15] { text-size: 12; text-character-spacing: 1; }
+    [zoom>=16] { text-size: 14; text-character-spacing: 2; }
   }
 }
 
@@ -221,12 +223,16 @@
   }
   ::label {
     text-name: @name;
-    text-face-name: @sans;
+    text-face-name: @sans_md;
     text-size: 12;
     text-fill: #666;
     text-halo-fill: fadeout(#fff, 50%);
     text-halo-radius: 1;
     text-halo-rasterizer: fast;
+    text-wrap-width: 70;
+    text-line-spacing:	-1;
+    //text-transform: uppercase;
+    //text-character-spacing:	0.25;
     // POI labels with an icon need to be offset:
     [maki!=null] { text-dy: 8; }
   }
@@ -264,7 +270,8 @@
   text-halo-fill: fadeout(#fff, 50%);
   text-halo-radius: 1;
   text-halo-rasterizer: fast;
-  text-size: 13;
+  text-size: 12;
+  [zoom>=15] { text-size: 13; }
 }
 
 
