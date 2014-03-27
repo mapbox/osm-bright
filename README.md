@@ -1,3 +1,3 @@
-# OSM Bright for TM2
+# This code has moved
 
-A reboot of [OSM Bright](https://github.com/mapbox/osm-bright) powered by [MapBox vector tiles](http://www.mapbox.com/blog/vector-tiles/) and [TM2](https://github.com/mapbox/tm2).
+The TM2 version of OSM Bright now lives at https://github.com/mapbox/osm-bright.tm2
