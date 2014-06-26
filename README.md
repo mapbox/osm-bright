@@ -15,6 +15,11 @@ implementation.
 [TileMill]: http://tilemill.com/
 [issue tracker]: http://github.com/mapbox/osm-bright/issues/
 
+### Quickstart
+
+* [Mac OS X Quickstart](https://www.mapbox.com/tilemill/docs/guides/osm-bright-mac-quickstart/)
+* [Ubuntu Quickstart](https://www.mapbox.com/tilemill/docs/guides/osm-bright-ubuntu-quickstart/)
+
 Setup Instructions
 ------------------
 
