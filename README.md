@@ -12,7 +12,7 @@ The style is still a work in progress and you are encouraged to use the
 implementation. 
 
 [Carto]: http://github.com/mapbox/carto/
-[TileMill]: http://tilemill.com/
+[TileMill]: https://www.mapbox.com/tilemill/
 [issue tracker]: http://github.com/mapbox/osm-bright/issues/
 
 ### Quickstart
@@ -25,26 +25,38 @@ Setup Instructions
 
 ### 1. Download shapefiles
 
-OSM Bright depends on several large shapefiles. You should start downloading these
-now so that they are ready later when you need them for rendering.
+OSM Bright depends on two large shapefiles. You will need to download and extract them before continuing. 
 
-Download them to the `osm-bright` directory. You can do this with `wget` like:
+Download them to the `shp` directory in the osm-bright folder. You can do this with `wget` like:
 
-    wget http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip
-    wget http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip
-    wget http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-land.zip
+    wget http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
+    wget http://data.openstreetmapdata.com/land-polygons-split-3857.zip
 
-### 2. Set up PostgreSQL & PostGIS ###
+Once downloaded, extract them from their zip files. 
+
+### 2. Run the shapefiles through shapeindex
+
+Shapeindex is a tool that improves performance for shapefiles in Tilemill. 
+
+Mac and Linux users already have Shapeindex installed through Tilemill but Windows users will need to download [Shapeindex for Windows][] before continuing. 
+
+To run Shapeindex on Mac and Linux, go to the terminal, move to the shp directory of osm-bright, run shapeindex in each shp subdirectory like: 
+
+shapeindex land-polygons-split-3857.shp
+
+[Shapeindex for Windows]: http://mapnik.s3.amazonaws.com/dist/archive/shapeindex-2.2.0-win-x86_32.zip
+
+### 3. Set up PostgreSQL & PostGIS ###
 
 If you don't already, you need to have [PostgreSQL][] installed & running with
 a [PostGIS][] database setup within it. See the [PostGIS documentation][1] for
-full information on how to do this
+full information on how to do this.
 
 [PostgreSQL]: http://postgresql.org/
 [PostGIS]: http://postgis.refractions.net/
 [1]: http://postgis.net/documentation
 
-### 2. Import OpenStreetMap data ###
+### 4. Import OpenStreetMap data ###
 
 You will need an OSM database extract in one of the following formats:
 
@@ -88,7 +100,7 @@ See `man osm2pgsql` or the [online documentation][5] for more details.
 [osm2pgsql]: http://wiki.openstreetmap.org/wiki/Osm2pgsql
 [5]: http://wiki.openstreetmap.org/wiki/Osm2pgsql
 
-### 3. Edit the configuration ###
+### 5. Edit the configuration ###
 
 You'll need to adjust some settings for things like your PostgreSQL connection
 information.
@@ -108,7 +120,7 @@ information.
    comments in the configuration file for more information.)
 8. Save & close the file.
 
-### 4. Run make.py ###
+### 6. Run make.py ###
 
     ./make.py
 

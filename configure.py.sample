@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from os import path, getcwd
 from collections import defaultdict
@@ -32,15 +33,11 @@ config["postgis"]["extent"] = "-20037508.34,-20037508.34,20037508.34,20037508.34
 
 # Land shapefiles required for the style. If you have already downloaded
 # these or wish to use different versions, specify their paths here.
-# OSM land shapefiles from MapBox are indexed for Mapnik and have blatant 
-# errors corrected (eg triangles along the 180 E/W line). They can be download
-# from:
-# - http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip
-# - http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip
-# But, they are updated infrequently. The latest versions can be downloaded from osm.org:
-# - http://tile.openstreetmap.org/processed_p.tar.bz2
-# - http://tile.openstreetmap.org/shoreline_300.tar.bz2
-config["processed_p"] = path.join(getcwd(),"coastline-good.zip")
-config["shoreline_300"] = path.join(getcwd(),"shoreline_300.zip")
-# http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-land.zip
-config["land"] = path.join(getcwd(),"10m-land.zip")
+# You will need to unzip these files before running make.py
+# These OSM land shapefiles are updated daily and can be downloaded at: 
+# - http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
+# - http://data.openstreetmapdata.com/land-polygons-split-3857.zip
+
+config["land-high"] = path.join(getcwd(),"shp/land-polygons-split-3857/land_polygons.shp")
+config["land-low"] = path.join(getcwd(),"shp/simplified-land-polygons-complete-3857/simplified_land_polygons.shp")
+
