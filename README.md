@@ -65,7 +65,7 @@ You will need an OSM database extract in one of the following formats:
 - .osm (xml)
 
 You can find appropriate data extracts for a variety of regions at
-<http://download.geofabrik.de> or <http://metro.teczno.com>. See
+<http://download.geofabrik.de> or <https://mapzen.com/metro-extracts/>. See
 [the OSM wiki][2] for information about (very large) full-planet downloads.
 
 You need to process this data and import it to your PostGIS database. You can
