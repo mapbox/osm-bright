@@ -6,11 +6,6 @@
 
 /* Font sets are defined in palette.mss */
 
-/* Mapnik does not yet support character-spacing adjustments for 
-   labels placed along a line. We can fake this using the replace()
-   function in the text-name parameter by replacing each character
-   with itself followed by one or more spaces. */
-
 /* ================================================================== */
 /* PLACE NAMES
 /* ================================================================== */
@@ -358,20 +353,13 @@
   text-placement: line;
   text-min-distance: 400;
   text-size: 10;
-  [type='river'][zoom=14],
-  [type='canal'][zoom=16],
-  [type='stream'][zoom=18] {
-    text-name: "[name].replace('([\S\ ])','$1 ')";
-  }
   [type='river'][zoom=15],
   [type='canal'][zoom=17] {
     text-size: 11;
-    text-name: "[name].replace('([\S\ ])','$1 ')";
   }
   [type='river'][zoom>=16],
   [type='canal'][zoom=18] {
     text-size: 14;
-    text-name: "[name].replace('([\S\ ])','$1 ')";
     text-spacing: 300;
   }
 }
