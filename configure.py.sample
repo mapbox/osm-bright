@@ -41,3 +41,9 @@ config["postgis"]["extent"] = "-20037508.34,-20037508.34,20037508.34,20037508.34
 config["land-high"] = path.join(getcwd(),"shp/land-polygons-split-3857/land_polygons.shp")
 config["land-low"] = path.join(getcwd(),"shp/simplified-land-polygons-complete-3857/simplified_land_polygons.shp")
 
+# Places shapefile required for the osm2pgsql style
+# - http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.4.0/cultural/10m-populated-places-simple.zip
+#  or
+# - http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_populated_places.zip
+
+config["ne_places"] = path.join(getcwd(),"shp/ne_10m_populated_places/ne_10m_populated_places.shp")
