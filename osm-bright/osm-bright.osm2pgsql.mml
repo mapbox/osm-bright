@@ -5,7 +5,8 @@
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "file": "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip", 
-        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+        "type": "shape"
       }, 
       "class": "shp", 
       "geometry": "polygon", 
@@ -17,7 +18,8 @@
     }, 
     {
       "Datasource": {
-        "file": "http://data.openstreetmapdata.com/land-polygons-split-3857.zip"
+        "file": "http://data.openstreetmapdata.com/land-polygons-split-3857.zip",
+        "type": "shape"
       }, 
       "class": "shp", 
       "geometry": "polygon", 
@@ -402,13 +404,15 @@
       "Datasource": {
         "dbname": "osm", 
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.4.0/cultural/10m-populated-places-simple.zip"
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.4.0/cultural/10m-populated-places-simple.zip",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+        "type": "shape"
       }, 
       "class": "", 
       "geometry": "point", 
       "id": "ne_places", 
       "name": "ne_places", 
-      "srs": "", 
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
       "srs-name": "autodetect"
     }, 
     {
