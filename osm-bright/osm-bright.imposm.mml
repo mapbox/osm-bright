@@ -550,7 +550,7 @@
     "roads.mss", 
     "labels.mss"
   ], 
-  "attribution": "Data \u00a9 OpenStreetMap (and) contributors, CC-BY-SA", 
+  "attribution": "Data \u00a9 OpenStreetMap (and) contributors, ODbL",
   "bounds": [
     -180, 
     -85.0511, 
