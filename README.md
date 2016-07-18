@@ -42,7 +42,7 @@ Mac and Linux users already have Shapeindex installed through Tilemill but Windo
 
 To run Shapeindex on Mac and Linux, go to the terminal, move to the shp directory of osm-bright, run shapeindex in each shp subdirectory like: 
 
-shapeindex land-polygons-split-3857.shp
+    shapeindex land-polygons-split-3857.shp
 
 [Shapeindex for Windows]: http://mapnik.s3.amazonaws.com/dist/archive/shapeindex-2.2.0-win-x86_32.zip
 
