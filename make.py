@@ -46,6 +46,8 @@ def build():
       layer["Datasource"]["file"] = config["land-low"]
     elif layer["id"] == "land-high":
       layer["Datasource"]["file"] = config["land-high"]
+    elif layer["id"] == "ne_places":
+      layer["Datasource"]["file"] = config["ne_places"]
     else:
       # Assume all other layers are PostGIS layers
       for opt, val in config["postgis"].iteritems():
@@ -88,6 +90,7 @@ def pull():
   defaultconfig["name"] = "OSM Bright"
   defaultconfig["land-high"] = "http://data.openstreetmapdata.com/land-polygons-split-3857.zip"
   defaultconfig["land-low"] = "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip"
+  defaultconfig["ne_places"] = "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.4.0/cultural/10m-populated-places-simple.zip"
 
   project["name"] = defaultconfig["name"]
   for layer in project["Layer"]:
@@ -95,6 +98,8 @@ def pull():
       layer["Datasource"]["file"] = defaultconfig["land-low"]
     elif layer["id"] == "land-high":
       layer["Datasource"]["file"] = defaultconfig["land-high"]
+    elif layer["id"] == "ne_places":
+      layer["Datasource"]["file"] = defaultconfig["ne_places"]
     else:
       # Assume all other layers are PostGIS layers
       for opt, val in defaultconfig["postgis"].iteritems():

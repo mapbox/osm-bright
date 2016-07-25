@@ -32,6 +32,9 @@ Download them to the `shp` directory in the osm-bright folder. You can do this w
     wget http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
     wget http://data.openstreetmapdata.com/land-polygons-split-3857.zip
 
+If you are going to use the osm2pqsql style you will need another (but smaller shapefile)
+    wget http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.4.0/cultural/10m-populated-places-simple.zip
+
 Once downloaded, extract them from their zip files. 
 
 ### 2. Run the shapefiles through shapeindex
