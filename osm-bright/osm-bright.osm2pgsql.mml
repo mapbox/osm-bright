@@ -242,7 +242,7 @@
         "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
         "geometry_field": "way", 
         "key_field": "", 
-        "table": "( SELECT way, \"building\" AS type\n  FROM planet_osm_polygon\n  WHERE building NOT IN ('0','false', 'no')\n  ORDER BY ST_YMin(ST_Envelope(way)) DESC\n) AS data", 
+        "table": "( SELECT way, \"building\" AS type\n  FROM planet_osm_polygon\n  WHERE building NOT IN ('', '0','false', 'no')\n  ORDER BY ST_YMin(ST_Envelope(way)) DESC\n) AS data", 
         "type": "postgis"
       }, 
       "class": "", 
