@@ -550,7 +550,7 @@
         "table": "( SELECT geometry, type, name \n  FROM osm_transport_points \n  WHERE type='station'\n) AS DATA ",
         "key_field": "",
         "geometry_field": "geometry",
-        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34",
+        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34"
       },
       "id": "train_stations",
       "class": "",
