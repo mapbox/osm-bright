@@ -1,3 +1,7 @@
 build
 *.pyc
 configure.py
+shp/
+osm_data/
+.idea/
+osm.xml

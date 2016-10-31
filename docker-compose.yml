@@ -1,0 +1,32 @@
+version: '2'
+
+volumes:
+    postgisdata:
+    tilecache:
+
+services:
+    postgis:
+        image: mdillon/postgis:9.6
+        volumes:
+            - postgisdata:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: 'osm'
+            POSTGRES_DB: 'osm'
+
+    tile_server:
+        build:
+            context: .
+            dockerfile: ./docker/tile_server/Dockerfile
+        volumes:
+            - tilecache:/srv/tile_server/tile_cache
+            - ./osm_data:/srv/tile_server/osm_data
+        links:
+            - postgis
+
+    nginx:
+        build:
+            context: ./docker/nginx
+        links:
+            - tile_server
+        ports:
+            - "80:80"
