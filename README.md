@@ -144,3 +144,21 @@ on its loading status. You can also check the TileMill logs to see the download
 status of the remote files.
 
 Once the map tiles show up, you're now ready to start editing the template in TileMill!
+
+### Alternative: running with Docker
+
+You can get a complete tile server running by using [Docker](http://docker.com/)
+and [Docker Compose](https://docs.docker.com/compose/).
+
+1. Get the shapefiles inside a folder called `shp` properly unzipped.
+2. Run `docker-compose build` to build the docker images.
+3. Run `docker-compose up -d` to get the whole stack running. This includes
+   a PostGIS database, a tile server and an Nginx balancer.
+4. Enter tile server container and import OSM data:
+
+   ```sh
+   docker exec -ti osmbright_tile_server_1 bash
+   wget http://download.geofabrik.de/south-america/peru-latest.osm.pbf
+   osm2pgsql -H postgis -U osm -d osm peru-latest.osm.pbf
+   ```
+5. Go to `http://localhost` to see your map
