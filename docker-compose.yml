@@ -19,7 +19,6 @@ services:
             dockerfile: ./docker/tile_server/Dockerfile
         volumes:
             - tilecache:/srv/tile_server/tile_cache
-            - ./osm_data:/srv/tile_server/osm_data
         links:
             - postgis
 

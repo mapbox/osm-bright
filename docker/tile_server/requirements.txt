@@ -1,4 +1,3 @@
-Flask==0.11.1
 gunicorn==19.6.0
 Pillow==3.3.1
 TileStache==1.51.3
