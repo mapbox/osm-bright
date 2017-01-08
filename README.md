@@ -27,7 +27,7 @@ Setup Instructions
 
 OSM Bright depends on two large shapefiles. You will need to download and extract them before continuing. 
 
-Download them to the `shp` directory in the osm-bright folder. You can do this with `wget` like:
+Download them to the `shp` directory in the osm-bright folder, or download the `shp` to any directory and reference that directory in `osm.xml` located `/etc/mapnik-carto-osm/osm.xml`. You can download with `wget` like this:
 
     wget http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
     wget http://data.openstreetmapdata.com/land-polygons-split-3857.zip
