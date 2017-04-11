@@ -220,6 +220,10 @@ ELSE 0
 END AS population FROM points
 WHERE  place IN ('country', 'state', 'region', 'county', 'city', 'town', 'village', 'hamlet', 'suburb', 'neighbourhood', 'locality');
 
+DROP VIEW IF EXISTS vw_osm_railway_stations;
+CREATE VIEW vw_osm_railway_stations AS SELECT geometry, name, railway
+FROM points WHERE railway IN ('subway_entrance', 'station', 'halt', 'tram_stop');
+
 DROP VIEW IF EXISTS vw_osm_turning_circles;
 CREATE VIEW vw_osm_turning_circles AS SELECT geometry FROM points WHERE highway IN ('turning_circle');
 
@@ -398,6 +402,14 @@ SELECT RecoverGeometryColumn('osm_places', 'geometry', 4326, 'POINT');
 SELECT date(), time(), 'Indexing column osm_places.geometry';
 SELECT CreateSpatialIndex('osm_places', 'geometry');
 
+SELECT date(), time(), 'Materializing view vw_osm_railway_stations';
+CREATE TABLE osm_railway_stations AS SELECT * FROM vw_osm_railway_stations;
+SELECT date(), time(), 'Recovering column osm_railway_stations.geometry';
+SELECT RecoverGeometryColumn('osm_railway_stations', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_railway_stations.geometry';
+SELECT CreateSpatialIndex('osm_railway_stations', 'geometry');
+
+
 SELECT date(), time(), 'Materializing view vw_osm_turning_circles';
 CREATE TABLE osm_turning_circles AS SELECT * FROM vw_osm_turning_circles;
 SELECT date(), time(), 'Recovering column osm_turning_circles.geometry';
@@ -454,20 +466,21 @@ DROP VIEW vw_osm_tunnels;
 DROP VIEW vw_osm_bridges;
 
 DROP VIEW vw_osm_places;
+DROP VIEW vw_osm_railway_stations;
 DROP VIEW vw_osm_turning_circles;
 DROP VIEW vw_osm_waterareas;
 DROP VIEW vw_osm_waterways;
 
-SELECT DiscardGeometryColumn('points', 'GEOMETRY');
-SELECT DiscardGeometryColumn('lines', 'GEOMETRY');
-SELECT DiscardGeometryColumn('multilinestrings', 'GEOMETRY');
-SELECT DiscardGeometryColumn('multipolygons', 'GEOMETRY');
-SELECT DiscardGeometryColumn('other_relations', 'GEOMETRY');
+-- SELECT DiscardGeometryColumn('points', 'GEOMETRY');
+-- SELECT DiscardGeometryColumn('lines', 'GEOMETRY');
+-- SELECT DiscardGeometryColumn('multilinestrings', 'GEOMETRY');
+-- SELECT DiscardGeometryColumn('multipolygons', 'GEOMETRY');
+-- SELECT DiscardGeometryColumn('other_relations', 'GEOMETRY');
 
-DROP TABLE points;
-DROP TABLE lines;
-DROP TABLE multilinestrings;
-DROP TABLE multipolygons;
-DROP TABLE other_relations;
+-- DROP TABLE points;
+-- DROP TABLE lines;
+-- DROP TABLE multilinestrings;
+-- DROP TABLE multipolygons;
+-- DROP TABLE other_relations;
 
-VACUUM;
+-- VACUUM;

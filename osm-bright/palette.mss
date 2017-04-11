@@ -168,6 +168,13 @@ Map { font-directory: url(./fonts); }
 @village_text:      #888;
 @village_halo:      @place_halo;
 
+/* For POIs */
+@standard-halo-radius:  1;
+@standard-halo-fill: rgba(255,255,255,0.6);
+@book-fonts: @sans;
+@bold-fonts: @sans_bold;
+@transportation-icon: #0092da;
+
 /* ****************************************************************** */
 
 

@@ -427,13 +427,28 @@
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, railway, name\n  FROM osm_railway_stations) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "stations", 
+            "name": "stations", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
         }
     ], 
     "Stylesheet": [
         "palette.mss", 
         "base.mss", 
         "roads.mss", 
-        "labels.mss"
+        "labels.mss",
+        "stations.mss"
     ], 
     "attribution": "Data \u00a9 OpenStreetMap (and) contributors, ODbL",
     "bounds": [
