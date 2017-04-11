@@ -50,6 +50,9 @@ END AS bname, ST_Area(geometry) AS area
 FROM multipolygons
 WHERE ST_IsValid(geometry) AND building IS NOT NULL AND bname IS NOT NULL;
 
+DROP VIEW IF EXISTS vw_osm_ferryways;
+CREATE VIEW vw_osm_ferryways AS SELECT geometry, name FROM lines WHERE route = 'ferry';
+
 DROP VIEW IF EXISTS vw_osm_landusages;
 CREATE VIEW vw_osm_landusages AS SELECT geometry, name, amenity AS type, ST_Area(geometry) AS area, 
 CASE
@@ -321,6 +324,13 @@ SELECT RecoverGeometryColumn('osm_building_labels', 'geometry', 4326, 'POINT');
 SELECT date(), time(), 'Indexing column osm_building_labels.geometry';
 SELECT CreateSpatialIndex('osm_building_labels', 'geometry');
 
+SELECT date(), time(), 'Materializing view vw_osm_ferryways';
+CREATE TABLE osm_ferryways AS SELECT * FROM vw_osm_ferryways;
+SELECT date(), time(), 'Recovering column osm_ferryways.geometry';
+SELECT RecoverGeometryColumn('osm_ferryways', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_ferryways.geometry';
+SELECT CreateSpatialIndex('osm_ferryways', 'geometry');
+
 SELECT date(), time(), 'Materializing view vw_osm_landusages_gen0';
 CREATE TABLE osm_landusages_gen0 AS SELECT * FROM vw_osm_landusages_gen0;
 SELECT date(), time(), 'Recovering column osm_landusages_gen0.geometry';
@@ -453,6 +463,7 @@ DROP VIEW vw_osm_barrierpoints;
 DROP VIEW vw_osm_barrierways;
 DROP VIEW vw_osm_buildings;
 DROP VIEW vw_osm_building_labels;
+DROP VIEW vw_osm_ferryways;
 DROP VIEW vw_osm_landusages_gen0;
 DROP VIEW vw_osm_landusages_gen1;
 DROP VIEW vw_osm_landusages;

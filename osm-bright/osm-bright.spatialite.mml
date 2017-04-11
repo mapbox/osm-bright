@@ -160,7 +160,19 @@
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
-        }, 
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, name FROM osm_ferryways) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "ferry_routes", 
+            "name": "ferry_routes", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        },         
         {
             "Datasource": {
                 "key_field": "rowid",
@@ -448,7 +460,8 @@
         "base.mss", 
         "roads.mss", 
         "labels.mss",
-        "stations.mss"
+        "stations.mss",
+        "ferry-routes.mss"
     ], 
     "attribution": "Data \u00a9 OpenStreetMap (and) contributors, ODbL",
     "bounds": [
