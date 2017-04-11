@@ -359,6 +359,20 @@
         {
             "Datasource": {
                 "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen0) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_gen0", 
+            "name": "amenity_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
                 "table": "(SELECT rowid, geometry, type, name, area FROM osm_area_labels ORDER BY area DESC) AS data",
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
@@ -370,6 +384,78 @@
             "srs-name": "900913", 
             "status": "on"
         }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, railway, name\n  FROM osm_railway_stations) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "stations", 
+            "name": "stations", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen0) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_gen0", 
+            "name": "amenity_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen1) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_gen1", 
+            "name": "amenity_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen2) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_gen2", 
+            "name": "amenity_gen2", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_points) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_points", 
+            "name": "amenity_points", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        
         {
             "Datasource": {
                 "key_field": "rowid",
@@ -439,20 +525,6 @@
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
-        },
-        {
-            "Datasource": {
-                "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, railway, name\n  FROM osm_railway_stations) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
-            }, 
-            "class": "", 
-            "geometry": "point", 
-            "id": "stations", 
-            "name": "stations", 
-            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
-            "srs-name": "900913", 
-            "status": "on"
         }
     ], 
     "Stylesheet": [
@@ -461,6 +533,7 @@
         "roads.mss", 
         "labels.mss",
         "stations.mss",
+        "amenity-points.mss",
         "ferry-routes.mss"
     ], 
     "attribution": "Data \u00a9 OpenStreetMap (and) contributors, ODbL",

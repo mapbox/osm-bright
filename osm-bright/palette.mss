@@ -171,11 +171,15 @@ Map { font-directory: url(./fonts); }
 /* For POIs and other styles from standard map*/
 @standard-halo-radius:  1;
 @standard-halo-fill: rgba(255,255,255,0.6);
+@standard-wrap-width: 30;
+@standard-font: @sans;
 @book-fonts: @sans;
 @bold-fonts: @sans_bold;
+
 @transportation-icon: #0092da;
 
 @water-color: @water;
+
 
 /* ****************************************************************** */
 
