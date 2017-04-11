@@ -327,7 +327,7 @@
 #building_label[zoom>=16] {
   text-name:"[bname]";
   text-face-name:@sans_italic;
-  text-size:10;
+  text-size:8;
   text-wrap-width:30;
   text-fill: @poi_text;
 }
