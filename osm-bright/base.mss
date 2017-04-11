@@ -16,9 +16,9 @@
   polygon-gamma: 0.75;
 }
 
-#landuse_gen0[zoom>3][zoom<=9],
-#landuse_gen1[zoom>9][zoom<=12],
-#landuse[zoom>12] {
+#landuse_gen0[zoom>3][zoom<=10],
+#landuse_gen1[zoom>10][zoom<=13],
+#landuse[zoom>13] {
   [type='cemetery']      { polygon-fill: @cemetery; }
   [type='college']       { polygon-fill: @school; }
   [type='commercial']    { polygon-fill: @industrial; }
@@ -60,7 +60,7 @@
   }
 
 /* ---- BUILDINGS ---- */
-#buildings[zoom>=12][zoom<=16] {
+#buildings[zoom>=14][zoom<=16] {
   polygon-fill:@building;
   [zoom>=14] {
     line-color:darken(@building,5%);
@@ -74,14 +74,9 @@
 // At the highest zoom levels, render buildings in fancy pseudo-3D.
 // Ordering polygons by their Y-position is necessary for this effect
 // so we use a separate layer that does this for us.
-#buildings[zoom>=17][type != 'hedge'] {
+#buildings[zoom>=17] {
   building-fill:@building;
-  building-height:1.25;
-}
-
-#buildings[zoom>=17][type = 'hedge'] {
-  building-fill:@wooded;
-  building-height:1.25;
+  building-height:0.000005;
 }
 
 /* ================================================================== */

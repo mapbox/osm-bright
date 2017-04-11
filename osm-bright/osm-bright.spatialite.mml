@@ -1,0 +1,457 @@
+{
+    "Layer": [
+        {
+            "Datasource": {
+                "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
+                "file": "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip", 
+                "id": "land-low", 
+                "type": "shape",
+                "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "land-low", 
+            "name": "land-low", 
+            "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
+                "file": "http://data.openstreetmapdata.com/land-polygons-split-3857.zip",
+                "type": "shape",
+                "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "land-high", 
+            "name": "land-high", 
+            "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+        },
+
+
+        {
+            "Datasource": {
+                "id": "landuse_gen0", 
+                "project": "osm-bright-spatialite", 
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages_gen0\n  ORDER BY area DESC\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "landuse_gen0", 
+            "name": "landuse_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "id": "landuse_gen1", 
+                "project": "osm-bright-spatialite", 
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages_gen1\n  ORDER BY area DESC\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "landuse_gen1", 
+            "name": "landuse_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "id": "landuse", 
+                "project": "osm-bright-spatialite", 
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages\n  ORDER BY area DESC\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "landuse", 
+            "name": "landuse", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "id": "waterway", 
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal')\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "waterway_low", 
+            "name": "waterway_low", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal', 'stream')\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "waterway_med", 
+            "name": "waterway_med", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal', 'stream', 'ditch', 'drain')\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "waterway_high", 
+            "name": "waterway_high", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas\n  WHERE area > 8.1162e-07\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "water_gen0", 
+            "name": "water_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas\n  WHERE area > 8.1162e-08\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "water_gen1", 
+            "name": "water_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry\n  FROM osm_waterareas) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "water", 
+            "name": "water", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type \nfrom osm_landusages\norder by area desc) as landusages", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "id": "landuse_overlays", 
+            "name": "landuse_overlays", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, admin_level from osm_admin) as admin", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "admin", 
+            "name": "admin", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry FROM osm_buildings\n ORDER BY y_min DESC\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "buildings", 
+            "name": "buildings", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type FROM osm_aeroways) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "aeroway", 
+            "name": "aeroway", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type, stylegroup, z_order FROM osm_tunnels ORDER BY z_order ASC) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "tunnel",
+            "name": "tunnel", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry FROM osm_turning_circles) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "turning_circle_case", 
+            "name": "turning_circle_case", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type, stylegroup FROM osm_roads ORDER BY z_order ASC) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "roads_high", 
+            "name": "roads_high", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type FROM osm_roads_gen1) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+             }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "roads_med", 
+            "name": "roads_med", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type FROM osm_motorways_gen0) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "roads_low", 
+            "name": "roads_low", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry FROM osm_turning_circles) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "turning_circle_fill", 
+            "name": "turning_circle_fill", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type, stylegroup, z_order FROM osm_bridges ORDER BY z_order ASC) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "bridge", 
+            "name": "bridge", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, stylegroup FROM osm_barrierpoints) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "barrier_points", 
+            "name": "barrier_points", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, stylegroup FROM osm_barrierways) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "barrier_lines", 
+            "name": "barrier_lines", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type, name FROM osm_places ORDER BY z_order, population DESC) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place", 
+            "name": "place", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type, name, area FROM osm_area_labels ORDER BY area DESC) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "area_label", 
+            "name": "area_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, bname FROM osm_building_labels ORDER BY area DESC) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            },
+            "class": "", 
+            "geometry": "point", 
+            "id": "building_label", 
+            "name": "building_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name, ref, LENGTH(ref) AS reflen, oneway, type FROM osm_roads WHERE type IN ('motorway', 'trunk')\n AND (name IS NOT NULL OR ref IS NOT NULL)) AS data",
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "motorway_label", 
+            "name": "motorway_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE type IN ('primary', 'secondary', 'tertiary') AND (name IS NOT NULL OR oneway <> 0)\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "mainroad_label", 
+            "name": "mainroad_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE (NOT type IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')) AND (name IS NOT NULL OR oneway <> 0)\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "minorroad_label", 
+            "name": "minorroad_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type, name\n  FROM osm_waterways\n  WHERE type IN ('canal', 'river', 'stream') \n    AND name IS NOT NULL\n) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "waterway_label", 
+            "name": "waterway_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }
+    ], 
+    "Stylesheet": [
+        "palette.mss", 
+        "base.mss", 
+        "roads.mss", 
+        "labels.mss"
+    ], 
+    "attribution": "Data \u00a9 OpenStreetMap (and) contributors, ODbL",
+    "bounds": [
+            -180, 
+            -85.0511, 
+        180, 
+        85.0511
+    ], 
+    "center": [
+        0, 
+        20, 
+        4
+    ], 
+    "description": "", 
+    "format": "png", 
+    "interactivity": false, 
+    "maxzoom": 18, 
+    "minzoom": 0, 
+    "name": "OSM Bright", 
+    "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+}

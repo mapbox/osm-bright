@@ -1,0 +1,473 @@
+DROP VIEW IF EXISTS vw_osm_admin;
+CREATE VIEW vw_osm_admin AS SELECT geometry, admin_level FROM multipolygons
+WHERE boundary IN ('administrative') AND admin_level IN ('2');
+
+DROP VIEW IF EXISTS vw_osm_aeroways;
+CREATE VIEW vw_osm_aeroways AS SELECT geometry, aeroway AS type FROM lines
+WHERE aeroway IN ('runway', 'taxiway');
+
+DROP VIEW IF EXISTS vw_osm_area_labels;
+CREATE VIEW vw_osm_area_labels AS SELECT ST_PointOnSurface(geometry) AS geometry, name,
+CASE
+WHEN leisure IN ('park', 'garden') THEN 'park'
+WHEN leisure IN ('golf_course') THEN leisure
+WHEN landuse='cemetery' OR amenity = 'grave_yard' THEN 'cemetery'
+WHEN amenity='hospital' THEN 'hospital'
+WHEN amenity IN ('college', 'kindergarten', 'school', 'university') THEN 'school'
+WHEN landuse IN ('basin', 'reservoir') OR natural IN ('water') OR waterway IN ('riverbank') THEN 'water'
+ELSE NULL END AS type, ST_Area(geometry) AS area
+FROM multipolygons
+WHERE ST_IsValid(geometry) AND building IS NULL AND name IS NOT NULL;
+
+DROP VIEW IF EXISTS vw_osm_barrierpoints;
+CREATE VIEW vw_osm_barrierpoints AS SELECT geometry, 
+CASE
+WHEN barrier IN ('toll_booth', 'stile', 'gate', 'horse_stile','lift_gate', 'kissing_gate','cattle_grid','entrance') THEN 'gate'
+WHEN barrier IN ('block', 'bollard', 'chain', 'cycle_barrier', 'spikes', 'fence', 'wire_fence','yes') THEN 'divider'
+ELSE NULL
+END AS stylegroup
+FROM points WHERE stylegroup IS NOT NULL;
+
+DROP VIEW IF EXISTS vw_osm_barrierways;
+CREATE VIEW vw_osm_barrierways AS SELECT geometry, 
+CASE 
+WHEN barrier IN ('city_wall', 'fence', 'retaining_wall', 'wall', 'wire_fence', 'yes') THEN 'fence'
+WHEN barrier IN ('gate', 'spikes', 'bollard', 'lift_gate', 'kissing_gate') THEN 'gate'
+WHEN barrier IN ('hedge') THEN 'hedge'
+END AS stylegroup FROM lines WHERE stylegroup IS NOT NULL;
+
+DROP VIEW IF EXISTS vw_osm_buildings;
+CREATE VIEW vw_osm_buildings AS SELECT geometry, ST_MinY(geometry) AS y_min FROM   multipolygons
+WHERE  building IS NOT NULL OR railway IN ('station') OR aeroway IN ('terminal');
+
+DROP VIEW IF EXISTS vw_osm_building_labels;
+CREATE VIEW vw_osm_building_labels AS SELECT ST_PointOnSurface(geometry) AS geometry,
+CASE
+WHEN name IS NOT NULL AND addr_housenumber IS NOT NULL THEN name || ' ' || addr_housenumber
+WHEN name IS NOT NULL THEN name
+ELSE addr_housenumber
+END AS bname, ST_Area(geometry) AS area
+FROM multipolygons
+WHERE ST_IsValid(geometry) AND building IS NOT NULL AND bname IS NOT NULL;
+
+DROP VIEW IF EXISTS vw_osm_landusages;
+CREATE VIEW vw_osm_landusages AS SELECT geometry, name, amenity AS type, ST_Area(geometry) AS area, 
+CASE
+WHEN amenity = 'cinema' THEN 13
+WHEN amenity = 'library' THEN 17
+WHEN amenity = 'college' THEN 18
+WHEN amenity = 'parking' THEN 15
+WHEN amenity = 'hospital' THEN 10
+WHEN amenity = 'fuel' THEN 16
+WHEN amenity = 'theatre' THEN 12
+WHEN amenity = 'place_of_worship' THEN 11
+WHEN amenity = 'school' THEN 19
+WHEN amenity = 'university' THEN 20
+ELSE -1
+END AS z_order FROM   multipolygons
+WHERE  amenity IN ('university', 'school', 'college', 'library', 'fuel', 'parking', 'cinema', 'theatre', 'place_of_worship', 'hospital')
+UNION ALL SELECT geometry, name, aeroway AS type, ST_Area(geometry) AS area, 
+CASE
+WHEN aeroway = 'apron' THEN 40
+WHEN aeroway = 'aerodrome' THEN 42
+WHEN aeroway = 'helipad'THEN 41
+ELSE -1
+END AS z_order FROM   multipolygons
+WHERE aeroway IN ('apron', 'aerodrome', 'helipad')
+UNION ALL SELECT geometry, name, natural AS type, ST_Area(geometry) AS area, 
+CASE
+WHEN natural = 'wood' THEN 32
+WHEN natural = 'scrub' THEN 9
+WHEN natural = 'land' THEN 0
+WHEN natural = 'wetland' THEN 29
+ELSE -1
+END AS z_order FROM   multipolygons
+WHERE  natural IN ('wood', 'land', 'scrub', 'wetland')
+UNION ALL SELECT geometry, name, highway AS type, ST_Area(geometry) AS area, 
+CASE
+WHEN highway = 'footway' THEN 43
+WHEN highway = 'pedestrian' THEN 44
+ELSE -1
+END AS z_order FROM   multipolygons
+WHERE highway IN ('pedestrian', 'footway')
+UNION ALL SELECT geometry, name, place AS type, ST_Area(geometry) AS area, 
+CASE
+WHEN place = 'island' THEN 1
+ELSE -1
+END AS z_order FROM   multipolygons
+WHERE  place IN ('island')
+UNION ALL SELECT geometry, name, landuse AS type, ST_Area(geometry) AS area, 
+CASE
+WHEN landuse = 'industrial' THEN 3
+WHEN landuse = 'meadow' THEN 31
+WHEN landuse = 'allotments' THEN 22
+WHEN landuse = 'village_green' THEN 28
+WHEN landuse = 'recreation_ground' THEN 27
+WHEN landuse = 'quarry' THEN 7
+WHEN landuse = 'residential' THEN 6
+WHEN landuse = 'cemetery' THEN 36
+WHEN landuse = 'wood' THEN 32
+WHEN landuse = 'forest' THEN 37
+WHEN landuse = 'farm' THEN 34
+WHEN landuse = 'park' THEN 38
+WHEN landuse = 'commercial' THEN 4
+WHEN landuse = 'farmland' THEN 33
+WHEN landuse = 'farmyard' THEN 35
+WHEN landuse = 'grass' THEN 30
+WHEN landuse = 'railway' THEN 2
+WHEN landuse = 'retail' THEN 5
+ELSE -1
+END AS z_order FROM   multipolygons
+WHERE  landuse IN ('park', 'forest', 'residential', 'retail', 'commercial', 'industrial', 'railway', 'cemetery', 'grass', 'farmyard', 'farm', 'farmland', 'wood', 'meadow', 'village_green', 'recreation_ground', 'allotments', 'quarry')
+UNION ALL SELECT geometry, name, tourism AS type, ST_Area(geometry) AS area, 
+CASE
+WHEN tourism = 'zoo' THEN 8
+ELSE -1
+END AS z_order FROM   multipolygons
+WHERE  tourism IN ('zoo')
+UNION ALL SELECT geometry, name, leisure AS type, ST_Area(geometry) AS area, 
+CASE
+WHEN leisure = 'pitch' THEN 24
+WHEN leisure = 'nature_reserve' THEN 14
+WHEN leisure = 'playground' THEN 39
+WHEN leisure = 'garden' THEN 26
+WHEN leisure = 'park' THEN 38
+WHEN leisure = 'golf_course' THEN 21
+WHEN leisure = 'sports_centre' THEN 25
+WHEN leisure = 'common' THEN 23
+ELSE -1
+END AS z_order FROM   multipolygons
+WHERE  leisure IN ('park', 'garden', 'playground', 'golf_course', 'sports_centre', 'pitch', 'stadium', 'common', 'nature_reserve');
+
+-- Roads
+
+-- DROP VIEW IF EXISTS vw_osm_motorways;
+-- CREATE VIEW vw_osm_motorways AS SELECT geometry, name, highway AS type, 
+-- CASE
+-- WHEN oneway IN ('yes', '1', 'true') THEN 1
+-- WHEN oneway IN ('-1') THEN -1
+-- ELSE 0
+-- END AS oneway, ref, layer, z_order, access
+-- FROM lines
+-- WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link');
+DROP VIEW IF EXISTS vw_osm_motorways;
+CREATE VIEW vw_osm_motorways AS SELECT geometry, highway AS type
+FROM lines
+WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link');
+
+DROP VIEW IF EXISTS vw_osm_roads_gen1;
+CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_SimplifyPreserveTopology(geometry, 0.00045) AS geometry, highway AS type
+FROM lines
+WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary', 'tertiary');
+
+DROP VIEW IF EXISTS vw_osm_roads;
+CREATE VIEW vw_osm_roads AS SELECT geometry, highway AS type, name, ref, oneway, z_order, 
+CASE
+WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('service', 'track') THEN 'service'
+WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+ELSE NULL END AS stylegroup
+FROM lines WHERE stylegroup IS NOT NULL AND (tunnel IS NULL OR tunnel NOT IN ('yes', '1', 'true'));
+
+DROP VIEW IF EXISTS vw_osm_tunnels;
+CREATE VIEW vw_osm_tunnels AS SELECT geometry, highway AS type, z_order, 
+CASE
+WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('service', 'track') THEN 'service'
+WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+ELSE NULL END AS stylegroup
+FROM lines WHERE stylegroup IS NOT NULL AND tunnel IN ('yes', '1', 'true');
+
+DROP VIEW IF EXISTS vw_osm_bridges;
+CREATE VIEW vw_osm_bridges AS SELECT geometry, highway AS type, z_order, 
+CASE
+WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('service', 'track') THEN 'service'
+WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+ELSE NULL END AS stylegroup
+FROM lines WHERE stylegroup IS NOT NULL AND bridge IN ('yes', '1', 'true');
+
+-- Roads: done
+
+DROP VIEW IF EXISTS vw_osm_places;
+CREATE VIEW vw_osm_places AS SELECT geometry, name, place AS type, 
+CASE
+WHEN place = 'town' THEN 5
+WHEN place = 'city' THEN 6
+WHEN place = 'locality' THEN 0
+WHEN place = 'country' THEN 10
+WHEN place = 'region' THEN 8
+WHEN place = 'hamlet' THEN 3
+WHEN place = 'county' THEN 7
+WHEN place = 'suburb' THEN 2
+WHEN place = 'state' THEN 9
+WHEN place = 'village' THEN 4
+WHEN place = 'neighbourhood' THEN 1
+ELSE -1
+END AS z_order, 
+CASE
+WHEN population IS NOT NULL THEN CAST(population AS INTEGER)
+ELSE 0
+END AS population FROM points
+WHERE  place IN ('country', 'state', 'region', 'county', 'city', 'town', 'village', 'hamlet', 'suburb', 'neighbourhood', 'locality');
+
+DROP VIEW IF EXISTS vw_osm_turning_circles;
+CREATE VIEW vw_osm_turning_circles AS SELECT geometry FROM points WHERE highway IN ('turning_circle');
+
+DROP VIEW IF EXISTS vw_osm_waterways;
+CREATE VIEW vw_osm_waterways AS SELECT geometry, name, waterway AS type FROM lines
+WHERE  waterway IN ('stream', 'river', 'canal', 'drain', 'ditch')
+UNION ALL SELECT geometry, name, barrier AS type FROM lines
+WHERE  barrier IN ('ditch');
+
+DROP VIEW IF EXISTS vw_osm_waterareas;
+CREATE VIEW vw_osm_waterareas AS SELECT geometry, name, waterway AS type, ST_Area(geometry) AS area FROM multipolygons
+WHERE waterway IN ('riverbank')
+UNION ALL SELECT geometry, name, landuse AS type, ST_Area(geometry) AS area FROM multipolygons
+WHERE  landuse IN ('basin', 'reservoir')
+UNION ALL SELECT geometry, name, natural AS type, ST_Area(geometry) AS area FROM multipolygons
+WHERE  natural IN ('water');
+
+-----------------------------------------------------------------------------------
+
+DROP VIEW IF EXISTS vw_osm_landusages_gen0;
+CREATE VIEW vw_osm_landusages_gen0 AS
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.0018)) AS geometry, name, type, area, z_order
+FROM   vw_osm_landusages
+WHERE  ST_Area(geometry)>0.000041;
+
+DROP VIEW IF EXISTS vw_osm_landusages_gen1;
+CREATE VIEW vw_osm_landusages_gen1 AS
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.00045)) AS geometry, name, type, area, z_order
+FROM   vw_osm_landusages
+WHERE  ST_Area(geometry)>0.0000041;
+
+-- DROP VIEW IF EXISTS vw_osm_motorways_gen0;
+-- CREATE VIEW vw_osm_motorways_gen0 AS
+-- SELECT ST_SimplifyPreserveTopology(geometry, 0.0018) AS geometry, name, type, oneway, ref, layer, z_order, access
+-- FROM   vw_osm_motorways;
+
+DROP VIEW IF EXISTS vw_osm_motorways_gen0;
+CREATE VIEW vw_osm_motorways_gen0 AS
+SELECT ST_SimplifyPreserveTopology(geometry, 0.0018) AS geometry, type
+FROM   vw_osm_motorways;
+
+-- DROP VIEW IF EXISTS vw_osm_motorways_gen1;
+-- CREATE VIEW vw_osm_motorways_gen1 AS
+-- SELECT ST_SimplifyPreserveTopology(geometry, 0.00045) AS geometry, name, type, oneway, ref, layer, z_order, access
+-- FROM   vw_osm_motorways;
+
+-----------------------------------------------------------------------------------
+
+SELECT date(), time(), 'Materializing view vw_osm_admin';
+CREATE TABLE osm_admin AS SELECT * FROM vw_osm_admin;
+SELECT date(), time(), 'Recovering column osm_admin.geometry';
+SELECT RecoverGeometryColumn('osm_admin', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_admin.geometry';
+SELECT CreateSpatialIndex('osm_admin', 'geometry');        
+
+SELECT date(), time(), 'Materializing view vw_osm_aeroways';
+CREATE TABLE osm_aeroways AS SELECT * FROM vw_osm_aeroways;
+SELECT date(), time(), 'Recovering column osm_aeroways.geometry';
+SELECT RecoverGeometryColumn('osm_aeroways', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_aeroways.geometry';
+SELECT CreateSpatialIndex('osm_aeroways', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_area_labels';
+CREATE TABLE osm_area_labels AS SELECT * FROM vw_osm_area_labels;
+SELECT date(), time(), 'Recovering column osm_area_labels.geometry';
+SELECT RecoverGeometryColumn('osm_area_labels', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_area_labels.geometry';
+SELECT CreateSpatialIndex('osm_area_labels', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_barrierpoints';
+CREATE TABLE osm_barrierpoints AS SELECT * FROM vw_osm_barrierpoints;
+SELECT date(), time(), 'Recovering column osm_barrierpoints.geometry';
+SELECT RecoverGeometryColumn('osm_barrierpoints', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_barrierpoints.geometry';
+SELECT CreateSpatialIndex('osm_barrierpoints', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_barrierways';
+CREATE TABLE osm_barrierways AS SELECT * FROM vw_osm_barrierways;
+SELECT date(), time(), 'Recovering column osm_barrierways.geometry';
+SELECT RecoverGeometryColumn('osm_barrierways', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_barrierways.geometry';
+SELECT CreateSpatialIndex('osm_barrierways', 'geometry');
+        
+SELECT date(), time(), 'Materializing view vw_osm_buildings';
+CREATE TABLE osm_buildings AS SELECT * FROM vw_osm_buildings;
+SELECT date(), time(), 'Recovering column osm_buildings.geometry';
+SELECT RecoverGeometryColumn('osm_buildings', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_buildings.geometry';
+SELECT CreateSpatialIndex('osm_buildings', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_building_labels';
+CREATE TABLE osm_building_labels AS SELECT * FROM vw_osm_building_labels;
+SELECT date(), time(), 'Recovering column osm_building_labels.geometry';
+SELECT RecoverGeometryColumn('osm_building_labels', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_building_labels.geometry';
+SELECT CreateSpatialIndex('osm_building_labels', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_landusages_gen0';
+CREATE TABLE osm_landusages_gen0 AS SELECT * FROM vw_osm_landusages_gen0;
+SELECT date(), time(), 'Recovering column osm_landusages_gen0.geometry';
+SELECT RecoverGeometryColumn('osm_landusages_gen0', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_landusages_gen0.geometry';
+SELECT CreateSpatialIndex('osm_landusages_gen0', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_landusages_gen1';
+CREATE TABLE osm_landusages_gen1 AS SELECT * FROM vw_osm_landusages_gen1;
+SELECT date(), time(), 'Recovering column osm_landusages_gen1.geometry';
+SELECT RecoverGeometryColumn('osm_landusages_gen1', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_landusages_gen1.geometry';
+SELECT CreateSpatialIndex('osm_landusages_gen1', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_landusages';
+CREATE TABLE osm_landusages AS SELECT * FROM vw_osm_landusages;
+SELECT date(), time(), 'Recovering column osm_landusages.geometry';
+SELECT RecoverGeometryColumn('osm_landusages', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_landusages.geometry';
+SELECT CreateSpatialIndex('osm_landusages', 'geometry');
+
+-- Motorways and roads
+
+-- SELECT date(), time(), 'Materializing view vw_osm_motorways';
+-- CREATE TABLE osm_motorways AS SELECT * FROM vw_osm_motorways;
+-- SELECT date(), time(), 'Recovering column osm_motorways.geometry';
+-- SELECT RecoverGeometryColumn('osm_motorways', 'geometry', 4326, 'LINESTRING');
+-- SELECT date(), time(), 'Indexing column osm_motorways.geometry';
+-- SELECT CreateSpatialIndex('osm_motorways', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_motorways_gen0';
+CREATE TABLE osm_motorways_gen0 AS SELECT * FROM vw_osm_motorways_gen0;
+SELECT date(), time(), 'Recovering column osm_motorways_gen0.geometry';
+SELECT RecoverGeometryColumn('osm_motorways_gen0', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_motorways_gen0.geometry';
+SELECT CreateSpatialIndex('osm_motorways_gen0', 'geometry');
+
+-- SELECT date(), time(), 'Materializing view vw_osm_motorways_gen1';
+-- CREATE TABLE osm_motorways_gen1 AS SELECT * FROM vw_osm_motorways_gen1;
+-- SELECT date(), time(), 'Recovering column osm_motorways_gen1.geometry';
+-- SELECT RecoverGeometryColumn('osm_motorways_gen1', 'geometry', 4326, 'LINESTRING');
+-- SELECT date(), time(), 'Indexing column osm_motorways_gen1.geometry';
+-- SELECT CreateSpatialIndex('osm_motorways_gen1', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_roads_gen1';
+CREATE TABLE osm_roads_gen1 AS SELECT * FROM vw_osm_roads_gen1;
+SELECT date(), time(), 'Recovering column osm_roads_gen1.geometry';
+SELECT RecoverGeometryColumn('osm_roads_gen1', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_roads_gen1.geometry';
+SELECT CreateSpatialIndex('osm_roads_gen1', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_roads';
+CREATE TABLE osm_roads AS SELECT * FROM vw_osm_roads;
+SELECT date(), time(), 'Recovering column osm_roads.geometry';
+SELECT RecoverGeometryColumn('osm_roads', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_roads.geometry';
+SELECT CreateSpatialIndex('osm_roads', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_tunnels';
+CREATE TABLE osm_tunnels AS SELECT * FROM vw_osm_tunnels;
+SELECT date(), time(), 'Recovering column osm_tunnels.geometry';
+SELECT RecoverGeometryColumn('osm_tunnels', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_tunnels.geometry';
+SELECT CreateSpatialIndex('osm_tunnels', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_bridges';
+CREATE TABLE osm_bridges AS SELECT * FROM vw_osm_bridges;
+SELECT date(), time(), 'Recovering column osm_bridges.geometry';
+SELECT RecoverGeometryColumn('osm_bridges', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_bridges.geometry';
+SELECT CreateSpatialIndex('osm_bridges', 'geometry');
+
+-- Motorways and roads: done
+
+SELECT date(), time(), 'Materializing view vw_osm_places';
+CREATE TABLE osm_places AS SELECT * FROM vw_osm_places;
+SELECT date(), time(), 'Recovering column osm_places.geometry';
+SELECT RecoverGeometryColumn('osm_places', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_places.geometry';
+SELECT CreateSpatialIndex('osm_places', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_turning_circles';
+CREATE TABLE osm_turning_circles AS SELECT * FROM vw_osm_turning_circles;
+SELECT date(), time(), 'Recovering column osm_turning_circles.geometry';
+SELECT RecoverGeometryColumn('osm_turning_circles', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_turning_circles.geometry';
+SELECT CreateSpatialIndex('osm_turning_circles', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_waterareas';
+CREATE TABLE osm_waterareas AS SELECT * FROM vw_osm_waterareas;
+SELECT date(), time(), 'Recovering column osm_waterareas.geometry';
+SELECT RecoverGeometryColumn('osm_waterareas', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_waterareas.geometry';
+SELECT CreateSpatialIndex('osm_waterareas', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_waterways';
+CREATE TABLE osm_waterways AS SELECT * FROM vw_osm_waterways;
+SELECT date(), time(), 'Recovering column osm_waterways.geometry';
+SELECT RecoverGeometryColumn('osm_waterways', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_waterways.geometry';
+SELECT CreateSpatialIndex('osm_waterways', 'geometry');
+
+-- Create indexes to ensure fast startup of Mapnik (needed if we use ORDER in table queries)
+CREATE INDEX index_osm_landusages_gen0 ON osm_landusages_gen0(area);
+CREATE INDEX index_osm_landusages_gen1 ON osm_landusages_gen1(area);
+CREATE INDEX index_osm_landusages ON osm_landusages(area);
+CREATE INDEX index_osm_buildings ON osm_buildings(y_min);
+CREATE INDEX index_osm_tunnels ON osm_tunnels(z_order);
+CREATE INDEX index_osm_roads ON osm_roads(z_order);
+CREATE INDEX index_osm_bridges ON osm_bridges(z_order);
+CREATE INDEX index_osm_places ON osm_places(z_order, population);
+CREATE INDEX index_osm_area_labels ON osm_area_labels(area);
+CREATE INDEX index_osm_building_labels ON osm_building_labels(area);
+------------------------------------------------------------------
+
+CREATE TABLE mapnik_metadata (f_table_name TEXT, xmin REAL, ymin REAL, xmax REAL, ymax REAL);
+
+DROP VIEW vw_osm_admin;
+DROP VIEW vw_osm_aeroways;
+DROP VIEW vw_osm_area_labels;
+DROP VIEW vw_osm_barrierpoints;
+DROP VIEW vw_osm_barrierways;
+DROP VIEW vw_osm_buildings;
+DROP VIEW vw_osm_building_labels;
+DROP VIEW vw_osm_landusages_gen0;
+DROP VIEW vw_osm_landusages_gen1;
+DROP VIEW vw_osm_landusages;
+
+DROP VIEW vw_osm_motorways;
+DROP VIEW vw_osm_motorways_gen0;
+--DROP VIEW vw_osm_motorways_gen1;
+DROP VIEW vw_osm_roads_gen1;
+DROP VIEW vw_osm_roads;
+DROP VIEW vw_osm_tunnels;
+DROP VIEW vw_osm_bridges;
+
+DROP VIEW vw_osm_places;
+DROP VIEW vw_osm_turning_circles;
+DROP VIEW vw_osm_waterareas;
+DROP VIEW vw_osm_waterways;
+
+SELECT DiscardGeometryColumn('points', 'GEOMETRY');
+SELECT DiscardGeometryColumn('lines', 'GEOMETRY');
+SELECT DiscardGeometryColumn('multilinestrings', 'GEOMETRY');
+SELECT DiscardGeometryColumn('multipolygons', 'GEOMETRY');
+SELECT DiscardGeometryColumn('other_relations', 'GEOMETRY');
+
+DROP TABLE points;
+DROP TABLE lines;
+DROP TABLE multilinestrings;
+DROP TABLE multipolygons;
+DROP TABLE other_relations;
+
+VACUUM;

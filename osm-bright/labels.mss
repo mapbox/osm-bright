@@ -257,13 +257,13 @@
 
 #area_label {
   // Bring in labels gradually as one zooms in, bases on polygon area
-  [zoom>=10][area>102400000],
-  [zoom>=11][area>25600000],
-  [zoom>=13][area>1600000],
-  [zoom>=14][area>320000],
-  [zoom>=15][area>80000],
-  [zoom>=16][area>20000],
-  [zoom>=17][area>5000],
+  [zoom>=10][area>102400000/111000.0/111000.0],
+  [zoom>=11][area>25600000/111000.0/111000.0],
+  [zoom>=13][area>1600000/111000.0/111000.0],
+  [zoom>=14][area>320000/111000.0/111000.0],
+  [zoom>=15][area>80000/111000.0/111000.0],
+  [zoom>=16][area>20000/111000.0/111000.0],
+  [zoom>=17][area>5000/111000.0/111000.0],
   [zoom>=18][area>=0] {
     text-name: "[name]";
     text-halo-radius: 1.5;
@@ -290,9 +290,7 @@
       text-fill: @hospital * 0.6;
       text-halo-fill: lighten(@hospital, 10%);
     }
-    [type='college'][zoom>=10],
-    [type='school'][zoom>=10],
-    [type='university'][zoom>=10] {
+    [type='school'][zoom>=10] {
       text-fill: @school * 0.6;
       text-halo-fill: lighten(@school, 10%);
     }
@@ -301,29 +299,37 @@
       text-halo-fill: lighten(@water, 10%);
     }
   }
-  [zoom=15][area>1600000],
-  [zoom=16][area>80000],
-  [zoom=17][area>20000],
-  [zoom=18][area>5000] {
+  [zoom=15][area>1600000/111000.0/111000.0],
+  [zoom=16][area>80000/111000.0/111000.0],
+  [zoom=17][area>20000/111000.0/111000.0],
+  [zoom=18][area>5000/111000.0/111000.0] {
     text-name: "[name]";
     text-size: 13;
     text-wrap-width: 60;
     text-character-spacing: 1;
     text-halo-radius: 2;
   }
-  [zoom=16][area>1600000],
-  [zoom=17][area>80000],
-  [zoom=18][area>20000] {
+  [zoom=16][area>1600000/111000.0/111000.0],
+  [zoom=17][area>80000/111000.0/111000.0],
+  [zoom=18][area>20000/111000.0/111000.0] {
     text-size: 15;
     text-character-spacing: 2;
     text-wrap-width: 120;
   }
-  [zoom>=17][area>1600000],
-  [zoom>=18][area>80000] {
+  [zoom>=17][area>1600000/111000.0/111000.0],
+  [zoom>=18][area>80000/111000.0/111000.0] {
     text-size: 20;
     text-character-spacing: 3;
     text-wrap-width: 180;
   }
+}
+
+#building_label[zoom>=16] {
+  text-name:"[bname]";
+  text-face-name:@sans_italic;
+  text-size:10;
+  text-wrap-width:30;
+  text-fill: @poi_text;
 }
    
 #poi[type='university'][zoom>=15],
