@@ -176,7 +176,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type \nfrom osm_landusages\norder by area desc) as landusages", 
+                "table": "(SELECT rowid, geometry, type \nfrom osm_landusage_overlays\norder by area desc) as landusages", 
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
             "class": "", 

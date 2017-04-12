@@ -130,92 +130,21 @@ DROP VIEW IF EXISTS vw_osm_ferryways;
 CREATE VIEW vw_osm_ferryways AS SELECT geometry, name FROM lines WHERE route = 'ferry';
 
 DROP VIEW IF EXISTS vw_osm_landusages;
-CREATE VIEW vw_osm_landusages AS SELECT geometry, name, amenity AS type, ST_Area(geometry) AS area, 
-CASE
-WHEN amenity = 'cinema' THEN 13
-WHEN amenity = 'library' THEN 17
-WHEN amenity = 'college' THEN 18
-WHEN amenity = 'parking' THEN 15
-WHEN amenity = 'hospital' THEN 10
-WHEN amenity = 'fuel' THEN 16
-WHEN amenity = 'theatre' THEN 12
-WHEN amenity = 'place_of_worship' THEN 11
-WHEN amenity = 'school' THEN 19
-WHEN amenity = 'university' THEN 20
-ELSE -1
-END AS z_order FROM   multipolygons
+CREATE VIEW vw_osm_landusages AS SELECT geometry, amenity AS type, ST_Area(geometry) AS area FROM   multipolygons
 WHERE  amenity IN ('university', 'school', 'college', 'library', 'fuel', 'parking', 'cinema', 'theatre', 'place_of_worship', 'hospital')
-UNION ALL SELECT geometry, name, aeroway AS type, ST_Area(geometry) AS area, 
-CASE
-WHEN aeroway = 'apron' THEN 40
-WHEN aeroway = 'aerodrome' THEN 42
-WHEN aeroway = 'helipad'THEN 41
-ELSE -1
-END AS z_order FROM   multipolygons
+UNION ALL SELECT geometry, aeroway AS type, ST_Area(geometry) AS area FROM   multipolygons
 WHERE aeroway IN ('apron', 'aerodrome', 'helipad')
-UNION ALL SELECT geometry, name, natural AS type, ST_Area(geometry) AS area, 
-CASE
-WHEN natural = 'wood' THEN 32
-WHEN natural = 'scrub' THEN 9
-WHEN natural = 'land' THEN 0
-WHEN natural = 'wetland' THEN 29
-ELSE -1
-END AS z_order FROM   multipolygons
+UNION ALL SELECT geometry, natural AS type, ST_Area(geometry) AS area FROM   multipolygons
 WHERE  natural IN ('wood', 'land', 'scrub', 'wetland')
-UNION ALL SELECT geometry, name, highway AS type, ST_Area(geometry) AS area, 
-CASE
-WHEN highway = 'footway' THEN 43
-WHEN highway = 'pedestrian' THEN 44
-ELSE -1
-END AS z_order FROM   multipolygons
+UNION ALL SELECT geometry, highway AS type, ST_Area(geometry) AS area FROM   multipolygons
 WHERE highway IN ('pedestrian', 'footway')
-UNION ALL SELECT geometry, name, place AS type, ST_Area(geometry) AS area, 
-CASE
-WHEN place = 'island' THEN 1
-ELSE -1
-END AS z_order FROM   multipolygons
+UNION ALL SELECT geometry, place AS type, ST_Area(geometry) AS area FROM   multipolygons
 WHERE  place IN ('island')
-UNION ALL SELECT geometry, name, landuse AS type, ST_Area(geometry) AS area, 
-CASE
-WHEN landuse = 'industrial' THEN 3
-WHEN landuse = 'meadow' THEN 31
-WHEN landuse = 'allotments' THEN 22
-WHEN landuse = 'village_green' THEN 28
-WHEN landuse = 'recreation_ground' THEN 27
-WHEN landuse = 'quarry' THEN 7
-WHEN landuse = 'residential' THEN 6
-WHEN landuse = 'cemetery' THEN 36
-WHEN landuse = 'wood' THEN 32
-WHEN landuse = 'forest' THEN 37
-WHEN landuse = 'farm' THEN 34
-WHEN landuse = 'park' THEN 38
-WHEN landuse = 'commercial' THEN 4
-WHEN landuse = 'farmland' THEN 33
-WHEN landuse = 'farmyard' THEN 35
-WHEN landuse = 'grass' THEN 30
-WHEN landuse = 'railway' THEN 2
-WHEN landuse = 'retail' THEN 5
-ELSE -1
-END AS z_order FROM   multipolygons
+UNION ALL SELECT geometry, landuse AS type, ST_Area(geometry) AS area FROM   multipolygons
 WHERE  landuse IN ('park', 'forest', 'residential', 'retail', 'commercial', 'industrial', 'railway', 'cemetery', 'grass', 'farmyard', 'farm', 'farmland', 'wood', 'meadow', 'village_green', 'recreation_ground', 'allotments', 'quarry')
-UNION ALL SELECT geometry, name, tourism AS type, ST_Area(geometry) AS area, 
-CASE
-WHEN tourism = 'zoo' THEN 8
-ELSE -1
-END AS z_order FROM   multipolygons
+UNION ALL SELECT geometry, tourism AS type, ST_Area(geometry) AS area FROM   multipolygons
 WHERE  tourism IN ('zoo')
-UNION ALL SELECT geometry, name, leisure AS type, ST_Area(geometry) AS area, 
-CASE
-WHEN leisure = 'pitch' THEN 24
-WHEN leisure = 'nature_reserve' THEN 14
-WHEN leisure = 'playground' THEN 39
-WHEN leisure = 'garden' THEN 26
-WHEN leisure = 'park' THEN 38
-WHEN leisure = 'golf_course' THEN 21
-WHEN leisure = 'sports_centre' THEN 25
-WHEN leisure = 'common' THEN 23
-ELSE -1
-END AS z_order FROM   multipolygons
+UNION ALL SELECT geometry, leisure AS type, ST_Area(geometry) AS area FROM   multipolygons
 WHERE  leisure IN ('park', 'garden', 'playground', 'golf_course', 'sports_centre', 'pitch', 'stadium', 'common', 'nature_reserve');
 
 -- Roads
@@ -324,15 +253,21 @@ WHERE  natural IN ('water');
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen0;
 CREATE VIEW vw_osm_landusages_gen0 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.0018)) AS geometry, name, type, area, z_order
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.0018)) AS geometry, type, area
 FROM   vw_osm_landusages
 WHERE  ST_Area(geometry)>0.000041;
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen1;
 CREATE VIEW vw_osm_landusages_gen1 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.00045)) AS geometry, name, type, area, z_order
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.00045)) AS geometry, type, area
 FROM   vw_osm_landusages
 WHERE  ST_Area(geometry)>0.0000041;
+
+DROP VIEW IF EXISTS vw_osm_landusage_overlays;
+CREATE VIEW vw_osm_landusage_overlays AS
+SELECT geometry, type, area
+FROM   vw_osm_landusages
+WHERE  type IN ('nature_reserve', 'wetland');
 
 -- DROP VIEW IF EXISTS vw_osm_motorways_gen0;
 -- CREATE VIEW vw_osm_motorways_gen0 AS
@@ -470,6 +405,13 @@ SELECT RecoverGeometryColumn('osm_landusages', 'geometry', 4326, 'MULTIPOLYGON')
 SELECT date(), time(), 'Indexing column osm_landusages.geometry';
 SELECT CreateSpatialIndex('osm_landusages', 'geometry');
 
+SELECT date(), time(), 'Materializing view vw_osm_landusage_overlays';
+CREATE TABLE osm_landusage_overlays AS SELECT * FROM vw_osm_landusage_overlays;
+SELECT date(), time(), 'Recovering column osm_landusage_overlays.geometry';
+SELECT RecoverGeometryColumn('osm_landusage_overlays', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_landusage_overlays.geometry';
+SELECT CreateSpatialIndex('osm_landusage_overlays', 'geometry');
+
 -- Motorways and roads
 
 -- SELECT date(), time(), 'Materializing view vw_osm_motorways';
@@ -563,6 +505,7 @@ SELECT CreateSpatialIndex('osm_waterways', 'geometry');
 CREATE INDEX index_osm_landusages_gen0 ON osm_landusages_gen0(area);
 CREATE INDEX index_osm_landusages_gen1 ON osm_landusages_gen1(area);
 CREATE INDEX index_osm_landusages ON osm_landusages(area);
+CREATE INDEX index_osm_landusage_overlays ON osm_landusage_overlays(area);
 CREATE INDEX index_osm_buildings ON osm_buildings(y_min);
 CREATE INDEX index_osm_tunnels ON osm_tunnels(z_order);
 CREATE INDEX index_osm_roads ON osm_roads(z_order);
@@ -591,6 +534,7 @@ DROP VIEW vw_osm_ferryways;
 DROP VIEW vw_osm_landusages_gen0;
 DROP VIEW vw_osm_landusages_gen1;
 DROP VIEW vw_osm_landusages;
+DROP VIEW vw_osm_landusage_overlays;
 
 DROP VIEW vw_osm_motorways;
 DROP VIEW vw_osm_motorways_gen0;
