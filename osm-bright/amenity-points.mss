@@ -22,16 +22,6 @@
 @standard-text-size: 10;
 @standard-font: @book-fonts;
 
-/* Note that .points is also used in water-features.mss */
-#amenity_gen0[zoom>=11] {
-    [feature = 'aeroway_aerodrome'] {
-        marker-file: url('symbols/aerodrome.12.svg');
-        marker-placement: interior;
-        marker-clip: false;
-        marker-fill: @airtransport;
-    }
-}
-
 #amenity_gen0[zoom>=13] {
     [feature = 'amenity_hospital'] {
         marker-file: url('symbols/hospital.svg');
@@ -55,7 +45,7 @@
     }
 }
 
-#amenity_gen0::text[zoom>=14] {
+#amenity_gen0::text[zoom>=16] {
     text-name: "[name]";
     text-halo-radius: @standard-halo-radius;
     text-face-name: @standard-font;
@@ -70,15 +60,9 @@
         text-fill: @hospital * 0.6;
         text-halo-fill: lighten(@hospital, 10%);
     }
-
-    [feature = 'aeroway_aerodrome'] {
-        text-dy: -10;
-        text-wrap-width: @standard-wrap-width;
-        text-face-name: @sans_bold;
-    }
 }
 
-#amenity_gen1[zoom >= 15] {
+#amenity_gen1[zoom >= 14] {
      [feature = 'tourism_alpine_hut'] {
         point-file: url('symbols/alpinehut.p.16.png');
         point-placement: interior;
@@ -90,20 +74,6 @@
         [feature = 'tourism_wilderness_hut'] {
             marker-file: url('symbols/wilderness_hut.svg');
         }
-        marker-fill: @transportation-icon;
-        marker-placement: interior;
-        marker-clip: false;
-    }
-
-    [feature = 'amenity_charging_station'] {
-        marker-file: url('symbols/charging_station.svg');
-        marker-fill: @transportation-icon;
-        marker-placement: interior;
-        marker-clip: false;
-    }
-
-    [feature = 'amenity_fuel'] {
-        marker-file: url('symbols/fuel.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
@@ -124,7 +94,7 @@
     }   
 }
 
-#amenity_gen1::text[zoom>=16] {
+#amenity_gen1::text[zoom>=17] {
     text-name: "[name]";
     text-halo-radius: @standard-halo-radius;
     text-face-name: @standard-font;
@@ -136,7 +106,38 @@
     text-dy: 11;    
 }
 
-#amenity_gen2[zoom >= 16] {
+#amenity_fuel[zoom >= 12] {
+    [zoom<14] {
+        marker-transform: 'scale(0.75)'
+    }
+    [feature = 'amenity_charging_station'] {
+        marker-file: url('symbols/charging_station.svg');
+        marker-fill: @transportation-icon;
+        marker-placement: interior;
+        marker-clip: false;
+    }
+
+    [feature = 'amenity_fuel'] {
+        marker-file: url('symbols/fuel.svg');
+        marker-fill: @transportation-icon;
+        marker-placement: interior;
+        marker-clip: false;
+    }
+}
+
+#amenity_fuel::text[zoom>=17] {
+    text-name: "[name]";
+    text-halo-radius: @standard-halo-radius;
+    text-face-name: @standard-font;
+    text-size: @standard-text-size;
+    text-wrap-width: @standard-wrap-width;
+    text-fill: @poi_text;
+    text-halo-fill: @standard-halo-fill;
+    text-placement: interior;
+    text-dy: 11;    
+}
+
+#amenity_gen2[zoom >= 15] {
     [feature = 'highway_bus_stop'] {
         [zoom >= 16] {
             marker-file: url('symbols/square.svg');
@@ -228,7 +229,7 @@
     text-dy: 11;    
 }
 
-#amenity_points[zoom >= 17] {
+#amenity_points[zoom >= 16] {
     [feature = 'amenity_atm'] {
         marker-file: url('symbols/atm.svg');
         marker-fill: @amenity-brown;

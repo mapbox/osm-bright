@@ -6,12 +6,20 @@ DROP VIEW IF EXISTS vw_osm_aeroways;
 CREATE VIEW vw_osm_aeroways AS SELECT geometry, aeroway AS type FROM lines
 WHERE aeroway IN ('runway', 'taxiway');
 
+DROP VIEW IF EXISTS vw_osm_airports;
+CREATE VIEW vw_osm_airports AS SELECT geometry, name, iata
+FROM (
+SELECT geometry, name, iata FROM points WHERE aeroway='aerodrome'
+UNION ALL
+SELECT ST_PointOnSurface(geometry) AS geometry, name, iata FROM multipolygons
+WHERE aeroway='aerodrome' AND ST_IsValid(geometry)
+);
+
 -- osm_id is kept to allow filtering later
 DROP VIEW IF EXISTS vw_osm_amenity;
 CREATE VIEW vw_osm_amenity AS SELECT osm_id, geometry, name,
 CASE
 WHEN tourism IS NOT NULL THEN 'tourism_' || tourism
-WHEN aeroway IS NOT NULL THEN 'aeroway_' || aeroway
 WHEN highway IS NOT NULL THEN 'highway_' || highway
 WHEN man_made IS NOT NULL THEN 'man_made_' || man_made
 WHEN shop IS NOT NULL THEN 'shop_' || shop
@@ -30,7 +38,6 @@ amenity IN ('hospital', 'townhall', 'shelter', 'bus_station', 'atm', 'bank', 'ba
 'cafe', 'car_rental', 'cinema', 'fire_station', 'fountain', 'charging_station', 'fuel', 'embassy',
 'parking', 'library', 'courthouse', 'clinic', 'doctors', 'place_of_worship', 'police', 'post_office', 'pub', 'biergarten',
 'restaurant', 'food_court', 'fast_food', 'theatre', 'arts_centre', 'toilets' ) OR
-aeroway IN ('aerodrome') OR
 highway IN ('bus_stop', 'ford' ) OR
 leisure IN ('water_park', 'dog_park', 'playground' ) OR
 man_made IN ('lighthouse') OR
@@ -44,12 +51,15 @@ CREATE INDEX index_tmp_osm_amenity_ids ON tmp_osm_amenity_ids(osm_id);
 
 DROP VIEW IF EXISTS vw_osm_amenity_gen0;
 CREATE VIEW vw_osm_amenity_gen0 AS SELECT geometry, name, feature FROM vw_osm_amenity
-WHERE feature IN ('amenity_hospital', 'aeroway_aerodrome', 'natural_peak', 'natural_volcano');
+WHERE feature IN ('amenity_hospital', 'natural_peak', 'natural_volcano');
 
 DROP VIEW IF EXISTS vw_osm_amenity_gen1;
 CREATE VIEW vw_osm_amenity_gen1 AS SELECT geometry, name, feature FROM vw_osm_amenity
-WHERE feature IN ('amenity_townhall', 'amenity_shelter', 'tourism_alpine_hut', 'tourism_wilderness_hut', 'tourism_museum',
-'amenity_charging_station', 'amenity_fuel');
+WHERE feature IN ('amenity_townhall', 'amenity_shelter', 'tourism_alpine_hut', 'tourism_wilderness_hut', 'tourism_museum');
+
+DROP VIEW IF EXISTS vw_osm_amenity_fuel;
+CREATE VIEW vw_osm_amenity_fuel AS SELECT geometry, name, feature FROM vw_osm_amenity
+WHERE feature IN ('amenity_charging_station', 'amenity_fuel');
 
 DROP VIEW IF EXISTS vw_osm_amenity_gen2;
 CREATE VIEW vw_osm_amenity_gen2 AS SELECT geometry, name, feature FROM vw_osm_amenity
@@ -82,7 +92,7 @@ WHEN amenity IN ('college', 'kindergarten', 'school', 'university') THEN 'school
 WHEN landuse IN ('basin', 'reservoir') OR natural IN ('water') OR waterway IN ('riverbank') THEN 'water'
 ELSE NULL END AS type, ST_Area(geometry) AS area
 FROM multipolygons
-WHERE ST_IsValid(geometry) AND building IS NULL AND name IS NOT NULL
+WHERE ST_IsValid(geometry) AND building IS NULL AND name IS NOT NULL AND aeroway NOT IN ('aerodrome')
 AND NOT EXISTS(SELECT 1 FROM tmp_osm_amenity_ids WHERE tmp_osm_amenity_ids.osm_id=multipolygons.osm_id);
 
 DROP VIEW IF EXISTS vw_osm_barrierpoints;
@@ -355,6 +365,13 @@ SELECT RecoverGeometryColumn('osm_aeroways', 'geometry', 4326, 'LINESTRING');
 SELECT date(), time(), 'Indexing column osm_aeroways.geometry';
 SELECT CreateSpatialIndex('osm_aeroways', 'geometry');
 
+SELECT date(), time(), 'Materializing view vw_osm_airports';
+CREATE TABLE osm_airports AS SELECT * FROM vw_osm_airports;
+SELECT date(), time(), 'Recovering column osm_airports.geometry';
+SELECT RecoverGeometryColumn('osm_airports', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_airports.geometry';
+SELECT CreateSpatialIndex('osm_airports', 'geometry');
+
 SELECT date(), time(), 'Materializing view vw_osm_amenity_gen0';
 CREATE TABLE osm_amenity_gen0 AS SELECT * FROM vw_osm_amenity_gen0;
 SELECT date(), time(), 'Recovering column osm_amenity_gen0.geometry';
@@ -382,6 +399,13 @@ SELECT date(), time(), 'Recovering column osm_amenity_points.geometry';
 SELECT RecoverGeometryColumn('osm_amenity_points', 'geometry', 4326, 'POINT');
 SELECT date(), time(), 'Indexing column osm_amenity_points.geometry';
 SELECT CreateSpatialIndex('osm_amenity_points', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_amenity_fuel';
+CREATE TABLE osm_amenity_fuel AS SELECT * FROM vw_osm_amenity_fuel;
+SELECT date(), time(), 'Recovering column osm_amenity_fuel.geometry';
+SELECT RecoverGeometryColumn('osm_amenity_fuel', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_amenity_fuel.geometry';
+SELECT CreateSpatialIndex('osm_amenity_fuel', 'geometry');
 
 SELECT date(), time(), 'Materializing view vw_osm_area_labels';
 CREATE TABLE osm_area_labels AS SELECT * FROM vw_osm_area_labels;
@@ -552,10 +576,12 @@ CREATE TABLE mapnik_metadata (f_table_name TEXT, xmin REAL, ymin REAL, xmax REAL
 
 DROP VIEW vw_osm_admin;
 DROP VIEW vw_osm_aeroways;
+DROP VIEW vw_osm_airports;
 DROP VIEW vw_osm_amenity_gen0;
 DROP VIEW vw_osm_amenity_gen1;
 DROP VIEW vw_osm_amenity_gen2;
 DROP VIEW vw_osm_amenity_points;
+DROP VIEW vw_osm_amenity_fuel;
 DROP VIEW vw_osm_area_labels;
 DROP VIEW vw_osm_barrierpoints;
 DROP VIEW vw_osm_barrierways;

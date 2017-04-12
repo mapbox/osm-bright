@@ -29,7 +29,6 @@
             "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
         },
 
-
         {
             "Datasource": {
                 "id": "landuse_gen0", 
@@ -77,7 +76,8 @@
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
-        }, 
+        },
+        
         {
             "Datasource": {
                 "id": "waterway", 
@@ -160,7 +160,7 @@
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
-        },
+        },        
         {
             "Datasource": {
                 "key_field": "rowid",
@@ -359,20 +359,6 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen0) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
-            }, 
-            "class": "", 
-            "geometry": "point", 
-            "id": "amenity_gen0", 
-            "name": "amenity_gen0", 
-            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
-            "srs-name": "900913", 
-            "status": "on"
-        },
-        {
-            "Datasource": {
-                "key_field": "rowid",
                 "table": "(SELECT rowid, geometry, type, name, area FROM osm_area_labels ORDER BY area DESC) AS data",
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
@@ -392,13 +378,27 @@
             }, 
             "class": "", 
             "geometry": "point", 
-            "id": "stations", 
-            "name": "stations", 
+            "id": "station", 
+            "name": "station", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
         },
 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, iata, name, CASE WHEN iata IS NOT NULL THEN 1 ELSE 0 END AS hasiata \n  FROM osm_airports) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "airport", 
+            "name": "airport", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
         {
             "Datasource": {
                 "key_field": "rowid",
@@ -451,6 +451,20 @@
             "geometry": "point", 
             "id": "amenity_points", 
             "name": "amenity_points", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_fuel) AS data", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_fuel", 
+            "name": "amenity_fuel", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
@@ -534,7 +548,8 @@
         "labels.mss",
         "stations.mss",
         "amenity-points.mss",
-        "ferry-routes.mss"
+        "ferry-routes.mss",
+        "airports.mss"
     ], 
     "attribution": "Data \u00a9 OpenStreetMap (and) contributors, ODbL",
     "bounds": [
