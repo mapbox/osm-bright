@@ -92,7 +92,7 @@ WHEN amenity IN ('college', 'kindergarten', 'school', 'university') THEN 'school
 WHEN landuse IN ('basin', 'reservoir') OR natural IN ('water') OR waterway IN ('riverbank') THEN 'water'
 ELSE NULL END AS type, ST_Area(geometry) AS area
 FROM multipolygons
-WHERE ST_IsValid(geometry) AND building IS NULL AND name IS NOT NULL AND aeroway NOT IN ('aerodrome')
+WHERE ST_IsValid(geometry) AND building IS NULL AND name IS NOT NULL AND (aeroway IS NULL OR aeroway NOT IN ('aerodrome'))
 AND NOT EXISTS(SELECT 1 FROM tmp_osm_amenity_ids WHERE tmp_osm_amenity_ids.osm_id=multipolygons.osm_id);
 
 DROP VIEW IF EXISTS vw_osm_barrierpoints;
