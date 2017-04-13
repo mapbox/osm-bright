@@ -16,7 +16,7 @@
   polygon-gamma: 0.75;
 }
 
-#landuse_gen0[zoom>3][zoom<=10],
+#landuse_gen0[zoom>=7][zoom<=10],
 #landuse_gen1[zoom>10][zoom<=13],
 #landuse[zoom>13] {
   [type='cemetery']      { polygon-fill: @cemetery; }
@@ -40,7 +40,7 @@
   [type='wood']          { polygon-fill: @wooded; }
 }
 
-#landuse_overlays[type='nature_reserve'][zoom>7] {
+#landuse_overlays[type='nature_reserve'][zoom>8] {
   line-color: darken(@wooded,25%);
   line-opacity:  0.3;
   line-dasharray: 1,1;
@@ -168,7 +168,8 @@ Map { background-color: @water; }
 /* ================================================================== */
 
 
-#barrier_points[zoom>=17][stylegroup = 'divider'] {
+// #barrier_points[zoom>=17][stylegroup = 'divider'] {
+#barrier_points[zoom>=17] {
   marker-height: 2;
   marker-fill: #c7c7c7;
   marker-line-opacity:0;

@@ -651,7 +651,7 @@ come in as well.
     line-color:@aeroway;
     line-cap:butt;
     line-join:miter;
-    [type='runway'] {
+    [is_runway>0] {
         [zoom=10]{ line-width:1; }
         [zoom=11]{ line-width:2; }
         [zoom=12]{ line-width:3; }
@@ -662,7 +662,7 @@ come in as well.
         [zoom=17]{ line-width:19; }
         [zoom>17]{ line-width:23; }
     }
-    [type='taxiway'] {
+    [is_runway=0] {
         [zoom=10]{ line-width:0.2; }
         [zoom=11]{ line-width:0.2; }
         [zoom=12]{ line-width:0.2; }

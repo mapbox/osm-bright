@@ -24,7 +24,7 @@ rm $D || true
 
 echo "Importing to" $D
 echo "Preliminary import using ogr2ogr"
-ogr2ogr -f SQLite $D $1 -progress -dsco SPATIALITE=YES -gt 65536 --config OSM_CONFIG_FILE ./osmconf.ini -lco SPATIAL_INDEX=NO
+ogr2ogr -f SQLite $D $1 -progress -dsco SPATIALITE=YES -gt 65536 --config OSM_CONFIG_FILE ./osmconf.ini -lco SPATIAL_INDEX=NO 
 
 spatialite -bail $D < reorganize.sql
 

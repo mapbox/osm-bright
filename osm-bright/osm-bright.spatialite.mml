@@ -212,7 +212,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type FROM osm_aeroways) AS data", 
+                "table": "(SELECT rowid, geometry, is_runway FROM osm_aeroways) AS data", 
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
             "class": "", 
@@ -319,7 +319,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, stylegroup FROM osm_barrierpoints) AS data",
+                "table": "(SELECT rowid, geometry FROM osm_barrierpoints) AS data",
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
             "class": "", 
@@ -473,7 +473,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, bname FROM osm_building_labels ORDER BY area DESC) AS data",
+                "table": "(SELECT rowid, geometry, bname FROM osm_building_labels) AS data",
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             },
             "class": "", 

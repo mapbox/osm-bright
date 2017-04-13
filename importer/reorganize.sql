@@ -1,9 +1,11 @@
+PRAGMA journal_mode = OFF;
+
 DROP VIEW IF EXISTS vw_osm_admin;
 CREATE VIEW vw_osm_admin AS SELECT geometry, admin_level FROM multipolygons
 WHERE boundary IN ('administrative') AND admin_level IN ('2');
 
 DROP VIEW IF EXISTS vw_osm_aeroways;
-CREATE VIEW vw_osm_aeroways AS SELECT geometry, aeroway AS type FROM lines
+CREATE VIEW vw_osm_aeroways AS SELECT geometry, (aeroway='runway') AS is_runway FROM lines
 WHERE aeroway IN ('runway', 'taxiway');
 
 DROP VIEW IF EXISTS vw_osm_airports;
@@ -95,14 +97,17 @@ FROM multipolygons
 WHERE ST_IsValid(geometry) AND building IS NULL AND name IS NOT NULL AND (aeroway IS NULL OR aeroway NOT IN ('aerodrome'))
 AND NOT EXISTS(SELECT 1 FROM tmp_osm_amenity_ids WHERE tmp_osm_amenity_ids.osm_id=multipolygons.osm_id);
 
+-- DROP VIEW IF EXISTS vw_osm_barrierpoints;
+-- CREATE VIEW vw_osm_barrierpoints AS SELECT geometry, 
+-- CASE
+-- WHEN barrier IN ('toll_booth', 'stile', 'gate', 'horse_stile','lift_gate', 'kissing_gate','cattle_grid','entrance') THEN 'gate'
+-- WHEN barrier IN ('block', 'bollard', 'chain', 'cycle_barrier', 'spikes', 'fence', 'wire_fence','yes') THEN 'divider'
+-- ELSE NULL
+-- END AS stylegroup
+-- FROM points WHERE stylegroup IS NOT NULL;
 DROP VIEW IF EXISTS vw_osm_barrierpoints;
-CREATE VIEW vw_osm_barrierpoints AS SELECT geometry, 
-CASE
-WHEN barrier IN ('toll_booth', 'stile', 'gate', 'horse_stile','lift_gate', 'kissing_gate','cattle_grid','entrance') THEN 'gate'
-WHEN barrier IN ('block', 'bollard', 'chain', 'cycle_barrier', 'spikes', 'fence', 'wire_fence','yes') THEN 'divider'
-ELSE NULL
-END AS stylegroup
-FROM points WHERE stylegroup IS NOT NULL;
+CREATE VIEW vw_osm_barrierpoints AS SELECT geometry
+FROM points WHERE barrier IN ('block', 'bollard', 'chain', 'cycle_barrier', 'spikes', 'fence', 'wire_fence','yes');
 
 DROP VIEW IF EXISTS vw_osm_barrierways;
 CREATE VIEW vw_osm_barrierways AS SELECT geometry, 
@@ -122,9 +127,16 @@ CASE
 WHEN name IS NOT NULL AND addr_housenumber IS NOT NULL THEN name || ' ' || addr_housenumber
 WHEN name IS NOT NULL THEN name
 ELSE addr_housenumber
-END AS bname, ST_Area(geometry) AS area
+END AS bname
 FROM multipolygons
-WHERE ST_IsValid(geometry) AND building IS NOT NULL AND bname IS NOT NULL;
+WHERE ST_IsValid(geometry) AND building IS NOT NULL AND bname IS NOT NULL
+UNION ALL SELECT geometry, CASE
+WHEN addr_housename IS NOT NULL AND addr_housenumber IS NOT NULL THEN addr_housename || ' ' || addr_housenumber
+WHEN addr_housename IS NOT NULL THEN addr_housename
+ELSE addr_housenumber
+END AS bname
+FROM points
+WHERE addr_housenumber IS NOT NULL OR addr_housename IS NOT NULL;
 
 DROP VIEW IF EXISTS vw_osm_ferryways;
 CREATE VIEW vw_osm_ferryways AS SELECT geometry, name FROM lines WHERE route = 'ferry';
@@ -512,7 +524,6 @@ CREATE INDEX index_osm_roads ON osm_roads(z_order);
 CREATE INDEX index_osm_bridges ON osm_bridges(z_order);
 CREATE INDEX index_osm_places ON osm_places(z_order, population);
 CREATE INDEX index_osm_area_labels ON osm_area_labels(area);
-CREATE INDEX index_osm_building_labels ON osm_building_labels(area);
 ------------------------------------------------------------------
 
 CREATE TABLE mapnik_metadata (f_table_name TEXT, xmin REAL, ymin REAL, xmax REAL, ymax REAL);
