@@ -40,7 +40,7 @@
   [type='wood']          { polygon-fill: @wooded; }
 }
 
-#landuse_overlays[type='nature_reserve'][zoom>8] {
+#landuse_overlays[type='nature_reserve'][zoom>=7] {
   line-color: darken(@wooded,25%);
   line-opacity:  0.3;
   line-dasharray: 1,1;
@@ -54,8 +54,8 @@
   [zoom>=12] { line-width: 2.0; }
 }
  
-#landuse_overlays[type='wetland'][zoom>11] {
-  [zoom>11][zoom<=14] { polygon-pattern-file:url(img/marsh-16.png); }
+#landuse_overlays[type='wetland'][zoom>=10] {
+  [zoom>=10][zoom<=14] { polygon-pattern-file:url(img/marsh-16.png); }
   [zoom>14] { polygon-pattern-file:url(img/marsh-32.png);}
   }
 

@@ -184,7 +184,7 @@ FROM lines
 WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link');
 
 DROP VIEW IF EXISTS vw_osm_roads_gen1;
-CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_SimplifyPreserveTopology(geometry, 0.001) AS geometry, highway AS type
+CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_SimplifyPreserveTopology(geometry, 0.0005) AS geometry, highway AS type
 FROM lines
 WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary', 'tertiary');
 
@@ -273,13 +273,13 @@ WHERE  natural IN ('water');
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen0;
 CREATE VIEW vw_osm_landusages_gen0 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.005)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.002)) AS geometry, type, area
 FROM   vw_osm_landusages
 WHERE  ST_Area(geometry)>0.000041;
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen1;
 CREATE VIEW vw_osm_landusages_gen1 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.001)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.0005)) AS geometry, type, area
 FROM   vw_osm_landusages
 WHERE  ST_Area(geometry)>0.0000041;
 
@@ -296,7 +296,7 @@ WHERE  type IN ('nature_reserve', 'wetland');
 
 DROP VIEW IF EXISTS vw_osm_motorways_gen0;
 CREATE VIEW vw_osm_motorways_gen0 AS
-SELECT ST_SimplifyPreserveTopology(geometry, 0.005) AS geometry, type
+SELECT ST_SimplifyPreserveTopology(geometry, 0.002) AS geometry, type
 FROM   vw_osm_motorways;
 
 -- DROP VIEW IF EXISTS vw_osm_motorways_gen1;
