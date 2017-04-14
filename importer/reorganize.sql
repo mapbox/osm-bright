@@ -1,5 +1,13 @@
 PRAGMA journal_mode = OFF;
 
+-- -- SIMPLIFY GEOMETRY AND PREPARE TABLES
+-- SELECT date(), time(), 'Simplify geometry and prepare tables';
+
+-- UPDATE lines SET geometry = (SELECT ST_SimplifyPreserveTopology(geometry, 0.000005) from lines l2 where lines.rowid=l2.rowid);
+-- UPDATE multipolygons SET geometry = (SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.000005)) from multipolygons m2 where multipolygons.rowid=m2.rowid);
+
+-- READY FOR IMPORT
+
 DROP VIEW IF EXISTS vw_osm_admin;
 CREATE VIEW vw_osm_admin AS SELECT geometry, admin_level FROM multipolygons
 WHERE boundary IN ('administrative') AND admin_level IN ('2');
@@ -176,7 +184,7 @@ FROM lines
 WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link');
 
 DROP VIEW IF EXISTS vw_osm_roads_gen1;
-CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_SimplifyPreserveTopology(geometry, 0.00045) AS geometry, highway AS type
+CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_SimplifyPreserveTopology(geometry, 0.001) AS geometry, highway AS type
 FROM lines
 WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary', 'tertiary');
 
@@ -265,13 +273,13 @@ WHERE  natural IN ('water');
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen0;
 CREATE VIEW vw_osm_landusages_gen0 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.0018)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.005)) AS geometry, type, area
 FROM   vw_osm_landusages
 WHERE  ST_Area(geometry)>0.000041;
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen1;
 CREATE VIEW vw_osm_landusages_gen1 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.00045)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.001)) AS geometry, type, area
 FROM   vw_osm_landusages
 WHERE  ST_Area(geometry)>0.0000041;
 
@@ -288,7 +296,7 @@ WHERE  type IN ('nature_reserve', 'wetland');
 
 DROP VIEW IF EXISTS vw_osm_motorways_gen0;
 CREATE VIEW vw_osm_motorways_gen0 AS
-SELECT ST_SimplifyPreserveTopology(geometry, 0.0018) AS geometry, type
+SELECT ST_SimplifyPreserveTopology(geometry, 0.005) AS geometry, type
 FROM   vw_osm_motorways;
 
 -- DROP VIEW IF EXISTS vw_osm_motorways_gen1;

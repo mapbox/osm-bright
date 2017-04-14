@@ -14,7 +14,7 @@ config["name"] = "OSM Bright SQLite"
 
 # The absolute path to your MapBox projects directory. You should 
 # not need to change this unless you have configured TileMill specially
-config["path"] = path.expanduser("/home/rinigus/osmscout/osm-bright-sqlite/install")
+config["path"] = path.expanduser("./install")
 
 # SQLite connection setup 
 config["sqlite"]["metadata"] = "mapnik_metadata"
