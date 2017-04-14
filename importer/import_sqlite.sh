@@ -9,6 +9,8 @@ if [ "$#" -ne 1 ]; then
     exit 0
 fi
 
+PROGPATH=$(dirname "$0")
+
 D=${1%-latest.osm.pbf}
 D=${D%.osm.pbf}
 D=${D%.pbf} 
@@ -20,12 +22,13 @@ then
   D=$1-imported
 fi
 
-rm $D || true
+echo "Importing to" "$D"
 
-echo "Importing to" $D
+rm "$D" || true
+
 echo "Preliminary import using ogr2ogr"
-ogr2ogr -f SQLite $D $1 -progress -dsco SPATIALITE=YES -gt 65536 --config OSM_CONFIG_FILE ./osmconf.ini -lco SPATIAL_INDEX=NO #-lco COMPRESS_GEOM=YES
-spatialite -bail $D < reorganize.sql
+ogr2ogr -f SQLite "$D" $1 -progress -dsco SPATIALITE=YES -gt 65536 --config OSM_CONFIG_FILE $PROGPATH/osmconf.ini -lco SPATIAL_INDEX=NO #-lco COMPRESS_GEOM=YES
+spatialite -bail "$D" < $PROGPATH/reorganize.sql
 
 for table in `sqlite3 "$D" "SELECT name FROM sqlite_master WHERE type='table' AND name GLOB 'osm_*'"`; do
     echo "Finding extent:" $table
