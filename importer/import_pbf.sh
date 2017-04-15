@@ -4,25 +4,31 @@
 
 set -e
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: ./import.sh openstreetmapfilename"
+if [[ "$#" -ne 1 && "$#" -ne 2 ]]; then
+    echo "Usage: ./import.sh openstreetmap_filename [sqlite_filename]"
     exit 0
 fi
 
 PROGPATH=$(dirname "$0")
 
-D=${1%-latest.osm.pbf}
-D=${D%.osm.pbf}
-D=${D%.pbf} 
-D=${D%.osm}
-D=$D.sqlite
+if [ "$#" -eq 1 ]; then
+    D=${1%-latest.osm.pbf}
+    D=${D%.osm.pbf}
+    D=${D%.pbf} 
+    D=${D%.osm}
+    D=$D.sqlite
 
-if [ "$1" == "$D" ] 
-then
-  D=$1-imported
+    if [ "$1" == "$D" ] 
+    then
+        D=$1-imported
+    fi
 fi
 
-echo "Importing to" "$D"
+if [ "$#" -eq 2 ]; then
+    D=$2
+fi
+
+echo "Importing" $1 "to" $D
 
 rm "$D" || true
 
