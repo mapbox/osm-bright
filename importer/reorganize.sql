@@ -1,4 +1,5 @@
 PRAGMA journal_mode = OFF;
+PRAGMA temp_store =  MEMORY;
 
 -- -- SIMPLIFY GEOMETRY AND PREPARE TABLES
 -- SELECT date(), time(), 'Simplify geometry and prepare tables';
