@@ -8,7 +8,7 @@ set -e
 # - http://data.openstreetmapdata.com/land-polygons-split-3857.zip
 # 
 
-MapsDir=maps/world
+MapsDir=maps/global
 
 rm $MapsDir/land-polygons-split.sqlite $MapsDir/simplified-land-polygons.sqlite || true
 

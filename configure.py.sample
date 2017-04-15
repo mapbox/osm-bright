@@ -18,7 +18,7 @@ config["path"] = path.expanduser("./install")
 
 # SQLite connection setup 
 config["sqlite"]["metadata"] = "mapnik_metadata"
-config["sqlite"]["file"]     = "estonia.sqlite"
+config["sqlite"]["file"]     = "countries/estonia.sqlite"
 config["sqlite"]["initdb"] = "PRAGMA cache_size = -20480"
 
 # Increase performance if you are only rendering a particular area by
@@ -35,5 +35,5 @@ config["sqlite"]["initdb"] = "PRAGMA cache_size = -20480"
 # - http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
 # - http://data.openstreetmapdata.com/land-polygons-split-3857.zip
 
-config["land-high"] = "shp/land-polygons-split-3857/land_polygons.shp"
-config["land-low"] = "shp/simplified-land-polygons-complete-3857/simplified_land_polygons.shp"
+config["land-high"] = "global/land-polygons-split.sqlite"
+config["land-low"] = "global/simplified-land-polygons.sqlite"
