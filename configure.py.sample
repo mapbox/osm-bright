@@ -18,7 +18,7 @@ config["path"] = path.expanduser("./install")
 
 # SQLite connection setup 
 config["sqlite"]["metadata"] = "mapnik_metadata"
-config["sqlite"]["file"]     = "countries/estonia.sqlite"
+config["sqlite"]["file"]     = "country/mapnik.sqlite"
 config["sqlite"]["initdb"] = "PRAGMA cache_size = -20480"
 
 # Increase performance if you are only rendering a particular area by
