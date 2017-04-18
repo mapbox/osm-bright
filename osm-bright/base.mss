@@ -16,8 +16,8 @@
   polygon-gamma: 0.75;
 }
 
-#landuse_gen0[zoom>=7][zoom<=10],
-#landuse_gen1[zoom>10][zoom<=13],
+#landuse_gen0[zoom>6][zoom<=9],
+#landuse_gen1[zoom>9][zoom<=13],
 #landuse[zoom>13] {
   [type='cemetery']      { polygon-fill: @cemetery; }
   [type='college']       { polygon-fill: @school; }

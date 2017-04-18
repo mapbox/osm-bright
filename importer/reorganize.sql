@@ -274,15 +274,15 @@ WHERE  natural IN ('water');
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen0;
 CREATE VIEW vw_osm_landusages_gen0 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.002)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.01)) AS geometry, type, area
 FROM   vw_osm_landusages
-WHERE  ST_Area(geometry)>0.000041;
+WHERE  ST_Area(geometry)>1e-3;
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen1;
 CREATE VIEW vw_osm_landusages_gen1 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.0005)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 7e-4)) AS geometry, type, area
 FROM   vw_osm_landusages
-WHERE  ST_Area(geometry)>0.0000041;
+WHERE  ST_Area(geometry)>1e-05;
 
 DROP VIEW IF EXISTS vw_osm_landusage_overlays;
 CREATE VIEW vw_osm_landusage_overlays AS
@@ -418,6 +418,13 @@ SELECT date(), time(), 'Recovering column osm_landusages_gen1.geometry';
 SELECT RecoverGeometryColumn('osm_landusages_gen1', 'geometry', 4326, 'MULTIPOLYGON');
 SELECT date(), time(), 'Indexing column osm_landusages_gen1.geometry';
 SELECT CreateSpatialIndex('osm_landusages_gen1', 'geometry');
+
+-- SELECT date(), time(), 'Materializing view vw_osm_landusages_gen2';
+-- CREATE TABLE osm_landusages_gen2 AS SELECT * FROM vw_osm_landusages_gen2;
+-- SELECT date(), time(), 'Recovering column osm_landusages_gen2.geometry';
+-- SELECT RecoverGeometryColumn('osm_landusages_gen2', 'geometry', 4326, 'MULTIPOLYGON');
+-- SELECT date(), time(), 'Indexing column osm_landusages_gen2.geometry';
+-- SELECT CreateSpatialIndex('osm_landusages_gen2', 'geometry');
 
 SELECT date(), time(), 'Materializing view vw_osm_landusages';
 CREATE TABLE osm_landusages AS SELECT * FROM vw_osm_landusages;
