@@ -86,8 +86,8 @@
 Map { background-color: @water; }
 
 #water_gen0[zoom>3][zoom<=9],
-#water_gen1[zoom>9][zoom<=12],
-#water[zoom>12] {
+#water_gen1[zoom>9][zoom<=13],
+#water[zoom>13] {
   polygon-fill: @water;
 }
 
@@ -95,7 +95,7 @@ Map { background-color: @water; }
 /* WATER WAYS
 /* ================================================================== */
 
-#waterway_low[zoom>=8][zoom<=12] {
+#waterway_gen0[zoom>=8][zoom<=12] {
   line-color: @water;
   [zoom=8] { line-width: 0.1; }
   [zoom=9] { line-width: 0.2; }
@@ -155,7 +155,9 @@ Map { background-color: @water; }
 /* ================================================================== */
 
 
-#admin[admin_level='2'][zoom>1] {
+#admin_gen0[zoom>1][zoom<=8],
+#admin_gen1[zoom>8][zoom<=12],
+#admin[zoom>12] {
   line-color:@admin_2;
   line-width:0.5;
   [zoom=2] { line-opacity: 0.25; }

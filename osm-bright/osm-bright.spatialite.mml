@@ -85,13 +85,13 @@
             "Datasource": {
                 "id": "waterway", 
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal')\n) AS data", 
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterways_gen0\n) AS data", 
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
             "class": "", 
             "geometry": "linestring", 
-            "id": "waterway_low", 
-            "name": "waterway_low", 
+            "id": "waterway_gen0", 
+            "name": "waterway_gen0", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
@@ -125,7 +125,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas\n  WHERE area > 8.1162e-07\n) AS data", 
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas_gen0\n) AS data", 
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
             "class": "", 
@@ -139,7 +139,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas\n  WHERE area > 8.1162e-08\n) AS data", 
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas_gen1\n) AS data", 
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
             "class": "", 
@@ -190,7 +190,31 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, admin_level from osm_admin) as admin", 
+                "table": "(SELECT rowid, geometry from osm_admin_gen0) as admin", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "admin_gen0", 
+            "name": "admin_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry from osm_admin_gen1) as admin", 
+                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "admin_gen1", 
+            "name": "admin_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry from osm_admin) as admin", 
                 "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
             }, 
             "class": "", 

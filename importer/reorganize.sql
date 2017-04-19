@@ -10,7 +10,7 @@ PRAGMA temp_store =  MEMORY;
 -- READY FOR IMPORT
 
 DROP VIEW IF EXISTS vw_osm_admin;
-CREATE VIEW vw_osm_admin AS SELECT geometry, admin_level FROM multipolygons
+CREATE VIEW vw_osm_admin AS SELECT geometry FROM multipolygons
 WHERE boundary IN ('administrative') AND admin_level IN ('2');
 
 DROP VIEW IF EXISTS vw_osm_aeroways;
@@ -263,14 +263,22 @@ UNION ALL SELECT geometry, name, barrier AS type FROM lines
 WHERE  barrier IN ('ditch');
 
 DROP VIEW IF EXISTS vw_osm_waterareas;
-CREATE VIEW vw_osm_waterareas AS SELECT geometry, name, waterway AS type, ST_Area(geometry) AS area FROM multipolygons
+CREATE VIEW vw_osm_waterareas AS SELECT geometry, name, waterway AS type FROM multipolygons
 WHERE waterway IN ('riverbank')
-UNION ALL SELECT geometry, name, landuse AS type, ST_Area(geometry) AS area FROM multipolygons
+UNION ALL SELECT geometry, name, landuse AS type FROM multipolygons
 WHERE  landuse IN ('basin', 'reservoir')
-UNION ALL SELECT geometry, name, natural AS type, ST_Area(geometry) AS area FROM multipolygons
+UNION ALL SELECT geometry, name, natural AS type FROM multipolygons
 WHERE  natural IN ('water');
 
 -----------------------------------------------------------------------------------
+
+DROP VIEW IF EXISTS vw_osm_admin_gen0;
+CREATE VIEW vw_osm_admin_gen0 AS SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.05)) AS geometry
+FROM vw_osm_admin;
+
+DROP VIEW IF EXISTS vw_osm_admin_gen1;
+CREATE VIEW vw_osm_admin_gen1 AS SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.001)) AS geometry
+FROM vw_osm_admin;
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen0;
 CREATE VIEW vw_osm_landusages_gen0 AS
@@ -305,6 +313,24 @@ FROM   vw_osm_motorways;
 -- SELECT ST_SimplifyPreserveTopology(geometry, 0.00045) AS geometry, name, type, oneway, ref, layer, z_order, access
 -- FROM   vw_osm_motorways;
 
+DROP VIEW IF EXISTS vw_osm_waterareas_gen0;
+CREATE VIEW vw_osm_waterareas_gen0 AS
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.01)) AS geometry, type, area
+FROM   vw_osm_waterareas
+WHERE  ST_Area(geometry)>1e-3;
+
+DROP VIEW IF EXISTS vw_osm_waterareas_gen1;
+CREATE VIEW vw_osm_waterareas_gen1 AS
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 7e-4)) AS geometry, type, area
+FROM   vw_osm_waterareas
+WHERE  ST_Area(geometry)>1e-05;
+
+DROP VIEW IF EXISTS vw_osm_waterways_gen0;
+CREATE VIEW vw_osm_waterways_gen0 AS
+SELECT ST_SimplifyPreserveTopology(geometry, 0.001) AS geometry
+FROM   vw_osm_waterways
+WHERE  type IN ('river', 'canal');
+
 -----------------------------------------------------------------------------------
 
 SELECT date(), time(), 'Materializing view vw_osm_admin';
@@ -313,6 +339,20 @@ SELECT date(), time(), 'Recovering column osm_admin.geometry';
 SELECT RecoverGeometryColumn('osm_admin', 'geometry', 4326, 'MULTIPOLYGON');
 SELECT date(), time(), 'Indexing column osm_admin.geometry';
 SELECT CreateSpatialIndex('osm_admin', 'geometry');        
+
+SELECT date(), time(), 'Materializing view vw_osm_admin_gen0';
+CREATE TABLE osm_admin_gen0 AS SELECT * FROM vw_osm_admin_gen0;
+SELECT date(), time(), 'Recovering column osm_admin_gen0.geometry';
+SELECT RecoverGeometryColumn('osm_admin_gen0', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_admin.geometry';
+SELECT CreateSpatialIndex('osm_admin_gen0', 'geometry');        
+
+SELECT date(), time(), 'Materializing view vw_osm_admin_gen1';
+CREATE TABLE osm_admin_gen1 AS SELECT * FROM vw_osm_admin_gen1;
+SELECT date(), time(), 'Recovering column osm_admin_gen1.geometry';
+SELECT RecoverGeometryColumn('osm_admin_gen1', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_admin.geometry';
+SELECT CreateSpatialIndex('osm_admin_gen1', 'geometry');        
 
 SELECT date(), time(), 'Materializing view vw_osm_aeroways';
 CREATE TABLE osm_aeroways AS SELECT * FROM vw_osm_aeroways;
@@ -515,12 +555,33 @@ SELECT RecoverGeometryColumn('osm_turning_circles', 'geometry', 4326, 'POINT');
 SELECT date(), time(), 'Indexing column osm_turning_circles.geometry';
 SELECT CreateSpatialIndex('osm_turning_circles', 'geometry');
 
+SELECT date(), time(), 'Materializing view vw_osm_waterareas_gen0';
+CREATE TABLE osm_waterareas_gen0 AS SELECT * FROM vw_osm_waterareas_gen0;
+SELECT date(), time(), 'Recovering column osm_waterareas_gen0.geometry';
+SELECT RecoverGeometryColumn('osm_waterareas_gen0', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_waterareas_gen0.geometry';
+SELECT CreateSpatialIndex('osm_waterareas_gen0', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_waterareas_gen1';
+CREATE TABLE osm_waterareas_gen1 AS SELECT * FROM vw_osm_waterareas_gen1;
+SELECT date(), time(), 'Recovering column osm_waterareas_gen1.geometry';
+SELECT RecoverGeometryColumn('osm_waterareas_gen1', 'geometry', 4326, 'MULTIPOLYGON');
+SELECT date(), time(), 'Indexing column osm_waterareas_gen1.geometry';
+SELECT CreateSpatialIndex('osm_waterareas_gen1', 'geometry');
+
 SELECT date(), time(), 'Materializing view vw_osm_waterareas';
 CREATE TABLE osm_waterareas AS SELECT * FROM vw_osm_waterareas;
 SELECT date(), time(), 'Recovering column osm_waterareas.geometry';
 SELECT RecoverGeometryColumn('osm_waterareas', 'geometry', 4326, 'MULTIPOLYGON');
 SELECT date(), time(), 'Indexing column osm_waterareas.geometry';
 SELECT CreateSpatialIndex('osm_waterareas', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_waterways_gen0';
+CREATE TABLE osm_waterways_gen0 AS SELECT * FROM vw_osm_waterways_gen0;
+SELECT date(), time(), 'Recovering column osm_waterways_gen0.geometry';
+SELECT RecoverGeometryColumn('osm_waterways_gen0', 'geometry', 4326, 'LINESTRING');
+SELECT date(), time(), 'Indexing column osm_waterways_gen0.geometry';
+SELECT CreateSpatialIndex('osm_waterways_gen0', 'geometry');
 
 SELECT date(), time(), 'Materializing view vw_osm_waterways';
 CREATE TABLE osm_waterways AS SELECT * FROM vw_osm_waterways;
@@ -544,6 +605,8 @@ CREATE INDEX index_osm_area_labels ON osm_area_labels(area);
 
 CREATE TABLE mapnik_metadata (f_table_name TEXT, xmin REAL, ymin REAL, xmax REAL, ymax REAL);
 
+DROP VIEW vw_osm_admin_gen0;
+DROP VIEW vw_osm_admin_gen1;
 DROP VIEW vw_osm_admin;
 DROP VIEW vw_osm_aeroways;
 DROP VIEW vw_osm_airports;
@@ -574,7 +637,10 @@ DROP VIEW vw_osm_bridges;
 DROP VIEW vw_osm_places;
 DROP VIEW vw_osm_railway_stations;
 DROP VIEW vw_osm_turning_circles;
+DROP VIEW vw_osm_waterareas_gen0;
+DROP VIEW vw_osm_waterareas_gen1;
 DROP VIEW vw_osm_waterareas;
+DROP VIEW vw_osm_waterways_gen0;
 DROP VIEW vw_osm_waterways;
 
 SELECT date(), time(), 'Cleanup by dropping non-required tables and running VACUUM';
