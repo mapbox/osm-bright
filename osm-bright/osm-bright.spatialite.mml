@@ -37,8 +37,7 @@
                 "id": "landuse_gen0", 
                 "project": "osm-bright-spatialite", 
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages_gen0\n  ORDER BY area DESC\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages_gen0\n  ORDER BY area DESC\n) AS data"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -53,8 +52,7 @@
                 "id": "landuse_gen1", 
                 "project": "osm-bright-spatialite", 
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages_gen1\n  ORDER BY area DESC\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages_gen1\n  ORDER BY area DESC\n) AS data"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -69,8 +67,7 @@
                 "id": "landuse", 
                 "project": "osm-bright-spatialite", 
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages\n  ORDER BY area DESC\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages\n ORDER BY area DESC\n) AS data"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -85,13 +82,12 @@
             "Datasource": {
                 "id": "waterway", 
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry\n  FROM osm_waterways_gen0\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterways_low\n) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
-            "id": "waterway_gen0", 
-            "name": "waterway_gen0", 
+            "id": "waterway_low", 
+            "name": "waterway_low", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
@@ -99,8 +95,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal', 'stream')\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal', 'stream')\n) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -112,8 +107,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal', 'stream', 'ditch', 'drain')\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal', 'stream', 'ditch', 'drain')\n) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -125,8 +119,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas_gen0\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas_gen0\n) AS data"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -139,8 +132,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas_gen1\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas_gen1\n) AS data"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -153,8 +145,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry\n  FROM osm_waterareas) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry\n  FROM osm_waterareas) AS data"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -167,8 +158,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, name FROM osm_ferryways) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, name FROM osm_ferryways) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -179,8 +169,27 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type \nfrom osm_landusage_overlays\norder by area desc) as landusages", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, type \nfrom osm_landusage_overlays_gen0\norder by area desc) as landusages"
+            }, 
+            "class": "", 
+            "id": "landuse_overlays_gen0", 
+            "name": "landuse_overlays_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type \nfrom osm_landusage_overlays_gen1\norder by area desc) as landusages"
+            }, 
+            "class": "", 
+            "id": "landuse_overlays_gen1", 
+            "name": "landuse_overlays_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type \nfrom osm_landusage_overlays\norder by area desc) as landusages"
             }, 
             "class": "", 
             "id": "landuse_overlays", 
@@ -190,8 +199,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry from osm_admin_gen0) as admin", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry from osm_admin_gen0) as admin"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -202,8 +210,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry from osm_admin_gen1) as admin", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry from osm_admin_gen1) as admin"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -214,8 +221,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry from osm_admin) as admin", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry from osm_admin) as admin"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -226,8 +232,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry FROM osm_buildings\n ORDER BY y_min DESC\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry FROM osm_buildings\n ORDER BY y_min DESC\n) AS data"
             }, 
             "class": "", 
             "geometry": "polygon", 
@@ -239,8 +244,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, is_runway FROM osm_aeroways) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, is_runway FROM osm_aeroways) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -253,8 +257,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type, stylegroup, z_order FROM osm_tunnels ORDER BY z_order ASC) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, type, stylegroup, z_order FROM osm_tunnels ORDER BY z_order ASC) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -266,8 +269,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry FROM osm_turning_circles) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry FROM osm_turning_circles) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -279,8 +281,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type, stylegroup FROM osm_roads ORDER BY z_order ASC) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, type, stylegroup FROM osm_roads ORDER BY z_order ASC) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -292,8 +293,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type FROM osm_roads_gen1) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, type FROM osm_roads_gen1) AS data"
              }, 
             "class": "", 
             "geometry": "linestring", 
@@ -305,8 +305,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type FROM osm_motorways_gen0) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, type FROM osm_motorways_gen0) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -319,8 +318,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry FROM osm_turning_circles) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry FROM osm_turning_circles) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -332,8 +330,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type, stylegroup, z_order FROM osm_bridges ORDER BY z_order ASC) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, type, stylegroup, z_order FROM osm_bridges ORDER BY z_order ASC) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -346,8 +343,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry FROM osm_barrierpoints) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry FROM osm_barrierpoints) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -359,8 +355,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, stylegroup FROM osm_barrierways) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, stylegroup FROM osm_barrierways) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -372,8 +367,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type, name FROM osm_places ORDER BY z_order, population DESC) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, type, name FROM osm_places ORDER BY z_order, population DESC) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -386,8 +380,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type, name, area FROM osm_area_labels ORDER BY area DESC) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, type, name, area FROM osm_area_labels ORDER BY area DESC) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -400,8 +393,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, railway, name\n  FROM osm_railway_stations) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, railway, name\n  FROM osm_railway_stations) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -415,8 +407,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, iata, name, CASE WHEN iata IS NOT NULL THEN 1 ELSE 0 END AS hasiata \n  FROM osm_airports) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, iata, name, CASE WHEN iata IS NOT NULL THEN 1 ELSE 0 END AS hasiata \n  FROM osm_airports) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -429,8 +420,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen0) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen0) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -443,8 +433,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen1) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen1) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -457,8 +446,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen2) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen2) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -471,8 +459,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_points) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_points) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -485,8 +472,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_fuel) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_fuel) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
@@ -500,8 +486,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, bname FROM osm_building_labels) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, bname FROM osm_building_labels) AS data"
             },
             "class": "", 
             "geometry": "point", 
@@ -514,8 +499,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, name, ref, LENGTH(ref) AS reflen, oneway, type FROM osm_roads WHERE type IN ('motorway', 'trunk')\n AND (name IS NOT NULL OR ref IS NOT NULL)) AS data",
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "(SELECT rowid, geometry, name, ref, LENGTH(ref) AS reflen, oneway, type FROM osm_roads WHERE type IN ('motorway', 'trunk')\n AND (name IS NOT NULL OR ref IS NOT NULL)) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -528,8 +512,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE type IN ('primary', 'secondary', 'tertiary') AND (name IS NOT NULL OR oneway <> 0)\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE type IN ('primary', 'secondary', 'tertiary') AND (name IS NOT NULL OR oneway <> 0)\n) AS data" 
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -542,8 +525,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE (NOT type IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')) AND (name IS NOT NULL OR oneway <> 0)\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE (NOT type IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')) AND (name IS NOT NULL OR oneway <> 0)\n) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
@@ -556,8 +538,7 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, type, name\n  FROM osm_waterways\n  WHERE type IN ('canal', 'river', 'stream') \n    AND name IS NOT NULL\n) AS data", 
-                "wkb_format": "spatialite", "use_spatial_index": "true", "type": "sqlite"
+                "table": "( SELECT rowid, geometry, type, name\n  FROM osm_waterways\n  WHERE type IN ('canal', 'river', 'stream') \n    AND name IS NOT NULL\n) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 

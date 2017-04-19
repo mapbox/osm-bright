@@ -40,7 +40,9 @@
   [type='wood']          { polygon-fill: @wooded; }
 }
 
-#landuse_overlays[type='nature_reserve'][zoom>=7] {
+#landuse_overlays_gen0[type='nature_reserve'][zoom>6][zoom<=9],
+#landuse_overlays_gen1[type='nature_reserve'][zoom>9][zoom<=13],
+#landuse_overlays[type='nature_reserve'][zoom>13] {
   line-color: darken(@wooded,25%);
   line-opacity:  0.3;
   line-dasharray: 1,1;
@@ -54,7 +56,8 @@
   [zoom>=12] { line-width: 2.0; }
 }
  
-#landuse_overlays[type='wetland'][zoom>=10] {
+#landuse_overlays_gen1[type='wetland'][zoom>9][zoom<=13],
+#landuse_overlays[type='wetland'][zoom>13] {
   [zoom>=10][zoom<=14] { polygon-pattern-file:url(img/marsh-16.png); }
   [zoom>14] { polygon-pattern-file:url(img/marsh-32.png);}
   }
@@ -95,7 +98,7 @@ Map { background-color: @water; }
 /* WATER WAYS
 /* ================================================================== */
 
-#waterway_gen0[zoom>=8][zoom<=12] {
+#waterway_low[zoom>=8][zoom<=12] {
   line-color: @water;
   [zoom=8] { line-width: 0.1; }
   [zoom=9] { line-width: 0.2; }
@@ -155,14 +158,18 @@ Map { background-color: @water; }
 /* ================================================================== */
 
 
-#admin_gen0[zoom>1][zoom<=8],
-#admin_gen1[zoom>8][zoom<=12],
-#admin[zoom>12] {
+#admin_gen0[zoom>1][zoom<=8] {
   line-color:@admin_2;
   line-width:0.5;
   [zoom=2] { line-opacity: 0.25; }
   [zoom=3] { line-opacity: 0.3; }
   [zoom=4] { line-opacity: 0.4; }
+}
+
+#admin_gen1[zoom>8][zoom<=12],
+#admin[zoom>12] {
+  line-color:@admin_2;
+  line-width:0.5;
 }
 
 /* ================================================================== */
