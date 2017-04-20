@@ -1,31 +1,33 @@
 {
     "Layer": [
-    {
-      "Datasource": {
-        "dbname": "osm", 
-        "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
-        "file": "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip", 
-        "id": "land-low", 
-        "type": "shape",
-        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
-      }, 
-      "class": "", 
-      "geometry": "polygon", 
-      "id": "land-low", 
-      "name": "land-low", 
-      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
-      "status": "on"
-    }, 
-    {
-      "Datasource": {
-        "file": "http://data.openstreetmapdata.com/land-polygons-split-3857.zip"
-      }, 
-      "class": "", 
-      "geometry": "polygon", 
-      "id": "land-high", 
-      "name": "land-high", 
-      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
-    }, 
+        {
+            "Datasource": {
+                "dbname": "osm", 
+                "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
+                "file": "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip", 
+                "id": "land-low", 
+                "type": "shape",
+                "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "land-low", 
+            "name": "land-low", 
+            "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "file": "http://data.openstreetmapdata.com/land-polygons-split-3857.zip",
+                "type": "shape",
+                "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "land-high", 
+            "name": "land-high", 
+            "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+        }, 
 
         {
             "Datasource": {
@@ -289,7 +291,7 @@
             "Datasource": {
                 "key_field": "rowid",
                 "table": "(SELECT rowid, geometry, type FROM osm_roads_gen1) AS data"
-             }, 
+            }, 
             "class": "", 
             "geometry": "linestring", 
             "id": "roads_med", 
@@ -362,12 +364,77 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, type, name FROM osm_places ORDER BY z_order, population DESC) AS data"
+                "table": "(SELECT rowid, geometry, name FROM osm_places_country ORDER BY population DESC) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
-            "id": "place", 
-            "name": "place", 
+            "id": "place_country", 
+            "name": "place_country", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_state ORDER BY population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_state", 
+            "name": "place_state", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_city ORDER BY z_order, population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_city", 
+            "name": "place_city", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_town ORDER BY population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_town", 
+            "name": "place_town", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_small ORDER BY z_order, population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_small", 
+            "name": "place_small", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_tiny) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_tiny", 
+            "name": "place_tiny", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"

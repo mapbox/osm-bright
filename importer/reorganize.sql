@@ -227,27 +227,63 @@ FROM lines WHERE stylegroup IS NOT NULL AND bridge IN ('yes', '1', 'true');
 
 -- Roads: done
 
-DROP VIEW IF EXISTS vw_osm_places;
-CREATE VIEW vw_osm_places AS SELECT geometry, name, place AS type, 
+DROP VIEW IF EXISTS vw_osm_places_country;
+CREATE VIEW vw_osm_places_country AS SELECT geometry, name, 
 CASE
-WHEN place = 'town' THEN 5
+WHEN population IS NOT NULL THEN CAST(population AS INTEGER)
+ELSE 0
+END AS population FROM points
+WHERE  place IN ('country');
+
+DROP VIEW IF EXISTS vw_osm_places_state;
+CREATE VIEW vw_osm_places_state AS SELECT geometry, name, 
+CASE
+WHEN population IS NOT NULL THEN CAST(population AS INTEGER)
+ELSE 0
+END AS population FROM points
+WHERE  place IN ('state');
+
+DROP VIEW IF EXISTS vw_osm_places_city;
+CREATE VIEW vw_osm_places_city AS SELECT geometry, name, 
+CASE
 WHEN place = 'city' THEN 6
-WHEN place = 'locality' THEN 0
-WHEN place = 'country' THEN 10
 WHEN place = 'region' THEN 8
-WHEN place = 'hamlet' THEN 3
 WHEN place = 'county' THEN 7
-WHEN place = 'suburb' THEN 2
-WHEN place = 'state' THEN 9
-WHEN place = 'village' THEN 4
-WHEN place = 'neighbourhood' THEN 1
 ELSE -1
 END AS z_order, 
 CASE
 WHEN population IS NOT NULL THEN CAST(population AS INTEGER)
 ELSE 0
 END AS population FROM points
-WHERE  place IN ('country', 'state', 'region', 'county', 'city', 'town', 'village', 'hamlet', 'suburb', 'neighbourhood', 'locality');
+WHERE  place IN ('region', 'county', 'city');
+
+DROP VIEW IF EXISTS vw_osm_places_town;
+CREATE VIEW vw_osm_places_town AS SELECT geometry, name, 
+CASE
+WHEN population IS NOT NULL THEN CAST(population AS INTEGER)
+ELSE 0
+END AS population FROM points
+WHERE  place IN ('town');
+
+DROP VIEW IF EXISTS vw_osm_places_small;
+CREATE VIEW vw_osm_places_small AS SELECT geometry, name, 
+CASE
+WHEN place = 'hamlet' THEN 3
+WHEN place = 'suburb' THEN 2
+WHEN place = 'village' THEN 4
+WHEN place = 'neighbourhood' THEN 1
+ELSE 0
+END AS z_order, 
+CASE
+WHEN population IS NOT NULL THEN CAST(population AS INTEGER)
+ELSE 0
+END AS population FROM points
+WHERE  place IN ('village', 'hamlet', 'suburb', 'neighbourhood');
+
+DROP VIEW IF EXISTS vw_osm_places_tiny;
+CREATE VIEW vw_osm_places_tiny AS SELECT geometry, name
+FROM points
+WHERE  place IN ('locality');
 
 DROP VIEW IF EXISTS vw_osm_railway_stations;
 CREATE VIEW vw_osm_railway_stations AS SELECT geometry, name, railway
@@ -282,13 +318,13 @@ FROM vw_osm_admin;
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen0;
 CREATE VIEW vw_osm_landusages_gen0 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.01)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.005)) AS geometry, type, area
 FROM   vw_osm_landusages
 WHERE  ST_Area(geometry)>1e-3;
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen1;
 CREATE VIEW vw_osm_landusages_gen1 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 7e-4)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 5e-4)) AS geometry, type, area
 FROM   vw_osm_landusages
 WHERE  ST_Area(geometry)>1e-5;
 
@@ -300,13 +336,13 @@ WHERE  type IN ('nature_reserve', 'wetland');
 
 DROP VIEW IF EXISTS vw_osm_landusage_overlays_gen0;
 CREATE VIEW vw_osm_landusage_overlays_gen0 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.01)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.005)) AS geometry, type, area
 FROM   vw_osm_landusage_overlays
 WHERE  ST_Area(geometry)>1e-3;
 
 DROP VIEW IF EXISTS vw_osm_landusage_overlays_gen1;
 CREATE VIEW vw_osm_landusage_overlays_gen1 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 7e-4)) AS geometry, type, area
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 5e-4)) AS geometry, type, area
 FROM   vw_osm_landusage_overlays
 WHERE  ST_Area(geometry)>1e-5;
 
@@ -328,13 +364,13 @@ FROM   vw_osm_motorways;
 
 DROP VIEW IF EXISTS vw_osm_waterareas_gen0;
 CREATE VIEW vw_osm_waterareas_gen0 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.01)) AS geometry
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.005)) AS geometry
 FROM   vw_osm_waterareas
 WHERE  ST_Area(geometry)>1e-3;
 
 DROP VIEW IF EXISTS vw_osm_waterareas_gen1;
 CREATE VIEW vw_osm_waterareas_gen1 AS
-SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 7e-4)) AS geometry
+SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 5e-4)) AS geometry
 FROM   vw_osm_waterareas
 WHERE  ST_Area(geometry)>1e-05;
 
@@ -560,12 +596,47 @@ SELECT CreateSpatialIndex('osm_bridges', 'geometry');
 
 -- Motorways and roads: done
 
-SELECT date(), time(), 'Materializing view vw_osm_places';
-CREATE TABLE osm_places AS SELECT * FROM vw_osm_places;
-SELECT date(), time(), 'Recovering column osm_places.geometry';
-SELECT RecoverGeometryColumn('osm_places', 'geometry', 4326, 'POINT');
-SELECT date(), time(), 'Indexing column osm_places.geometry';
-SELECT CreateSpatialIndex('osm_places', 'geometry');
+SELECT date(), time(), 'Materializing view vw_osm_places_country';
+CREATE TABLE osm_places_country AS SELECT * FROM vw_osm_places_country;
+SELECT date(), time(), 'Recovering column osm_places_country.geometry';
+SELECT RecoverGeometryColumn('osm_places_country', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_places_country.geometry';
+SELECT CreateSpatialIndex('osm_places_country', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_places_state';
+CREATE TABLE osm_places_state AS SELECT * FROM vw_osm_places_state;
+SELECT date(), time(), 'Recovering column osm_places_state.geometry';
+SELECT RecoverGeometryColumn('osm_places_state', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_places_state.geometry';
+SELECT CreateSpatialIndex('osm_places_state', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_places_city';
+CREATE TABLE osm_places_city AS SELECT * FROM vw_osm_places_city;
+SELECT date(), time(), 'Recovering column osm_places_city.geometry';
+SELECT RecoverGeometryColumn('osm_places_city', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_places_city.geometry';
+SELECT CreateSpatialIndex('osm_places_city', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_places_town';
+CREATE TABLE osm_places_town AS SELECT * FROM vw_osm_places_town;
+SELECT date(), time(), 'Recovering column osm_places_town.geometry';
+SELECT RecoverGeometryColumn('osm_places_town', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_places_town.geometry';
+SELECT CreateSpatialIndex('osm_places_town', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_places_tiny';
+CREATE TABLE osm_places_tiny AS SELECT * FROM vw_osm_places_tiny;
+SELECT date(), time(), 'Recovering column osm_places_tiny.geometry';
+SELECT RecoverGeometryColumn('osm_places_tiny', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_places_tiny.geometry';
+SELECT CreateSpatialIndex('osm_places_tiny', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_places_small';
+CREATE TABLE osm_places_small AS SELECT * FROM vw_osm_places_small;
+SELECT date(), time(), 'Recovering column osm_places_small.geometry';
+SELECT RecoverGeometryColumn('osm_places_small', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_places_small.geometry';
+SELECT CreateSpatialIndex('osm_places_small', 'geometry');
 
 SELECT date(), time(), 'Materializing view vw_osm_railway_stations';
 CREATE TABLE osm_railway_stations AS SELECT * FROM vw_osm_railway_stations;
@@ -628,7 +699,11 @@ CREATE INDEX index_osm_buildings ON osm_buildings(y_min);
 CREATE INDEX index_osm_tunnels ON osm_tunnels(z_order);
 CREATE INDEX index_osm_roads ON osm_roads(z_order);
 CREATE INDEX index_osm_bridges ON osm_bridges(z_order);
-CREATE INDEX index_osm_places ON osm_places(z_order, population);
+CREATE INDEX index_osm_places_country ON osm_places_country(population);
+CREATE INDEX index_osm_places_state ON osm_places_state(population);
+CREATE INDEX index_osm_places_city ON osm_places_city(z_order, population);
+CREATE INDEX index_osm_places_town ON osm_places_town(population);
+CREATE INDEX index_osm_places_small ON osm_places_small(z_order, population);
 CREATE INDEX index_osm_area_labels ON osm_area_labels(area);
 ------------------------------------------------------------------
 
@@ -665,7 +740,12 @@ DROP VIEW vw_osm_roads;
 DROP VIEW vw_osm_tunnels;
 DROP VIEW vw_osm_bridges;
 
-DROP VIEW vw_osm_places;
+DROP VIEW vw_osm_places_country;
+DROP VIEW vw_osm_places_state;
+DROP VIEW vw_osm_places_city;
+DROP VIEW vw_osm_places_town;
+DROP VIEW vw_osm_places_tiny;
+DROP VIEW vw_osm_places_small;
 DROP VIEW vw_osm_railway_stations;
 DROP VIEW vw_osm_turning_circles;
 DROP VIEW vw_osm_waterareas_gen0;
@@ -689,4 +769,5 @@ DROP TABLE multipolygons;
 DROP TABLE other_relations;
 DROP TABLE tmp_osm_amenity_ids;
 
-VACUUM;
+-- this is done in the end of import script
+-- VACUUM;

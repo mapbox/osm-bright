@@ -17,8 +17,8 @@
 }
 
 #landuse_gen0[zoom>6][zoom<=9],
-#landuse_gen1[zoom>9][zoom<=13],
-#landuse[zoom>13] {
+#landuse_gen1[zoom>9][zoom<=12],
+#landuse[zoom>12] {
   [type='cemetery']      { polygon-fill: @cemetery; }
   [type='college']       { polygon-fill: @school; }
   [type='commercial']    { polygon-fill: @industrial; }
@@ -41,8 +41,8 @@
 }
 
 #landuse_overlays_gen0[type='nature_reserve'][zoom>6][zoom<=9],
-#landuse_overlays_gen1[type='nature_reserve'][zoom>9][zoom<=13],
-#landuse_overlays[type='nature_reserve'][zoom>13] {
+#landuse_overlays_gen1[type='nature_reserve'][zoom>9][zoom<=12],
+#landuse_overlays[type='nature_reserve'][zoom>12] {
   line-color: darken(@wooded,25%);
   line-opacity:  0.3;
   line-dasharray: 1,1;
@@ -56,8 +56,8 @@
   [zoom>=12] { line-width: 2.0; }
 }
  
-#landuse_overlays_gen1[type='wetland'][zoom>9][zoom<=13],
-#landuse_overlays[type='wetland'][zoom>13] {
+#landuse_overlays_gen1[type='wetland'][zoom>9][zoom<=12],
+#landuse_overlays[type='wetland'][zoom>12] {
   [zoom>=10][zoom<=14] { polygon-pattern-file:url(img/marsh-16.png); }
   [zoom>14] { polygon-pattern-file:url(img/marsh-32.png);}
   }
@@ -89,8 +89,8 @@
 Map { background-color: @water; }
 
 #water_gen0[zoom>3][zoom<=9],
-#water_gen1[zoom>9][zoom<=13],
-#water[zoom>13] {
+#water_gen1[zoom>9][zoom<=12],
+#water[zoom>12] {
   polygon-fill: @water;
 }
 

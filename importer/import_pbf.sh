@@ -46,4 +46,5 @@ for table in `sqlite3 "$D" "SELECT name FROM sqlite_master WHERE type='table' AN
     spatialite -silent -noheader "$D" "SELECT DiscardGeometryColumn('${table}', 'GEOMETRY'); UPDATE ${table} SET geometry = (SELECT AsBinary(geometry) FROM ${table} t2 where ${table}.rowid=t2.rowid);"
 done
 
+echo "VACUUM"
 sqlite3 "$D" "PRAGMA temp_store=MEMORY; VACUUM;"

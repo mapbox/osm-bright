@@ -19,7 +19,11 @@ config["path"] = path.expanduser("./install")
 # SQLite connection setup 
 config["sqlite"]["metadata"] = "mapnik_metadata"
 config["sqlite"]["file"]     = "country/mapnik.sqlite"
-config["sqlite"]["initdb"] = "PRAGMA cache_size = -20480"
+config["sqlite"]["initdb"] = "PRAGMA cache_size = -20480;" # SELECT load_extension('mod_spatialite');"
+config["sqlite"]["geometry_field"] = "geometry"
+config["sqlite"]["wkb_format"] = "sqlite"
+config["sqlite"]["use_spatial_index"] = "true"
+config["sqlite"]["type"] = "sqlite"
 
 # Increase performance if you are only rendering a particular area by
 # specifying a bounding box to restrict queries. Format is "XMIN,YMIN,XMAX,YMAX"
@@ -35,5 +39,5 @@ config["sqlite"]["initdb"] = "PRAGMA cache_size = -20480"
 # - http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip
 # - http://data.openstreetmapdata.com/land-polygons-split-3857.zip
 
-config["land-high"] = "global/land-polygons-split.sqlite"
-config["land-low"] = "global/simplified-land-polygons.sqlite"
+config["land-high"] = "global/land-polygons-split-3857/land_polygons.shp"
+config["land-low"] = "global/simplified-land-polygons-complete-3857/simplified_land_polygons.shp"
