@@ -40,3 +40,10 @@ for table in `sqlite3 "$D" "SELECT name FROM sqlite_master WHERE type='table' AN
     echo "Finding extent:" $table
     sqlite3 "$D" "INSERT INTO mapnik_metadata (f_table_name, xmin, ymin, xmax, ymax) SELECT '${table}' AS f_table_name, MIN(xmin), MIN(ymin), MAX(xmax), MAX(ymax) FROM idx_${table}_geometry"
 done
+
+for table in `sqlite3 "$D" "SELECT name FROM sqlite_master WHERE type='table' AND name GLOB 'osm_*'"`; do
+    echo "Converting to WKB:" $table
+    spatialite -silent -noheader "$D" "SELECT DiscardGeometryColumn('${table}', 'GEOMETRY'); UPDATE ${table} SET geometry = (SELECT AsBinary(geometry) FROM ${table} t2 where ${table}.rowid=t2.rowid);"
+done
+
+sqlite3 "$D" "PRAGMA temp_store=MEMORY; VACUUM;"
