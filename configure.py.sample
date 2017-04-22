@@ -21,7 +21,7 @@ config["sqlite"]["metadata"] = "mapnik_metadata"
 config["sqlite"]["file"]     = "country/mapnik.sqlite"
 config["sqlite"]["initdb"] = "PRAGMA cache_size = -20480;" # SELECT load_extension('mod_spatialite');"
 config["sqlite"]["geometry_field"] = "geometry"
-config["sqlite"]["wkb_format"] = "sqlite"
+config["sqlite"]["wkb_format"] = "generic"
 config["sqlite"]["use_spatial_index"] = "true"
 config["sqlite"]["type"] = "sqlite"
 
