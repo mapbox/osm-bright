@@ -4,6 +4,11 @@
 
 set -e
 
+# unset the variable CONVERT_TO_TWKB if you wish to keep geometry in
+# WKB by commenting the following line out. To get TWKB, set it to "Y"
+#CONVERT_TO_TWKB="Y"
+TWKB_PRECISION=6
+
 if [[ "$#" -ne 1 && "$#" -ne 2 ]]; then
     echo "Usage: ./import.sh openstreetmap_filename [sqlite_filename]"
     exit 0
@@ -33,7 +38,7 @@ echo "Importing" $1 "to" $D
 rm "$D" || true
 
 echo "Preliminary import using ogr2ogr"
-ogr2ogr -f SQLite "$D" $1 -progress -dsco SPATIALITE=YES -gt 65536 --config OSM_CONFIG_FILE $PROGPATH/osmconf.ini -lco SPATIAL_INDEX=NO #-lco COMPRESS_GEOM=YES
+ogr2ogr -f SQLite "$D" $1 -progress -dsco SPATIALITE=YES -gt 65536 --config OSM_CONFIG_FILE $PROGPATH/osmconf.ini -lco SPATIAL_INDEX=NO
 spatialite -bail "$D" < $PROGPATH/reorganize.sql
 
 for table in `sqlite3 "$D" "SELECT name FROM sqlite_master WHERE type='table' AND name GLOB 'osm_*'"`; do
@@ -44,7 +49,16 @@ done
 for table in `sqlite3 "$D" "SELECT name FROM sqlite_master WHERE type='table' AND name GLOB 'osm_*'"`; do
     echo "Converting to WKB:" $table
     spatialite -silent -noheader "$D" "SELECT DiscardGeometryColumn('${table}', 'GEOMETRY'); UPDATE ${table} SET geometry = (SELECT AsBinary(geometry) FROM ${table} t2 where ${table}.rowid=t2.rowid);"
+
+    if [ "x$CONVERT_TO_TWKB" == "xY" ]; then
+        echo "Converting to TWKB:" $table
+        $PROGPATH/wkb2twkb-sqlite/wkb2twkb-sqlite "$D" ${table} 'GEOMETRY' $TWKB_PRECISION
+    fi
 done
+
+echo "Database cleanup"
+sqlite3 "$D" "DROP TABLE IF EXISTS SPATIAL_REF_SYS"
+sqlite3 "$D" "DROP TABLE IF EXISTS SPATIAL_REF_SYS_AUX"
 
 echo "VACUUM"
 sqlite3 "$D" "PRAGMA temp_store=MEMORY; VACUUM;"
