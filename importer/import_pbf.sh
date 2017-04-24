@@ -6,7 +6,7 @@ set -e
 
 # unset the variable CONVERT_TO_TWKB if you wish to keep geometry in
 # WKB by commenting the following line out. To get TWKB, set it to "Y"
-#CONVERT_TO_TWKB="Y"
+CONVERT_TO_TWKB="Y"
 TWKB_PRECISION=6
 
 if [[ "$#" -ne 1 && "$#" -ne 2 ]]; then
