@@ -290,6 +290,18 @@
         {
             "Datasource": {
                 "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, stylegroup, type FROM osm_roads WHERE stylegroup IN ('motorway', 'mainroad', 'minorroad', 'railway') ORDER BY z_order ASC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "roads_med_high", 
+            "name": "roads_med_high", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
                 "table": "(SELECT rowid, geometry, type FROM osm_roads_gen1) AS data"
             }, 
             "class": "", 

@@ -65,7 +65,67 @@ come in as well.
 
 /* ---- Casing ----------------------------------------------- */
 
-#roads_high::outline[zoom>=11][zoom<=20] {
+#roads_med_high::outline[zoom>=11][zoom<=12] {
+    /* -- colors & styles -- */
+    line-cap: round;
+    line-join: round;
+    line-color: @standard_case;
+    [stylegroup='motorway'] { line-color: @motorway_case; }
+    [stylegroup='mainroad'] { line-color: @primary_case; }
+    [stylegroup='minorroad'] { line-color: @secondary_case; }
+    [stylegroup='railway']  { line-color: fadeout(@land,50%); }
+    
+    /* -- widths -- */
+    [zoom=11] {
+        [stylegroup='motorway'] { line-width: @rdz11_maj + 2; }
+        [stylegroup='mainroad'] { line-width: @rdz11_med + 1.6; }
+        [stylegroup='minorroad']{ line-width: @rdz11_min; }
+        [stylegroup='railway']  { line-width: 0; }
+    }
+    [zoom=12] {
+        [stylegroup='motorway'] { line-width: @rdz12_maj + 2; }
+        [stylegroup='mainroad'] { line-width: @rdz12_med + 2; }
+        [stylegroup='minorroad']{ line-width: @rdz12_min; }
+        [stylegroup='railway']  { line-width: 0; }
+    }
+}
+
+
+#roads_med_high[zoom>=11][zoom<=12] {
+    /* -- colors & styles -- */
+    line-color: @standard_fill;
+    [stylegroup='motorway'] { line-color: @motorway_fill; }
+    [stylegroup='mainroad'] { line-color: @primary_fill; }
+    [stylegroup='minorroad'] { line-color: @secondary_fill; }
+    [stylegroup='railway'] {
+        line-color: @rail_line;
+        line-dasharray: 1,1;
+        [type='subway'] { line-opacity: 0.67; }
+        [zoom>15] { line-dasharray: 1,2; } 
+    }
+    [stylegroup='minorroad'] {
+        line-width: 0;
+    }
+    [stylegroup='minorroad'],
+    [stylegroup='mainroad'],
+    [stylegroup='motorway'] {
+        line-cap: round;
+        line-join: round;
+    }
+    /* -- widths -- */
+    [zoom=11] {
+        [stylegroup='motorway'] { line-width: @rdz11_maj; }
+        [stylegroup='mainroad'] { line-width: @rdz11_med; }
+        [stylegroup='railway']  { line-width: 0.2; }
+    }
+    [zoom=12] {
+        [stylegroup='motorway'] { line-width: @rdz12_maj; }
+        [stylegroup='mainroad'] { line-width: @rdz12_med; }
+        [stylegroup='railway']  { line-width: 0.4; }
+    }
+}
+
+#roads_high::outline[zoom>=13][zoom<=20] {
     /* -- colors & styles -- */
     line-cap: round;
     line-join: round;

@@ -182,7 +182,7 @@ WHERE  leisure IN ('park', 'garden', 'playground', 'golf_course', 'sports_centre
 DROP VIEW IF EXISTS vw_osm_motorways;
 CREATE VIEW vw_osm_motorways AS SELECT geometry, highway AS type
 FROM lines
-WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link');
+WHERE highway IN ('motorway', 'trunk');
 
 DROP VIEW IF EXISTS vw_osm_roads_gen1;
 CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_SimplifyPreserveTopology(geometry, 0.0005) AS geometry, highway AS type
@@ -190,7 +190,11 @@ FROM lines
 WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary', 'tertiary');
 
 DROP VIEW IF EXISTS vw_osm_roads;
-CREATE VIEW vw_osm_roads AS SELECT geometry, highway AS type, name, ref, oneway, z_order, 
+CREATE VIEW vw_osm_roads AS SELECT geometry,
+CASE
+WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN railway
+ELSE highway END as type,
+name, ref, oneway, z_order, 
 CASE
 WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
 WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
@@ -200,6 +204,20 @@ WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridlewa
 WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
 ELSE NULL END AS stylegroup
 FROM lines WHERE stylegroup IS NOT NULL AND (tunnel IS NULL OR tunnel NOT IN ('yes', '1', 'true'));
+
+-- DROP VIEW IF EXISTS vw_osm_roads_med_high;
+-- CREATE VIEW vw_osm_roads_med_high AS SELECT geometry,
+-- CASE
+-- WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN railway
+-- ELSE highway END as type,
+-- name, ref, oneway, z_order, 
+-- CASE
+-- WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
+-- WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
+-- WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+-- WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
+-- ELSE NULL END AS stylegroup
+-- FROM lines WHERE stylegroup IS NOT NULL AND (tunnel IS NULL OR tunnel NOT IN ('yes', '1', 'true'));
 
 DROP VIEW IF EXISTS vw_osm_tunnels;
 CREATE VIEW vw_osm_tunnels AS SELECT geometry, highway AS type, z_order, 
@@ -580,6 +598,13 @@ SELECT RecoverGeometryColumn('osm_roads', 'geometry', 4326, 'LINESTRING');
 SELECT date(), time(), 'Indexing column osm_roads.geometry';
 SELECT CreateSpatialIndex('osm_roads', 'geometry');
 
+-- SELECT date(), time(), 'Materializing view vw_osm_roads_med_high';
+-- CREATE TABLE osm_roads_med_high AS SELECT * FROM vw_osm_roads_med_high;
+-- SELECT date(), time(), 'Recovering column osm_roads_med_high.geometry';
+-- SELECT RecoverGeometryColumn('osm_roads_med_high', 'geometry', 4326, 'LINESTRING');
+-- SELECT date(), time(), 'Indexing column osm_roads_med_high.geometry';
+-- SELECT CreateSpatialIndex('osm_roads_med_high', 'geometry');
+
 SELECT date(), time(), 'Materializing view vw_osm_tunnels';
 CREATE TABLE osm_tunnels AS SELECT * FROM vw_osm_tunnels;
 SELECT date(), time(), 'Recovering column osm_tunnels.geometry';
@@ -698,6 +723,7 @@ CREATE INDEX index_osm_landusage_overlays ON osm_landusage_overlays(area);
 CREATE INDEX index_osm_buildings ON osm_buildings(y_min);
 CREATE INDEX index_osm_tunnels ON osm_tunnels(z_order);
 CREATE INDEX index_osm_roads ON osm_roads(z_order);
+-- CREATE INDEX index_osm_roads_med_high ON osm_roads_med_high(z_order);
 CREATE INDEX index_osm_bridges ON osm_bridges(z_order);
 CREATE INDEX index_osm_places_country ON osm_places_country(population);
 CREATE INDEX index_osm_places_state ON osm_places_state(population);
@@ -737,6 +763,7 @@ DROP VIEW vw_osm_motorways_gen0;
 --DROP VIEW vw_osm_motorways_gen1;
 DROP VIEW vw_osm_roads_gen1;
 DROP VIEW vw_osm_roads;
+-- DROP VIEW vw_osm_roads_med_high;
 DROP VIEW vw_osm_tunnels;
 DROP VIEW vw_osm_bridges;
 
