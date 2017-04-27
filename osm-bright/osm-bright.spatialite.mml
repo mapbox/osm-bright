@@ -290,12 +290,12 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "(SELECT rowid, geometry, stylegroup, type FROM osm_roads_med_high ORDER BY z_order ASC) AS data"
+                "table": "(SELECT rowid, geometry, stylegroup, type FROM osm_roads_gen2 ORDER BY z_order ASC) AS data"
             }, 
             "class": "", 
             "geometry": "linestring", 
-            "id": "roads_med_high", 
-            "name": "roads_med_high", 
+            "id": "roads_gen2", 
+            "name": "roads_gen2", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913"
         }, 
