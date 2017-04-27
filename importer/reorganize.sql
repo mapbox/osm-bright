@@ -190,7 +190,7 @@ FROM lines
 WHERE highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary');
 
 DROP VIEW IF EXISTS vw_osm_roads_gen2;
-CREATE VIEW vw_osm_roads_gen2 AS SELECT ST_Simplify(geometry, 0.0001) AS geometry,
+CREATE VIEW vw_osm_roads_gen2 AS SELECT ST_Simplify(geometry, 0.0002) AS geometry,
 CASE
 WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN railway
 ELSE highway END as type,

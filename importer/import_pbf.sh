@@ -51,8 +51,12 @@ for table in `sqlite3 "$D" "SELECT name FROM sqlite_master WHERE type='table' AN
     spatialite -silent -noheader "$D" "SELECT DiscardGeometryColumn('${table}', 'GEOMETRY'); UPDATE ${table} SET geometry = (SELECT AsBinary(geometry) FROM ${table} t2 where ${table}.rowid=t2.rowid);"
 
     if [ "x$CONVERT_TO_TWKB" == "xY" ]; then
-        echo "Converting to TWKB:" $table
-        $PROGPATH/wkb2twkb-sqlite/wkb2twkb-sqlite "$D" ${table} 'GEOMETRY' $TWKB_PRECISION
+        precision=$TWKB_PRECISION
+        if [[ "$table" == "osm_admin_gen0" || "$table" == "osm_admin_gen1" || "$table" == "osm_landusages_gen0" || "$table" == "osm_landusages_gen1" || "$table" == "osm_landusage_overlays_gen0" || "$table" == "osm_landusage_overlays_gen1" || "$table" == "osm_motorways_gen0" || "$table" == "osm_roads_gen1" || "$table" == "osm_roads_gen2" || "$table" == "osm_waterareas_gen0" || "$table" == "osm_waterareas_gen1" || "$table" == "osm_waterways_low" ]]; then
+            precision=4
+        fi
+        echo "Converting to TWKB:" $table        
+        $PROGPATH/wkb2twkb-sqlite/wkb2twkb-sqlite "$D" ${table} 'GEOMETRY' $precision
     fi
 done
 
