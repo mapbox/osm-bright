@@ -24,21 +24,21 @@
 
 #amenity_gen0[zoom>=13] {
     [feature = 'amenity_hospital'] {
-        marker-file: url('symbols/hospital.svg');
+        marker-file: url('icons/hospital-15.svg');
         marker-fill: @health-color;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'natural_peak'] {
-        marker-file: url('symbols/peak.svg');
+        marker-file: url('icons/mountain-15.svg');
         marker-fill: @landform-color;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'natural_volcano'] {
-        marker-file: url('symbols/peak.svg');
+        marker-file: url('icons/volcano-15.svg');
         marker-fill: #d40000;
         marker-placement: interior;
         marker-clip: false;
@@ -64,30 +64,27 @@
 
 #amenity_gen1[zoom >= 14] {
      [feature = 'tourism_alpine_hut'] {
-        point-file: url('symbols/alpinehut.p.16.png');
+        point-file: url('icons/shelter-15.svg');
         point-placement: interior;
     }
 
     [feature = 'tourism_wilderness_hut'],
     [feature = 'amenity_shelter'] {
-        marker-file: url('symbols/shelter.svg');
-        [feature = 'tourism_wilderness_hut'] {
-            marker-file: url('symbols/wilderness_hut.svg');
-        }
+        marker-file: url('icons/shelter-15.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_townhall'] {
-        marker-file: url('symbols/town_hall.svg');
+        marker-file: url('icons/town-hall-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'tourism_museum'] {
-        marker-file: url('symbols/museum.svg');
+        marker-file: url('icons/museum-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
@@ -107,21 +104,24 @@
 }
 
 #amenity_fuel[zoom >= 12] {
-    [zoom<14] {
-        marker-transform: 'scale(0.75)'
-    }
     [feature = 'amenity_charging_station'] {
-        marker-file: url('symbols/charging_station.svg');
+        marker-file: url('icons/charging-station-15.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
+        [zoom<16] {
+            marker-file: url('icons/charging-station-11.svg');
+        }
     }
 
     [feature = 'amenity_fuel'] {
-        marker-file: url('symbols/fuel.svg');
+        marker-file: url('icons/fuel-15.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
+        [zoom<16] {
+            marker-file: url('icons/fuel-11.svg');
+        }
     }
 }
 
@@ -140,34 +140,24 @@
 #amenity_gen2[zoom >= 15] {
     [feature = 'highway_bus_stop'] {
         [zoom >= 16] {
-            marker-file: url('symbols/square.svg');
+            marker-file: url('icons/bus-11.svg');
             marker-fill: @transportation-icon;
             marker-placement: interior;
-            marker-width: 6;
             marker-clip: false;
         }
-        [zoom >= 17] {
-            marker-file: url('symbols/bus_stop.12.svg');
-            marker-width: 12;
-        }
-    }
-
-    [feature = 'amenity_bus_station'] {
-        point-file: url('symbols/bus_station.n.16.png');
-        point-placement: interior;
     }
 
     [feature = 'amenity_parking'],
     [feature = 'amenity_bicycle_parking'],
     [feature = 'amenity_motorcycle_parking'] {
         [feature = 'amenity_parking'] {
-            marker-file: url('symbols/parking.svg');
+            marker-file: url('icons/parking-15.svg');
         }
         [feature = 'amenity_bicycle_parking'] {
-            marker-file: url('symbols/bicycle_parking.svg');
+            marker-file: url('icons/bicycle-15.svg');
         }
         [feature = 'amenity_motorcycle_parking'] {
-            marker-file: url('symbols/motorcycle_parking.svg');
+            marker-file: url('icons/motorcycle_parking.svg');
         }
         marker-placement: interior;
         marker-clip: false;
@@ -175,42 +165,42 @@
     }
 
     [feature = 'amenity_pharmacy'] {
-        marker-file: url('symbols/pharmacy.svg');
+        marker-file: url('icons/pharmacy-15.svg');
         marker-fill: @health-color;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'man_made_lighthouse'] {
-        marker-file: url('symbols/lighthouse.svg');
+        marker-file: url('icons/lighthouse-15.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @transportation-icon;
     }
 
     [feature = 'tourism_camp_site'] {
-        marker-file: url('symbols/camping.svg');
+        marker-file: url('icons/campsite-15.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'tourism_caravan_site'] {
-        marker-file: url('symbols/caravan_park.svg');
+        marker-file: url('icons/campsite-15.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @transportation-icon;
     }
 
     [feature = 'tourism_picnic_site'] {
-        marker-file: url('symbols/picnic.svg');
+        marker-file: url('icons/picnic-site-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'shop_department_store'] {
-        marker-file: url('symbols/shop/department_store.svg');
+        marker-file: url('icons/shop/department_store.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @shop-icon;
@@ -231,70 +221,70 @@
 
 #amenity_points[zoom >= 16] {
     [feature = 'amenity_atm'] {
-        marker-file: url('symbols/atm.svg');
+        marker-file: url('icons/atm.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_bank'] {
-        marker-file: url('symbols/bank.svg');
+        marker-file: url('icons/bank-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_bar'] {
-        marker-file: url('symbols/bar.svg');
+        marker-file: url('icons/bar-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_bicycle_rental'] {
-        marker-file: url('symbols/rental_bicycle.svg');
+        marker-file: url('icons/bicycle-share-15.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_taxi'] {
-        marker-file: url('symbols/taxi.svg');
+        marker-file: url('icons/taxi.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_cafe'] {
-        marker-file: url('symbols/cafe.svg');
+        marker-file: url('icons/cafe-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'tourism_artwork'] {
-        marker-file: url('symbols/artwork.svg');
+        marker-file: url('icons/monument-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_car_rental'] {
-        marker-file: url('symbols/rental_car.svg');
+        marker-file: url('icons/rental_car.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_cinema'] {
-        marker-file: url('symbols/cinema.svg');
+        marker-file: url('icons/cinema-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_fire_station'] {
-        marker-file: url('symbols/firestation.svg');
+        marker-file: url('icons/fire-station-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
@@ -317,7 +307,7 @@
                 nozzle/marker-height: 3;
             }
             [zoom >= 18] {
-                nozzle/marker-file: url('symbols/fountain.svg');
+                nozzle/marker-file: url('icons/fountain.svg');
                 nozzle/marker-fill: @marina-text;
                 nozzle/marker-placement: interior;
                 nozzle/marker-clip: false;
@@ -325,50 +315,38 @@
         }
     }
 
-    [feature = 'tourism_hostel'] {
-        marker-file: url('symbols/hostel.svg');
-        marker-placement: interior;
-        marker-clip: false;
-        marker-fill: @transportation-icon;
-    }
-
-    [feature = 'tourism_hotel'] {
-        marker-file: url('symbols/hotel.svg');
-        marker-placement: interior;
-        marker-clip: false;
-        marker-fill: @transportation-icon;
-    }
-
+    [feature = 'tourism_hostel'],
+    [feature = 'tourism_hotel'],
     [feature = 'tourism_motel'] {
-        marker-file: url('symbols/motel.svg');
+        marker-file: url('icons/lodging-15.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @transportation-icon;
     }
 
     [feature = 'tourism_information'] {
-        marker-file: url('symbols/information.12.svg');
+        marker-file: url('icons/information-15.svg');
         marker-placement: interior;
         marker-fill: @amenity-brown;
         marker-clip: false;
     }
 
     [feature = 'amenity_embassy'] {
-        marker-file: url('symbols/embassy.svg');
+        marker-file: url('icons/embassy-15.svg');
         marker-fill: @transportation-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_library'] {
-        marker-file: url('symbols/library.svg');
+        marker-file: url('icons/library-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_courthouse'] {
-        marker-file: url('symbols/courthouse.svg');
+        marker-file: url('icons/courthouse.svg');
         marker-placement: interior;
         marker-fill: @amenity-brown;
         marker-clip: false;
@@ -376,42 +354,42 @@
 
     [feature = 'amenity_clinic'],
     [feature = 'amenity_doctors'] {
-        marker-file: url('symbols/doctors.svg');
+        marker-file: url('icons/doctor-15.svg');
         marker-fill: @health-color;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_place_of_worship'] {
-        marker-file: url('symbols/place_of_worship.svg');
+        marker-file: url('icons/place-of-worship-15.svg');
         marker-fill: #000000;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_police'] {
-        marker-file: url('symbols/police.svg');
+        marker-file: url('icons/police-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_post_office'] {
-        marker-file: url('symbols/post_office.svg');
+        marker-file: url('icons/post-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_pub'] {
-        marker-file: url('symbols/pub.svg');
+        marker-file: url('icons/beer-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_biergarten'] {
-        marker-file: url('symbols/biergarten.svg');
+        marker-file: url('icons/beer-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
@@ -419,104 +397,104 @@
 
     [feature = 'amenity_restaurant'],
     [feature = 'amenity_food_court'] {
-        marker-file: url('symbols/restaurant.svg');
+        marker-file: url('icons/restaurant-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_fast_food'] {
-        marker-file: url('symbols/fast_food.svg');
+        marker-file: url('icons/fast-food-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_theatre'] {
-        marker-file: url('symbols/theatre.svg');
+        marker-file: url('icons/theatre-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_arts_centre'] {
-        marker-file: url('symbols/shop/art.svg');
+        marker-file: url('icons/art-gallery-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'amenity_toilets'] {
-        marker-file: url('symbols/toilets.svg');
+        marker-file: url('icons/toilet-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'shop_supermarket'] {
-        marker-file: url('symbols/shop/supermarket.svg');
+        marker-file: url('icons/shop-15.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @shop-icon;
     }
 
     [feature = 'shop_art'] {
-        marker-file: url('symbols/shop/art.svg');
+        marker-file: url('icons/shop/art.svg');
         marker-fill: @shop-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'shop_bag'] {
-        marker-file: url('symbols/shop/bag.svg');
+        marker-file: url('icons/shop/bag.svg');
         marker-fill: @shop-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'shop_bakery'] {
-        marker-file: url('symbols/shop/bakery.svg');
+        marker-file: url('icons/shop/bakery-15.svg');
         marker-fill: @shop-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'shop_beverages'] {
-        marker-file: url('symbols/shop/beverages.svg');
+        marker-file: url('icons/shop/alcohol-shop-15.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @shop-icon;
     }
 
     [feature = 'shop_books'] {
-        marker-file: url('symbols/library.svg');
+        marker-file: url('icons/library-15.svg');
         marker-fill: @shop-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'shop_butcher'] {
-        marker-file: url('symbols/shop/butcher.png');
+        marker-file: url('icons/shop-15.svg');
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'shop_coffee'] {
-        marker-file: url('symbols/shop/coffee.svg');
+        marker-file: url('icons/shop/coffee.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @shop-icon;
     }
 
     [feature = 'shop_convenience'] {
-        marker-file: url('symbols/shop/convenience.svg');
+        marker-file: url('icons/shop/convenience.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @shop-icon;
     }
 
     [feature = 'shop_deli'] {
-        marker-file: url('symbols/shop/deli.svg');
+        marker-file: url('icons/shop/deli.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @shop-icon;
@@ -524,7 +502,7 @@
 
     [feature = 'shop_doityourself'],
     [feature = 'shop_hardware'] {
-        marker-file: url('symbols/shop/diy.svg');
+        marker-file: url('icons/shop/diy.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @shop-icon;
@@ -533,7 +511,7 @@
     [feature = 'shop_fishmonger'],
     [feature = 'shop_seafood'] {
         [zoom >= 17] {
-            marker-file: url('symbols/shop/seafood.svg');
+            marker-file: url('icons/shop/seafood.svg');
             marker-placement: interior;
             marker-clip: false;
             marker-fill: @shop-icon;
@@ -541,42 +519,42 @@
     }
 
     [feature = 'shop_garden_centre'] {
-        marker-file: url('symbols/shop/garden_centre.svg');
+        marker-file: url('icons/garden-center-15.svg');
         marker-placement: interior;
         marker-clip: false;
         marker-fill: @shop-icon;
     }
 
     [feature = 'shop_toys'] {
-        marker-file: url('symbols/shop/toys.svg');
+        marker-file: url('icons/shop/toys.svg');
         marker-fill: @shop-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'shop_sports'] {
-        marker-file: url('symbols/shop/sports.svg');
+        marker-file: url('icons/shop/sports.svg');
         marker-fill: @shop-icon;
         marker-placement: interior;
         marker-clip: false;
     }
 
     [feature = 'leisure_water_park'] {
-        marker-file: url('symbols/water_park.svg');
+        marker-file: url('icons/water_park.svg');
         marker-placement: interior;
         marker-fill: @amenity-brown;
         marker-clip: false;
     }
 
     [feature = 'leisure_dog_park'] {
-        marker-file: url('symbols/shop/pet.svg');
+        marker-file: url('icons/shop/pet.svg');
         marker-placement: interior;
         marker-fill: @amenity-brown;
         marker-clip: false;
     }
 
     [feature = 'leisure_playground'] {
-        marker-file: url('symbols/playground.svg');
+        marker-file: url('icons/playground-15.svg');
         marker-fill: @amenity-brown;
         marker-placement: interior;
         marker-clip: false;

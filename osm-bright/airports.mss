@@ -1,12 +1,13 @@
 #airport[zoom>=8][hasiata>0] {    
-    marker-file: url('symbols/aerodrome.12.svg');
+    marker-file: url('icons/airport-11.svg');
+    [zoom>=14] { marker-file: url('icons/airport-15.svg'); }
     marker-placement: interior;
     marker-clip: false;
     marker-fill: @airtransport;
 }
 
 #airport[zoom>=14][hasiata=0] {    
-    marker-file: url('symbols/aerodrome.12.svg');
+    marker-file: url('icons/airport-15.svg');
     marker-placement: interior;
     marker-clip: false;
     marker-fill: @airtransport;
