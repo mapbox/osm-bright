@@ -30,25 +30,35 @@ WHERE aeroway='aerodrome' AND ST_IsValid(geometry)
 DROP VIEW IF EXISTS vw_osm_amenity;
 CREATE VIEW vw_osm_amenity AS SELECT osm_id, geometry, name,
 CASE
+WHEN amenity IN ('place_of_worship') THEN
+CASE
+WHEN religion='christian' THEN 'religion_christian'
+WHEN religion='jewish' THEN 'religion_jewish'
+WHEN religion='muslim' THEN 'religion_muslim'
+ELSE 'amenity_place_of_worship' END
 WHEN tourism IS NOT NULL THEN 'tourism_' || tourism
 WHEN highway IS NOT NULL THEN 'highway_' || highway
 WHEN man_made IS NOT NULL THEN 'man_made_' || man_made
 WHEN shop IS NOT NULL THEN 'shop_' || shop
 WHEN leisure IS NOT NULL THEN 'leisure_' || leisure
 WHEN natural IS NOT NULL THEN 'natural_' || natural
+WHEN building IS NOT NULL THEN 'building_' || building
+WHEN barrier IS NOT NULL THEN 'barrier_' || barrier
 WHEN amenity IS NOT NULL THEN 'amenity_' || amenity
 ELSE NULL END AS feature
 FROM (
-SELECT osm_id, geometry, name, tourism, aeroway, highway, man_made, shop, leisure, natural, amenity FROM points WHERE name IS NOT NULL
+SELECT osm_id, geometry, name, tourism, aeroway, highway, man_made, shop, leisure, natural, amenity, building, barrier, religion FROM points WHERE name IS NOT NULL
 UNION ALL
-SELECT osm_id, ST_PointOnSurface(geometry) AS geometry, name, tourism, aeroway, highway, man_made, shop, leisure, natural, amenity FROM multipolygons
+SELECT osm_id, ST_PointOnSurface(geometry) AS geometry, name, tourism, aeroway, highway, man_made, shop, leisure, natural, amenity, building, barrier, religion FROM multipolygons
 WHERE name IS NOT NULL AND ST_IsValid(geometry)
 )
 WHERE
 amenity IN ('hospital', 'townhall', 'shelter', 'bus_station', 'atm', 'bank', 'bar', 'bicycle_rental', 'taxi',
-'cafe', 'car_rental', 'cinema', 'fire_station', 'fountain', 'charging_station', 'fuel', 'embassy',
+'cafe', 'car_rental', 'cinema', 'fire_station', 'charging_station', 'fuel', 'embassy',
 'parking', 'library', 'courthouse', 'clinic', 'doctors', 'place_of_worship', 'police', 'post_office', 'pub', 'biergarten',
-'restaurant', 'food_court', 'fast_food', 'theatre', 'arts_centre', 'toilets' ) OR
+'restaurant', 'food_court', 'fast_food', 'theatre', 'arts_centre', 'toilets', 'university', 'college', 'school', 'kindergarten' ) OR
+building IN ('university', 'college', 'school', 'kindergarten') OR
+barrier IN ('border_control') OR
 highway IN ('bus_stop', 'ford' ) OR
 leisure IN ('water_park', 'dog_park', 'playground' ) OR
 man_made IN ('lighthouse') OR
@@ -60,36 +70,121 @@ SELECT date(), time(), 'Create temporary table with all amenity IDs';
 CREATE TABLE tmp_osm_amenity_ids AS SELECT osm_id AS osm_id FROM vw_osm_amenity;
 CREATE INDEX index_tmp_osm_amenity_ids ON tmp_osm_amenity_ids(osm_id);
 
-DROP VIEW IF EXISTS vw_osm_amenity_gen0;
-CREATE VIEW vw_osm_amenity_gen0 AS SELECT geometry, name, feature FROM vw_osm_amenity
-WHERE feature IN ('amenity_hospital', 'natural_peak', 'natural_volcano');
+DROP VIEW IF EXISTS vw_osm_amenity_z13;
+CREATE VIEW vw_osm_amenity_z13 AS SELECT geometry, name,
+CASE
+WHEN feature IN ('amenity_hospital') THEN 'hospital'
+WHEN feature IN ('natural_peak') THEN 'mountain'
+WHEN feature IN ('natural_volcano') THEN 'volcano'
+ELSE NULL END AS icon,
+CASE
+WHEN feature GLOB ('*hospital*') THEN 1
+WHEN feature GLOB ('natural_*') THEN 2
+ELSE 0 END AS color
+FROM vw_osm_amenity
+WHERE icon IS NOT NULL;
 
-DROP VIEW IF EXISTS vw_osm_amenity_gen1;
-CREATE VIEW vw_osm_amenity_gen1 AS SELECT geometry, name, feature FROM vw_osm_amenity
-WHERE feature IN ('amenity_townhall', 'amenity_shelter', 'tourism_alpine_hut', 'tourism_wilderness_hut', 'tourism_museum');
+DROP VIEW IF EXISTS vw_osm_amenity_z14;
+CREATE VIEW vw_osm_amenity_z14 AS SELECT geometry, name,
+CASE
+WHEN feature IN ('amenity_townhall') THEN 'town-hall'
+WHEN feature IN ('amenity_fire_station') THEN 'fire-station'
+ELSE NULL END AS icon, 0 AS color
+FROM vw_osm_amenity
+WHERE icon IS NOT NULL;
+
+DROP VIEW IF EXISTS vw_osm_amenity_z15;
+CREATE VIEW vw_osm_amenity_z15 AS SELECT geometry, name,
+CASE
+WHEN feature IN ('amenity_university', 'building_university', 'amenity_college', 'building_college' ) THEN 'college'
+WHEN feature IN ('amenity_police', 'barrier_border_control') THEN 'police'
+WHEN feature IN ('amenity_bank') THEN 'bank'
+WHEN feature IN ('amenity_taxi') THEN 'car'
+ELSE NULL END AS icon, 0 AS color
+FROM vw_osm_amenity
+WHERE icon IS NOT NULL;
+
+DROP VIEW IF EXISTS vw_osm_amenity_z16;
+CREATE VIEW vw_osm_amenity_z16 AS SELECT geometry, name,
+CASE
+WHEN feature IN ('amenity_school', 'building_school' ) THEN 'school'
+WHEN feature IN ('amenity_kindergarten', 'building_kindergarten' ) THEN 'playground'
+WHEN feature IN ('amenity_embassy') THEN 'embassy'
+ELSE NULL END AS icon,
+CASE
+WHEN feature IN ('amenity_embassy') THEN 3
+ELSE 0 END AS color
+FROM vw_osm_amenity
+WHERE icon IS NOT NULL;
+
+DROP VIEW IF EXISTS vw_osm_amenity_z17;
+CREATE VIEW vw_osm_amenity_z17 AS SELECT geometry, name,
+CASE
+WHEN feature IN ('tourism_alpine_hut', 'tourism_wilderness_hut', 'amenity_shelter') THEN 'shelter'
+WHEN feature IN ('highway_bus_stop', 'amenity_bus_station') THEN 'bus'
+WHEN feature IN ('amenity_parking') THEN 'parking'
+WHEN feature IN ('amenity_bicycle_parking') THEN 'bicycle'
+WHEN feature IN ('amenity_motorcycle_parking') THEN 'motorcycle-parking'
+WHEN feature IN ('tourism_museum') THEN 'museum'
+WHEN feature IN ('amenity_pharmacy') THEN 'pharmacy'
+WHEN feature IN ('man_made_lighthouse') THEN 'lighthouse'
+WHEN feature IN ('tourism_camp_site', 'tourism_caravan_site') THEN 'campsite'
+WHEN feature IN ('tourism_picnic_site') THEN 'picnic-site'
+WHEN feature IN ('shop_department_store') THEN 'shop/department-store'
+WHEN feature IN ('amenity_atm') THEN 'atm'
+WHEN feature IN ('amenity_bar') THEN 'bar'
+WHEN feature IN ('amenity_bicycle_rental') THEN 'bicycle-share'
+WHEN feature IN ('amenity_cafe') THEN 'cafe'
+WHEN feature IN ('tourism_artwork') THEN 'monument'
+WHEN feature IN ('amenity_car_rental') THEN 'rental-car'
+WHEN feature IN ('amenity_cinema') THEN 'cinema'
+WHEN feature IN ('tourism_hostel', 'tourism_hotel', 'tourism_motel') THEN 'lodging'
+WHEN feature IN ('tourism_information') THEN 'information'
+WHEN feature IN ('amenity_library') THEN 'library'
+WHEN feature IN ('amenity_courthouse') THEN 'courthouse'
+WHEN feature IN ('amenity_clinic', 'amenity_doctors') THEN 'doctor'
+WHEN feature IN ('amenity_place_of_worship') THEN 'place-of-worship'
+WHEN feature IN ('religion_christian') THEN 'religious-christian'
+WHEN feature IN ('religion_jewish') THEN 'religious-jewish'
+WHEN feature IN ('religion_muslim') THEN 'religious-muslim'
+WHEN feature IN ('amenity_post_office') THEN 'post'
+WHEN feature IN ('amenity_pub', 'amenity_biergarten') THEN 'beer'
+WHEN feature IN ('amenity_restaurant', 'amenity_food_court') THEN 'restaurant'
+WHEN feature IN ('amenity_fast_food') THEN 'fast-food'
+WHEN feature IN ('amenity_theatre') THEN 'theatre'
+WHEN feature IN ('amenity_arts_centre') THEN 'art-gallery'
+WHEN feature IN ('amenity_toilets') THEN 'toilet'
+WHEN feature IN ('shop_supermarket', 'shop_butcher') THEN 'shop'
+WHEN feature IN ('shop_art') THEN 'shop/art'
+WHEN feature IN ('shop_bag') THEN 'shop/bag'
+WHEN feature IN ('shop_bakery') THEN 'shop/bakery'
+WHEN feature IN ('shop_beverages') THEN 'shop/alcohol-shop'
+WHEN feature IN ('shop_books') THEN 'library'
+WHEN feature IN ('shop_coffee') THEN 'shop/coffee'
+WHEN feature IN ('shop_convenience') THEN 'shop/convenience'
+WHEN feature IN ('shop_deli') THEN 'shop/deli'
+WHEN feature IN ('shop_doityourself', 'shop_hardware') THEN 'shop/diy'
+WHEN feature IN ('shop_fishmonger', 'shop_seafood') THEN 'shop/seafood'
+WHEN feature IN ('shop_garden_centre') THEN 'garden-center'
+WHEN feature IN ('shop_toys') THEN 'shop/toys'
+WHEN feature IN ('shop_sports') THEN 'shop/sports'
+WHEN feature IN ('leisure_water_park') THEN 'water-park'
+WHEN feature IN ('leisure_dog_park') THEN 'dog-park'
+WHEN feature IN ('leisure_playground') THEN 'playground'
+ELSE NULL END AS icon,
+CASE
+WHEN feature IN ('tourism_artwork', 'tourism_information', 'tourism_museum') THEN 0
+WHEN feature IN ('amenity_clinic', 'amenity_doctors', 'amenity_pharmacy') THEN 1
+WHEN feature GLOB 'tourism_*' OR feature IN ('amenity_bicycle_rental', 'amenity_car_rental', 'amenity_shelter', 'amenity_bus_station', 'amenity_parking', 'amenity_bicycle_parking', 'amenity_motorcycle_parking', 'highway_bus_stop') THEN 3
+WHEN feature GLOB 'shop_*' THEN 4
+ELSE 0 END AS color
+FROM vw_osm_amenity
+WHERE icon IS NOT NULL;
+
 
 DROP VIEW IF EXISTS vw_osm_amenity_fuel;
 CREATE VIEW vw_osm_amenity_fuel AS SELECT geometry, name, feature FROM vw_osm_amenity
 WHERE feature IN ('amenity_charging_station', 'amenity_fuel');
-
-DROP VIEW IF EXISTS vw_osm_amenity_gen2;
-CREATE VIEW vw_osm_amenity_gen2 AS SELECT geometry, name, feature FROM vw_osm_amenity
-WHERE feature IN ('highway_bus_stop', 'amenity_bus_station', 'amenity_parking', 'amenity_bicycle_parking', 'amenity_motorcycle_parking',
-'amenity_pharmacy', 'man_made_lighthouse', 'tourism_camp_site', 'tourism_caravan_site',
-'tourism_picnic_site', 'shop_department_store');
-
-DROP VIEW IF EXISTS vw_osm_amenity_points;
-CREATE VIEW vw_osm_amenity_points AS SELECT geometry, name, feature FROM vw_osm_amenity
-WHERE feature IN ('amenity_atm', 'amenity_bank', 'amenity_bar', 'amenity_bicycle_rental', 'amenity_taxi', 'amenity_cafe', 'tourism_artwork',
-'amenity_car_rental', 'amenity_cinema', 'amenity_fire_station', 'amenity_fountain', 'tourism_hostel', 'tourism_hotel', 'tourism_motel', 'tourism_information',
-'amenity_embassy', 'amenity_library', 'amenity_courthouse', 'amenity_clinic', 'amenity_doctors', 'amenity_place_of_worship', 'amenity_police',
-'amenity_post_office', 'amenity_pub', 'amenity_biergarten', 'amenity_restaurant', 'amenity_food_court', 'amenity_fast_food', 'amenity_theatre',
-'amenity_arts_centre', 'amenity_toilets', 'shop_supermarket', 'shop_art', 'shop_bag', 'shop_bakery', 'shop_beverages', 'shop_books', 'shop_butcher',
-'shop_coffee', 'shop_convenience', 'shop_deli', 'shop_doityourself', 'shop_hardware', 'shop_fishmonger', 'shop_seafood', 'shop_garden_centre', 'shop_toys',
-'shop_sports', 'leisure_water_park', 'leisure_dog_park', 'leisure_playground'
-);
-
-
 
 -- skip areas which are registered as amenity
 DROP VIEW IF EXISTS vw_osm_area_labels;
@@ -435,33 +530,40 @@ SELECT RecoverGeometryColumn('osm_airports', 'geometry', 4326, 'POINT');
 SELECT date(), time(), 'Indexing column osm_airports.geometry';
 SELECT CreateSpatialIndex('osm_airports', 'geometry');
 
-SELECT date(), time(), 'Materializing view vw_osm_amenity_gen0';
-CREATE TABLE osm_amenity_gen0 AS SELECT * FROM vw_osm_amenity_gen0;
-SELECT date(), time(), 'Recovering column osm_amenity_gen0.geometry';
-SELECT RecoverGeometryColumn('osm_amenity_gen0', 'geometry', 4326, 'POINT');
-SELECT date(), time(), 'Indexing column osm_amenity_gen0.geometry';
-SELECT CreateSpatialIndex('osm_amenity_gen0', 'geometry');
+SELECT date(), time(), 'Materializing view vw_osm_amenity_z13';
+CREATE TABLE osm_amenity_z13 AS SELECT * FROM vw_osm_amenity_z13;
+SELECT date(), time(), 'Recovering column osm_amenity_z13.geometry';
+SELECT RecoverGeometryColumn('osm_amenity_z13', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_amenity_z13.geometry';
+SELECT CreateSpatialIndex('osm_amenity_z13', 'geometry');
 
-SELECT date(), time(), 'Materializing view vw_osm_amenity_gen1';
-CREATE TABLE osm_amenity_gen1 AS SELECT * FROM vw_osm_amenity_gen1;
-SELECT date(), time(), 'Recovering column osm_amenity_gen1.geometry';
-SELECT RecoverGeometryColumn('osm_amenity_gen1', 'geometry', 4326, 'POINT');
-SELECT date(), time(), 'Indexing column osm_amenity_gen1.geometry';
-SELECT CreateSpatialIndex('osm_amenity_gen1', 'geometry');
+SELECT date(), time(), 'Materializing view vw_osm_amenity_z14';
+CREATE TABLE osm_amenity_z14 AS SELECT * FROM vw_osm_amenity_z14;
+SELECT date(), time(), 'Recovering column osm_amenity_z14.geometry';
+SELECT RecoverGeometryColumn('osm_amenity_z14', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_amenity_z14.geometry';
+SELECT CreateSpatialIndex('osm_amenity_z14', 'geometry');
 
-SELECT date(), time(), 'Materializing view vw_osm_amenity_gen2';
-CREATE TABLE osm_amenity_gen2 AS SELECT * FROM vw_osm_amenity_gen2;
-SELECT date(), time(), 'Recovering column osm_amenity_gen2.geometry';
-SELECT RecoverGeometryColumn('osm_amenity_gen2', 'geometry', 4326, 'POINT');
-SELECT date(), time(), 'Indexing column osm_amenity_gen2.geometry';
-SELECT CreateSpatialIndex('osm_amenity_gen2', 'geometry');
+SELECT date(), time(), 'Materializing view vw_osm_amenity_z15';
+CREATE TABLE osm_amenity_z15 AS SELECT * FROM vw_osm_amenity_z15;
+SELECT date(), time(), 'Recovering column osm_amenity_z15.geometry';
+SELECT RecoverGeometryColumn('osm_amenity_z15', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_amenity_z15.geometry';
+SELECT CreateSpatialIndex('osm_amenity_z15', 'geometry');
 
-SELECT date(), time(), 'Materializing view vw_osm_amenity_points';
-CREATE TABLE osm_amenity_points AS SELECT * FROM vw_osm_amenity_points;
-SELECT date(), time(), 'Recovering column osm_amenity_points.geometry';
-SELECT RecoverGeometryColumn('osm_amenity_points', 'geometry', 4326, 'POINT');
-SELECT date(), time(), 'Indexing column osm_amenity_points.geometry';
-SELECT CreateSpatialIndex('osm_amenity_points', 'geometry');
+SELECT date(), time(), 'Materializing view vw_osm_amenity_z16';
+CREATE TABLE osm_amenity_z16 AS SELECT * FROM vw_osm_amenity_z16;
+SELECT date(), time(), 'Recovering column osm_amenity_z16.geometry';
+SELECT RecoverGeometryColumn('osm_amenity_z16', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_amenity_z16.geometry';
+SELECT CreateSpatialIndex('osm_amenity_z16', 'geometry');
+
+SELECT date(), time(), 'Materializing view vw_osm_amenity_z17';
+CREATE TABLE osm_amenity_z17 AS SELECT * FROM vw_osm_amenity_z17;
+SELECT date(), time(), 'Recovering column osm_amenity_z17.geometry';
+SELECT RecoverGeometryColumn('osm_amenity_z17', 'geometry', 4326, 'POINT');
+SELECT date(), time(), 'Indexing column osm_amenity_z17.geometry';
+SELECT CreateSpatialIndex('osm_amenity_z17', 'geometry');
 
 SELECT date(), time(), 'Materializing view vw_osm_amenity_fuel';
 CREATE TABLE osm_amenity_fuel AS SELECT * FROM vw_osm_amenity_fuel;
@@ -740,10 +842,11 @@ DROP VIEW vw_osm_admin_gen1;
 DROP VIEW vw_osm_admin;
 DROP VIEW vw_osm_aeroways;
 DROP VIEW vw_osm_airports;
-DROP VIEW vw_osm_amenity_gen0;
-DROP VIEW vw_osm_amenity_gen1;
-DROP VIEW vw_osm_amenity_gen2;
-DROP VIEW vw_osm_amenity_points;
+DROP VIEW vw_osm_amenity_z13;
+DROP VIEW vw_osm_amenity_z14;
+DROP VIEW vw_osm_amenity_z15;
+DROP VIEW vw_osm_amenity_z16;
+DROP VIEW vw_osm_amenity_z17;
 DROP VIEW vw_osm_amenity_fuel;
 DROP VIEW vw_osm_area_labels;
 DROP VIEW vw_osm_barrierpoints;

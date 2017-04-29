@@ -494,12 +494,12 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen0) AS data"
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z13) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
-            "id": "amenity_gen0", 
-            "name": "amenity_gen0", 
+            "id": "amenity_z13", 
+            "name": "amenity_z13", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
@@ -507,12 +507,12 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen1) AS data"
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z14) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
-            "id": "amenity_gen1", 
-            "name": "amenity_gen1", 
+            "id": "amenity_z14", 
+            "name": "amenity_z14", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
@@ -520,12 +520,12 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_gen2) AS data"
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z15) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
-            "id": "amenity_gen2", 
-            "name": "amenity_gen2", 
+            "id": "amenity_z15", 
+            "name": "amenity_z15", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
@@ -533,12 +533,25 @@
         {
             "Datasource": {
                 "key_field": "rowid",
-                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_points) AS data"
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z16) AS data"
             }, 
             "class": "", 
             "geometry": "point", 
-            "id": "amenity_points", 
-            "name": "amenity_points", 
+            "id": "amenity_z16", 
+            "name": "amenity_z16", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z17) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_z17", 
+            "name": "amenity_z17", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
@@ -648,7 +661,7 @@
     "description": "", 
     "format": "png", 
     "interactivity": false, 
-    "maxzoom": 18, 
+    "maxzoom": 20, 
     "minzoom": 0, 
     "name": "OSM Bright", 
     "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"

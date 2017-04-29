@@ -133,7 +133,7 @@
 
 /* ---- Towns ------------------------------------------------------- */
 
-#place_town[zoom>=9][zoom<=17] {
+#place_town[zoom>=9][zoom<=16] {
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
@@ -161,26 +161,26 @@
     text-character-spacing: 2;
     text-line-spacing: 3;
   }
-  [zoom>=15]{
-    text-size:14;
-    text-character-spacing: 3;
-    text-line-spacing: 4;
-  }
+  // [zoom>=15]{
+  //   text-size:14;
+  //   text-character-spacing: 3;
+  //   text-line-spacing: 4;
+  // }
   [zoom>=15]{
     text-size:15;
     text-character-spacing: 4;
     text-line-spacing: 5;
   }
-  [zoom>=17]{
-    text-size:16;
-    text-character-spacing: 5;
-    text-line-spacing: 6;
-  }
+  // [zoom>=17]{
+  //   text-size:16;
+  //   text-character-spacing: 5;
+  //   text-line-spacing: 6;
+  // }
 }
 
 /* ---- Other small places ------------------------------------------ */
 
-#place_small[zoom>=13] {
+#place_small[zoom>=13][zoom<=16] {
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
@@ -208,20 +208,20 @@
     text-wrap-width: 120;
     text-line-spacing: 2;
   } 
-  [zoom>=17] {
-    text-size:13; 
-    text-character-spacing: 3;
-    text-wrap-width: 160;
-    text-line-spacing: 4;
-  }
-  [zoom>=18] {
-    text-size:14;
-    text-character-spacing: 4;
-    text-line-spacing: 6;
-  }
+  // [zoom>=17] {
+  //   text-size:13; 
+  //   text-character-spacing: 3;
+  //   text-wrap-width: 160;
+  //   text-line-spacing: 4;
+  // }
+  // [zoom>=18] {
+  //   text-size:14;
+  //   text-character-spacing: 4;
+  //   text-line-spacing: 6;
+  // }
 }
 
-#place_tiny[zoom>=15] {
+#place_tiny[zoom>=15][zoom<=17] {
   text-name:'[name]';
   text-face-name:@sans;
   text-placement:point;
@@ -317,7 +317,7 @@
   }
 }
 
-#building_label[zoom>=16] {
+#building_label[zoom>=18] {
   text-name:"[bname]";
   text-face-name:@sans_italic;
   text-size:8;
@@ -325,17 +325,6 @@
   text-fill: @poi_text;
 }
    
-#poi[type='university'][zoom>=15],
-#poi[type='hospital'][zoom>=16],
-#poi[type='school'][zoom>=17],
-#poi[type='library'][zoom>=17] {
-  text-name:"[name]";
-  text-face-name:@sans;
-  text-size:10;
-  text-wrap-width:30;
-  text-fill: @poi_text;
-}
-
 
 /* ================================================================== */
 /* WATERWAY LABELS
@@ -455,16 +444,6 @@
      [zoom=16] { marker-transform: "scale(0.5)"; }
      [zoom=17] { marker-transform: "scale(0.75)"; }
   }
-}
-
-
-/* ================================================================== */
-/* TRAIN STATIONS
-/* ================================================================== */
-
-#train_stations[zoom>15]{
-  point-file:url('img/icon/rail-12.png');
-  [zoom>=17] { point-file:url('img/icon/rail-18.png'); }
 }
 
 /* ****************************************************************** */

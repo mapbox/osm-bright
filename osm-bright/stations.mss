@@ -8,7 +8,7 @@
     marker-fill: @transportation-icon;
     marker-clip: false;
     [zoom >= 19] {
-      text-name: [ref];
+      text-name: [name];
       text-face-name: @book-fonts;
       text-size: 10;
       text-fill: @transportation-icon;
