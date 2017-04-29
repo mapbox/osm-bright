@@ -11,11 +11,8 @@
 @marina-text: #576ddf; // also swimming_pool
 @wetland-text: darken(#4aa5fa, 25%); /* Also for marsh and mud */
 @shop-text: #939;
-@transportation-icon: #0092da;
 @transportation-text: #0066ff;
 @airtransport: #8461C4;
-@health-color: #da0092;
-@amenity-brown: #734a08;
 @man-made-icon: #555;
 
 @landcover-font-size: 10;

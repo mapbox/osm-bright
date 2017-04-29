@@ -110,6 +110,7 @@ CASE
 WHEN feature IN ('amenity_school', 'building_school' ) THEN 'school'
 WHEN feature IN ('amenity_kindergarten', 'building_kindergarten' ) THEN 'playground'
 WHEN feature IN ('amenity_embassy') THEN 'embassy'
+WHEN feature IN ('tourism_zoo') THEN 'zoo'
 ELSE NULL END AS icon,
 CASE
 WHEN feature IN ('amenity_embassy') THEN 3
@@ -173,14 +174,13 @@ WHEN feature IN ('leisure_dog_park') THEN 'dog-park'
 WHEN feature IN ('leisure_playground') THEN 'playground'
 ELSE NULL END AS icon,
 CASE
-WHEN feature IN ('tourism_artwork', 'tourism_information', 'tourism_museum') THEN 0
+WHEN feature IN ('tourism_artwork', 'tourism_information', 'tourism_museum', 'tourism_zoo') THEN 0
 WHEN feature IN ('amenity_clinic', 'amenity_doctors', 'amenity_pharmacy') THEN 1
 WHEN feature GLOB 'tourism_*' OR feature IN ('amenity_bicycle_rental', 'amenity_car_rental', 'amenity_shelter', 'amenity_bus_station', 'amenity_parking', 'amenity_bicycle_parking', 'amenity_motorcycle_parking', 'highway_bus_stop') THEN 3
 WHEN feature GLOB 'shop_*' THEN 4
 ELSE 0 END AS color
 FROM vw_osm_amenity
 WHERE icon IS NOT NULL;
-
 
 DROP VIEW IF EXISTS vw_osm_amenity_fuel;
 CREATE VIEW vw_osm_amenity_fuel AS SELECT geometry, name, feature FROM vw_osm_amenity
