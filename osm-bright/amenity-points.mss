@@ -1,32 +1,3 @@
-
-// Colors and corresponding IDs in the database
-@amenity-brown:  #734a08; 	// 0
-@health-color: #da0092;		// 1
-@landform-color: #d08f55;	// 2
-@transportation-icon: #0092da;	// 3
-@shop-icon: #ac39ac;		// 4
-
-
-
-@marina-text: #576ddf; // also swimming_pool
-@wetland-text: darken(#4aa5fa, 25%); /* Also for marsh and mud */
-@shop-text: #939;
-@transportation-text: #0066ff;
-@airtransport: #8461C4;
-@man-made-icon: #555;
-
-@landcover-font-size: 10;
-@landcover-font-size-big: 12;
-@landcover-font-size-bigger: 15;
-@landcover-wrap-width-size: 25;
-@landcover-wrap-width-size-big: 35;
-@landcover-wrap-width-size-bigger: 45;
-@landcover-face-name: @oblique-fonts;
-
-@standard-wrap-width: 30;
-@standard-text-size: 10;
-@standard-font: @book-fonts;
-
 #amenity_z13[zoom>=13],
 #amenity_z14[zoom>=14],
 #amenity_z15[zoom>=15],
@@ -54,7 +25,7 @@
 {
     text-name: "[name]";
     text-halo-radius: @standard-halo-radius;
-    text-face-name: @standard-font;
+    text-face-name: @standard-poi-font;
     text-size: @standard-text-size;
     text-wrap-width: @standard-wrap-width;
     text-fill: @poi_text;

@@ -156,14 +156,22 @@ Map { font-directory: url(./fonts); }
 @standard-halo-radius:  1;
 @standard-halo-fill: rgba(255,255,255,0.6);
 @standard-wrap-width: 30;
+@standard-text-size: 10;
 @standard-font: @sans;
 @book-fonts: @sans;
 @bold-fonts: @sans_bold;
-
-@transportation-icon: #0092da;
+@standard-poi-font: @book-fonts;
 
 @water-color: @water;
+@airtransport: #8461C4;
 
+// POI colors
+// Colors and corresponding IDs in the database
+@amenity-brown:  #734a08; 	// 0
+@health-color: #da0092;		// 1
+@landform-color: #d08f55;	// 2
+@transportation-icon: #0092da;	// 3
+@shop-icon: #ac39ac;		// 4
 
 /* ****************************************************************** */
 
