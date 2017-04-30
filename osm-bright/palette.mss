@@ -80,6 +80,7 @@ Map { font-directory: url(./fonts); }
 @motorway_line:     #E65C5C;
 @motorway_fill:     lighten(@motorway_line,10%);
 @motorway_case:     @motorway_line * 0.9;
+@motorway_shield_fill: #fff;
 
 @trunk_line:        #E68A5C;
 @trunk_fill:        lighten(@trunk_line,10%);
@@ -117,6 +118,9 @@ Map { font-directory: url(./fonts); }
 
 @admin_2:           #324;
 
+@fence_color:       #aab;
+@barrier_point:     #c7c7c7;
+
 /* ================================================================== */
 /* LABEL COLORS
 /* ================================================================== */
@@ -138,6 +142,9 @@ Map { font-directory: url(./fonts); }
 @town_halo:         @place_halo;
 
 @poi_text:          #888;
+
+@area_text:	    @poi_text;
+@area_halo:         @place_halo;
 
 @road_text:         #777;
 @road_halo:         #fff;

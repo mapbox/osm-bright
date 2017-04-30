@@ -267,8 +267,8 @@
     text-face-name:@sans;
     text-size: 11;
     text-wrap-width:30;
-    text-fill: #888;
-    text-halo-fill: #fff;
+    text-fill: @area_text;
+    text-halo-fill: @area_halo;
     // Specific style overrides for different types of areas:
     [type='park'][zoom>=10] {
       text-face-name: @sans_lt_italic;
@@ -360,7 +360,7 @@
   shield-name: "[ref]";
   shield-size: 9;
   shield-face-name: @sans_bold;
-  shield-fill: #fff;
+  shield-fill: @motorway_shield_fill;
   shield-file: url(img/shield-motorway-1.png);
   [type='motorway'] {
     [reflen=1] { shield-file: url(img/shield-motorway-1.png); }

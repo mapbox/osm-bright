@@ -180,7 +180,7 @@ Map { background-color: @water; }
 // #barrier_points[zoom>=17][stylegroup = 'divider'] {
 #barrier_points[zoom>=17] {
   marker-height: 2;
-  marker-fill: #c7c7c7;
+  marker-fill: @barrier_point;
   marker-line-opacity:0;
   marker-allow-overlap:true;
 }
@@ -191,13 +191,13 @@ Map { background-color: @water; }
 
 #barrier_lines[zoom>=17][stylegroup = 'gate'] {
   line-width:2.5;
-  line-color:#aab;
+  line-color: @fence_color;
   line-dasharray:3,2;
 }
 
 #barrier_lines[zoom>=17][stylegroup = 'fence'] {
   line-width:1.75;
-  line-color:#aab;
+  line-color: @fence_color;
   line-dasharray:1,1;
 }
 
