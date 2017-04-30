@@ -180,6 +180,7 @@ Map { background-color: @water; }
 // #barrier_points[zoom>=17][stylegroup = 'divider'] {
 #barrier_points[zoom>=17] {
   marker-height: 2;
+  
   marker-fill: @barrier_point;
   marker-line-opacity:0;
   marker-allow-overlap:true;

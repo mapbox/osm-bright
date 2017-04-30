@@ -422,11 +422,11 @@ WHERE  natural IN ('water');
 -----------------------------------------------------------------------------------
 
 DROP VIEW IF EXISTS vw_osm_admin_gen0;
-CREATE VIEW vw_osm_admin_gen0 AS SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.05)) AS geometry
+CREATE VIEW vw_osm_admin_gen0 AS SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.005)) AS geometry
 FROM vw_osm_admin;
 
 DROP VIEW IF EXISTS vw_osm_admin_gen1;
-CREATE VIEW vw_osm_admin_gen1 AS SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.001)) AS geometry
+CREATE VIEW vw_osm_admin_gen1 AS SELECT CastToMultiPolygon(ST_SimplifyPreserveTopology(geometry, 0.0003)) AS geometry
 FROM vw_osm_admin;
 
 DROP VIEW IF EXISTS vw_osm_landusages_gen0;
@@ -489,7 +489,7 @@ WHERE  ST_Area(geometry)>1e-05;
 
 DROP VIEW IF EXISTS vw_osm_waterways_low;
 CREATE VIEW vw_osm_waterways_low AS
-SELECT ST_SimplifyPreserveTopology(geometry, 0.001) AS geometry
+SELECT ST_SimplifyPreserveTopology(geometry, 0.0003) AS geometry
 FROM   vw_osm_waterways
 WHERE  type IN ('river', 'canal');
 
