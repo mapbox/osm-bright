@@ -59,7 +59,7 @@
       text-size: 10;
       text-fill: @transportation-icon;
       text-dy: 10;
-      text-halo-radius: @standard-halo-radius * 1.5;
+      text-halo-radius: @standard-halo-radius;
       text-halo-fill: @standard-halo-fill;
       text-wrap-width: 0;
       text-placement: interior;
@@ -77,7 +77,7 @@
       text-size: 10;
       text-fill: @transportation-icon;
       text-dy: 10;
-      text-halo-radius: @standard-halo-radius * 1.5;
+      text-halo-radius: @standard-halo-radius;
       text-halo-fill: @standard-halo-fill;
       text-wrap-width: 0;
       text-placement: interior;
