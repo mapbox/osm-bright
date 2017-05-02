@@ -47,7 +47,7 @@
   line-opacity:  0.3;
   line-dasharray: 1,1;
   polygon-fill: darken(@wooded,25%);
-  polygon-opacity: 0.1;
+  polygon-opacity: 0.2;
   [zoom=7] { line-width: 0.4; }
   [zoom=8] { line-width: 0.6; }
   [zoom=9] { line-width: 0.8; }
@@ -91,24 +91,35 @@ Map { background-color: @water; }
 #water_gen0[zoom>3][zoom<=9],
 #water_gen1[zoom>9][zoom<=12],
 #water[zoom>12] {
-  polygon-fill: @water;
+    polygon-fill: @water - #111;
+    ::blur {
+        // This attachment creates a shadow effect by creating a
+        // light overlay that is offset slightly south. It also
+        // create a slight highlight of the land along the
+        // southern edge of any water body.
+        polygon-fill: #f0f0ff;
+        comp-op: soft-light;
+        image-filters: agg-stack-blur(1,1);
+        image-filters-inflate: true;
+        polygon-geometry-transform: translate(0,1);
+        polygon-clip: false;
+    }
 }
 
 /* ================================================================== */
 /* WATER WAYS
 /* ================================================================== */
-
 #waterway_low[zoom>=8][zoom<=12] {
-  line-color: @water;
-  [zoom=8] { line-width: 0.1; }
-  [zoom=9] { line-width: 0.2; }
-  [zoom=10]{ line-width: 0.4; }
+  line-color: @water * 0.9;
+  line-cap: round;
+  line-width: 0.5;
   [zoom=11]{ line-width: 0.6; }
   [zoom=12]{ line-width: 0.8; }
 }
 
 #waterway_med[zoom>=13][zoom<=14] {
-  line-color: @water;
+  line-color: @water * 0.9;
+  line-cap: round;
   [type='river'],
   [type='canal'] {
     line-cap: round;
@@ -123,7 +134,8 @@ Map { background-color: @water; }
 }
   
 #waterway_high[zoom>=15] {
-  line-color: @water;
+  line-color: @water * 0.9;
+  line-cap: round;
   [type='river'],
   [type='canal'] {
     line-cap: round;
@@ -190,20 +202,19 @@ Map { background-color: @water; }
 /* BARRIER LINES
 /* ================================================================== */
 
-#barrier_lines[zoom>=17][stylegroup = 'gate'] {
+#barrier_lines[zoom>=17][type = 'gate'] {
   line-width:2.5;
   line-color: @fence_color;
   line-dasharray:3,2;
 }
 
-#barrier_lines[zoom>=17][stylegroup = 'fence'] {
+#barrier_lines[zoom>=17][type = 'fence'] {
   line-width:1.75;
   line-color: @fence_color;
   line-dasharray:1,1;
 }
 
-#barrier_lines[zoom>=17][stylegroup = 'hedge'] {
+#barrier_lines[zoom>=17][type = 'hedge'] {
   line-width:3;
   line-color:darken(@park,5%);
-
 }
