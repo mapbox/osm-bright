@@ -83,8 +83,12 @@ Map { font-directory: url(./fonts); }
 @primary_line:      mix(@trunk_fill, #800, 75);
 @primary_case:      @trunk_line * 0.9;
 
+// @secondary_line:    @land*0.8;
+// @secondary_fill:    #FFFFFF;
+// @secondary_case:    @secondary_line;
+
 @secondary_line:    @land*0.8;
-@secondary_fill:    #FFFFFF;
+@secondary_fill:    #FFEEAA;
 @secondary_case:    @secondary_line;
 
 @standard_fill:     #FFFFFF;
