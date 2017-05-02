@@ -219,7 +219,7 @@ CASE
 WHEN barrier IN ('city_wall', 'fence', 'retaining_wall', 'wall', 'wire_fence', 'yes') THEN 'fence'
 WHEN barrier IN ('gate', 'spikes', 'bollard', 'lift_gate', 'kissing_gate') THEN 'gate'
 WHEN barrier IN ('hedge') THEN 'hedge'
-END AS stylegroup FROM lines WHERE stylegroup IS NOT NULL;
+END AS type FROM lines WHERE type IS NOT NULL;
 
 DROP VIEW IF EXISTS vw_osm_buildings;
 CREATE VIEW vw_osm_buildings AS SELECT geometry, ST_MinY(geometry) AS y_min FROM   multipolygons
@@ -282,61 +282,54 @@ WHERE highway IN ('motorway', 'trunk');
 DROP VIEW IF EXISTS vw_osm_roads_gen1;
 CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_Simplify(geometry, 0.0005) AS geometry, highway AS type
 FROM lines
-WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary', 'tertiary');
+WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary');
 
 DROP VIEW IF EXISTS vw_osm_roads_gen2;
 CREATE VIEW vw_osm_roads_gen2 AS SELECT ST_Simplify(geometry, 0.0002) AS geometry,
-CASE
-WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN railway
-ELSE highway END as type,
 name, ref, oneway, z_order, 
 CASE
-WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
-WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
-WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
 WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
-ELSE NULL END AS stylegroup
-FROM lines WHERE stylegroup IS NOT NULL AND (tunnel IS NULL OR tunnel NOT IN ('yes', '1', 'true'));
+WHEN highway IN ('primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary') THEN highway
+ELSE NULL END AS type
+FROM lines WHERE type IS NOT NULL AND (tunnel IS NULL OR tunnel NOT IN ('yes', '1', 'true'));
 
 DROP VIEW IF EXISTS vw_osm_roads;
-CREATE VIEW vw_osm_roads AS SELECT geometry,
+CREATE VIEW vw_osm_roads AS SELECT geometry, name, ref, oneway, z_order, 
 CASE
-WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN railway
-ELSE highway END as type,
-name, ref, oneway, z_order, 
-CASE
-WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
-WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
-WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary') THEN highway
+WHEN highway IN ('primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('path', 'steps', 'footway') THEN 'path'
+WHEN highway IN ('cycleway') THEN highway
 WHEN highway IN ('service', 'track') THEN 'service'
-WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+WHEN highway IN ('pedestrian') THEN 'noauto'
 WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
-ELSE NULL END AS stylegroup
-FROM lines WHERE stylegroup IS NOT NULL AND (tunnel IS NULL OR tunnel NOT IN ('yes', '1', 'true'));
+ELSE NULL END AS type
+FROM lines WHERE type IS NOT NULL AND (tunnel IS NULL OR tunnel NOT IN ('yes', '1', 'true'));
 
 DROP VIEW IF EXISTS vw_osm_tunnels;
-CREATE VIEW vw_osm_tunnels AS SELECT geometry, highway AS type, z_order, 
+CREATE VIEW vw_osm_tunnels AS SELECT geometry, z_order, 
 CASE
-WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
-WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
-WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary') THEN highway
+WHEN highway IN ('primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('path', 'cycleway') THEN highway
 WHEN highway IN ('service', 'track') THEN 'service'
-WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+WHEN highway IN ('footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
 WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
-ELSE NULL END AS stylegroup
-FROM lines WHERE stylegroup IS NOT NULL AND tunnel IN ('yes', '1', 'true');
+ELSE NULL END AS type
+FROM lines WHERE type IS NOT NULL AND tunnel IN ('yes', '1', 'true');
 
 DROP VIEW IF EXISTS vw_osm_bridges;
-CREATE VIEW vw_osm_bridges AS SELECT geometry, highway AS type, z_order, 
+CREATE VIEW vw_osm_bridges AS SELECT geometry, z_order, 
 CASE
-WHEN highway IN ('motorway', 'trunk') THEN 'motorway'
-WHEN highway IN ('primary', 'secondary') THEN 'mainroad'
-WHEN highway IN ('motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary') THEN highway
+WHEN highway IN ('primary_link', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified', 'road', 'living_street') THEN 'minorroad'
+WHEN highway IN ('path', 'cycleway') THEN highway
 WHEN highway IN ('service', 'track') THEN 'service'
-WHEN highway IN ('path', 'cycleway', 'footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
+WHEN highway IN ('footway', 'pedestrian', 'steps', 'bridleway') THEN 'noauto'
 WHEN railway IN ('light_rail', 'subway', 'narrow_gauge', 'rail', 'tram') THEN 'railway'
-ELSE NULL END AS stylegroup
-FROM lines WHERE stylegroup IS NOT NULL AND bridge IN ('yes', '1', 'true');
+ELSE NULL END AS type
+FROM lines WHERE type IS NOT NULL AND bridge IN ('yes', '1', 'true');
 
 -- Roads: done
 
