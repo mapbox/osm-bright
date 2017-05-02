@@ -73,7 +73,7 @@ Map { font-directory: url(./fonts); }
 @motorway_fill:     #FFCC88;
 @motorway_line:     mix(@motorway_fill, #800, 75);
 @motorway_case:     @motorway_line * 0.9;
-@motorway_shield_fill: #fff;
+@motorway_shield_fill: #333; //#fff;
 
 @trunk_fill:        #FFEEAA;
 @trunk_line:        mix(@trunk_fill, #800, 75);
