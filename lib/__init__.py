@@ -40,8 +40,8 @@ def build():
     elif layer["id"] in ("processed_p", "processed_p_outline"):
       layer["Datasource"]["file"] = config["processed_p"]
     else:
-      # Assume all other layers are PostGIS layers
-      for opt, val in config["postgis"].iteritems():
+      # Assume all other layers are Sqlite layers
+      for opt, val in config["sqlite"].iteritems():
         if (val == ""):
           if (opt in layer["Datasource"]):
             del layer["Datasource"][opt]
@@ -70,15 +70,10 @@ def pull():
   #load the project file
   project = loads(open(join("osm-bright", "project.mml")))
 
-  #Make sure we reset postgis data in the project file back to its default values
+  #Make sure we reset sqlite data in the project file back to its default values
   defaultconfig = defaultdict(defaultdict)
-  defaultconfig["postgis"]["host"]     = ""
-  defaultconfig["postgis"]["port"]     = ""
-  defaultconfig["postgis"]["dbname"]   = "osm"
-  defaultconfig["postgis"]["user"]     = ""
-  defaultconfig["postgis"]["password"] = ""
-  defaultconfig["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34"
-  defaultconfig["name"] = "NYC Bright Osm2pgsql"
+  defaultconfig["sqlite"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34"
+  defaultconfig["name"] = "OSM Bright SQLite"
   defaultconfig["processed_p"] = "http://tilemill-data.s3.amazonaws.com/osm/coastline-good.zip"
   defaultconfig["shoreline_300"] = "http://tilemill-data.s3.amazonaws.com/osm/shoreline_300.zip"
 
@@ -88,8 +83,8 @@ def pull():
     elif layer["id"] in ("processed_p", "processed_p_outline"):
       layer["Datasource"]["file"] = defaultconfig["processed_p"]
     else:
-      # Assume all other layers are PostGIS layers
-      for opt, val in defaultconfig["postgis"].iteritems():
+      # Assume all other layers are Sqlite layers
+      for opt, val in defaultconfig["sqlite"].iteritems():
         if not val and opt in layer["Datasource"]:
           del layer["Datasource"][opt]
         else:

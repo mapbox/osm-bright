@@ -1,0 +1,723 @@
+{
+    "Layer": [
+        {
+            "Datasource": {
+                "dbname": "osm", 
+                "extent": "-20037508.34 -20037508.34 20037508.34 20037508.34", 
+                "file": "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip", 
+                "id": "land-low", 
+                "type": "shape",
+                "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "land-low", 
+            "name": "land-low", 
+            "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "file": "http://data.openstreetmapdata.com/land-polygons-split-3857.zip",
+                "type": "shape",
+                "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "land-high", 
+            "name": "land-high", 
+            "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+        }, 
+
+        {
+            "Datasource": {
+                "id": "landuse_gen0", 
+                "project": "osm-bright-spatialite", 
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages_gen0\n  ORDER BY area DESC\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "landuse_gen0", 
+            "name": "landuse_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "id": "landuse_gen1", 
+                "project": "osm-bright-spatialite", 
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages_gen1\n  ORDER BY area DESC\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "landuse_gen1", 
+            "name": "landuse_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "id": "landuse", 
+                "project": "osm-bright-spatialite", 
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_landusages\n ORDER BY area DESC\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "landuse", 
+            "name": "landuse", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        
+        {
+            "Datasource": {
+                "id": "waterway", 
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterways_low\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "waterway_low", 
+            "name": "waterway_low", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal', 'stream')\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "waterway_med", 
+            "name": "waterway_med", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type\n  FROM osm_waterways\n  WHERE type IN ('river', 'canal', 'stream', 'ditch', 'drain')\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "waterway_high", 
+            "name": "waterway_high", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas_gen0\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "water_gen0", 
+            "name": "water_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry\n  FROM osm_waterareas_gen1\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "water_gen1", 
+            "name": "water_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry\n  FROM osm_waterareas) AS data"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "water", 
+            "name": "water", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },        
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, name FROM osm_ferryways) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "ferry_routes", 
+            "name": "ferry_routes", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        },         
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type \nfrom osm_landusage_overlays_gen0\norder by area desc) as landusages"
+            }, 
+            "class": "", 
+            "id": "landuse_overlays_gen0", 
+            "name": "landuse_overlays_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type \nfrom osm_landusage_overlays_gen1\norder by area desc) as landusages"
+            }, 
+            "class": "", 
+            "id": "landuse_overlays_gen1", 
+            "name": "landuse_overlays_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type \nfrom osm_landusage_overlays\norder by area desc) as landusages"
+            }, 
+            "class": "", 
+            "id": "landuse_overlays", 
+            "name": "landuse_overlays", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry from osm_admin_gen0) as admin"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "admin_gen0", 
+            "name": "admin_gen0", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry from osm_admin_gen1) as admin"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "admin_gen1", 
+            "name": "admin_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry from osm_admin) as admin"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "admin", 
+            "name": "admin", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry FROM osm_buildings\n ORDER BY y_min DESC\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "polygon", 
+            "id": "buildings", 
+            "name": "buildings", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, is_runway FROM osm_aeroways) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "aeroway", 
+            "name": "aeroway", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type, z_order FROM osm_tunnels ORDER BY z_order ASC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "tunnel",
+            "name": "tunnel", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry FROM osm_turning_circles) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "turning_circle_case", 
+            "name": "turning_circle_case", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type FROM osm_roads ORDER BY z_order ASC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "roads_high", 
+            "name": "roads_high", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type FROM osm_roads_gen2 ORDER BY z_order ASC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "roads_gen2", 
+            "name": "roads_gen2", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type FROM osm_roads_gen1) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "roads_med", 
+            "name": "roads_med", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type FROM osm_motorways_gen0) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "roads_low", 
+            "name": "roads_low", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry FROM osm_turning_circles) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "turning_circle_fill", 
+            "name": "turning_circle_fill", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type, z_order FROM osm_bridges ORDER BY z_order ASC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "bridge", 
+            "name": "bridge", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry FROM osm_barrierpoints) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "barrier_points", 
+            "name": "barrier_points", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type FROM osm_barrierways) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "barrier_lines", 
+            "name": "barrier_lines", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_country ORDER BY population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_country", 
+            "name": "place_country", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_state ORDER BY population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_state", 
+            "name": "place_state", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_city ORDER BY z_order, population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_city", 
+            "name": "place_city", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_town ORDER BY population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_town", 
+            "name": "place_town", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_small ORDER BY z_order, population DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_small", 
+            "name": "place_small", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name FROM osm_places_tiny) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "place_tiny", 
+            "name": "place_tiny", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, type, name, area FROM osm_area_labels ORDER BY area DESC) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "area_label", 
+            "name": "area_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, railway, name\n  FROM osm_railway_stations) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "station", 
+            "name": "station", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, iata, name, CASE WHEN iata IS NOT NULL THEN 1 ELSE 0 END AS hasiata \n  FROM osm_airports) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "airport", 
+            "name": "airport", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z13) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_z13", 
+            "name": "amenity_z13", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z14) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_z14", 
+            "name": "amenity_z14", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z15) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_z15", 
+            "name": "amenity_z15", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z16) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_z16", 
+            "name": "amenity_z16", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, icon, color, name\n  FROM osm_amenity_z17) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_z17", 
+            "name": "amenity_z17", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, feature, name\n  FROM osm_amenity_fuel) AS data"
+            }, 
+            "class": "", 
+            "geometry": "point", 
+            "id": "amenity_fuel", 
+            "name": "amenity_fuel", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, bname FROM osm_building_labels) AS data"
+            },
+            "class": "", 
+            "geometry": "point", 
+            "id": "building_label", 
+            "name": "building_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+
+
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name, ref, LENGTH(ref) AS reflen, oneway, type FROM osm_roads WHERE type IN ('motorway', 'trunk')\n AND (name IS NOT NULL OR ref IS NOT NULL)) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "motorway_label", 
+            "name": "motorway_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },        
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name, ref, LENGTH(ref) AS reflen, type FROM osm_roads_gen2 WHERE type IN ('motorway', 'trunk')\n AND (name IS NOT NULL OR ref IS NOT NULL)) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "motorway_label_gen2", 
+            "name": "motorway_label_gen2", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name, ref, LENGTH(ref) AS reflen, type FROM osm_roads_gen1 WHERE type IN ('motorway', 'trunk')\n AND (name IS NOT NULL OR ref IS NOT NULL)) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "motorway_label_med", 
+            "name": "motorway_label_med", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, ref, LENGTH(ref) AS reflen, type FROM osm_motorways_gen0 WHERE type IN ('motorway', 'trunk')\n AND (ref IS NOT NULL)) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "motorway_label_low", 
+            "name": "motorway_label_low", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE type IN ('primary', 'secondary', 'tertiary') AND (name IS NOT NULL OR oneway <> 0)\n) AS data" 
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "mainroad_label", 
+            "name": "mainroad_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads_gen2\n  WHERE type IN ('primary') AND (name IS NOT NULL OR oneway <> 0)\n) AS data" 
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "mainroad_label_gen2", 
+            "name": "mainroad_label_gen2", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE (NOT type IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')) AND (name IS NOT NULL OR oneway <> 0)\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "minorroad_label", 
+            "name": "minorroad_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },
+
+
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type, name\n  FROM osm_waterways\n  WHERE type IN ('canal', 'river', 'stream') \n    AND name IS NOT NULL\n) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "waterway_label", 
+            "name": "waterway_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }
+    ], 
+    "Stylesheet": [
+        "palette.mss", 
+        "base.mss", 
+        "roads.mss", 
+        "labels.mss",
+        "stations.mss",
+        "amenity-points.mss",
+        "ferry-routes.mss",
+        "airports.mss"
+    ], 
+    "attribution": "Data \u00a9 OpenStreetMap (and) contributors, ODbL",
+    "bounds": [
+            -180, 
+            -85.0511, 
+        180, 
+        85.0511
+    ], 
+    "center": [
+        0, 
+        20, 
+        4
+    ], 
+    "description": "", 
+    "format": "png", 
+    "interactivity": false, 
+    "maxzoom": 20, 
+    "minzoom": 0, 
+    "name": "OSM Bright", 
+    "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+}

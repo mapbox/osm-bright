@@ -49,8 +49,8 @@ def build():
     elif layer["id"] == "ne_places":
       layer["Datasource"]["file"] = config["ne_places"]
     else:
-      # Assume all other layers are PostGIS layers
-      for opt, val in config["postgis"].iteritems():
+      # Assume all other layers are Sqlite layers
+      for opt, val in config["sqlite"].iteritems():
         if (val == ""):
           if (opt in layer["Datasource"]):
             del layer["Datasource"][opt]
@@ -79,14 +79,9 @@ def pull():
   #load the project file
   project = loads(open(join("osm-bright", "project.mml")).read())
 
-  #Make sure we reset postgis data in the project file back to its default values
+  #Make sure we reset sqlite data in the project file back to its default values
   defaultconfig = defaultdict(defaultdict)
-  defaultconfig["postgis"]["host"]     = ""
-  defaultconfig["postgis"]["port"]     = ""
-  defaultconfig["postgis"]["dbname"]   = "osm"
-  defaultconfig["postgis"]["user"]     = ""
-  defaultconfig["postgis"]["password"] = ""
-  defaultconfig["postgis"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34"
+  defaultconfig["sqlite"]["extent"] = "-20037508.34 -20037508.34 20037508.34 20037508.34"
   defaultconfig["name"] = "OSM Bright"
   defaultconfig["land-high"] = "http://data.openstreetmapdata.com/land-polygons-split-3857.zip"
   defaultconfig["land-low"] = "http://data.openstreetmapdata.com/simplified-land-polygons-complete-3857.zip"
@@ -101,8 +96,8 @@ def pull():
     elif layer["id"] == "ne_places":
       layer["Datasource"]["file"] = defaultconfig["ne_places"]
     else:
-      # Assume all other layers are PostGIS layers
-      for opt, val in defaultconfig["postgis"].iteritems():
+      # Assume all other layers are Sqlite layers
+      for opt, val in defaultconfig["sqlite"].iteritems():
         if val and opt in layer["Datasource"]:
           layer["Datasource"][opt] = val
         elif opt in layer["Datasource"]:

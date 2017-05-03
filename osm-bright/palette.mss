@@ -1,3 +1,4 @@
+
 /* ****************************************************************** */
 /* OSM BRIGHT for Imposm                                              */
 /* ****************************************************************** */
@@ -21,36 +22,14 @@
 Map { font-directory: url(./fonts); }
 
 /* set up font sets for various weights and styles */
-@sans_lt:       "Open Sans Regular", "DejaVu Sans Book", "Arundina Sans Regular", "Padauk Regular", "Khmer OS Metal Chrieng Regular",
-                "Mukti Narrow Regular", "gargi Medium", "TSCu_Paranar Regular", "Tibetan Machine Uni Regular", "Mallige Normal",
-                "Droid Sans Fallback Regular", "Unifont Medium", "unifont Medium";
+@sans_lt:       "Open Sans Regular", "DejaVu Sans Book";
+@sans_lt_italic:    "Open Sans Italic", "DejaVu Sans Oblique";
 
+@sans:          "Open Sans Semibold", "DejaVu Sans Book";
+@sans_italic:   "Open Sans Semibold Italic",  "DejaVu Sans Oblique";
 
-@sans_lt_italic:    "Open Sans Oblique", "DejaVu Sans Oblique", "Arundina Sans Italic", "TSCu_Paranar Italic", "Mallige NormalItalic",
-                "DejaVu Sans Book", "Arundina Sans Regular", "Padauk Regular", "Khmer OS Metal Chrieng Regular",
-                "Mukti Narrow Regular", "gargi Medium", "TSCu_Paranar Regular", "Tibetan Machine Uni Regular", "Mallige Normal",
-                "Droid Sans Fallback Regular", "Unifont Medium", "unifont Medium";
-
-
-@sans:          "Open Sans Semibold", "DejaVu Sans Book", "Arundina Sans Regular", "Padauk Regular", "Khmer OS Metal Chrieng Regular",
-                "Mukti Narrow Regular", "gargi Medium", "TSCu_Paranar Regular", "Tibetan Machine Uni Regular", "Mallige Normal",
-                "Droid Sans Fallback Regular", "Unifont Medium", "unifont Medium";
-
-@sans_italic:   "Open Sans Semibold Italic",  "DejaVu Sans Oblique", "Arundina Sans Italic", "TSCu_Paranar Italic", "Mallige NormalItalic",
-                "DejaVu Sans Book", "Arundina Sans Regular", "Padauk Regular", "Khmer OS Metal Chrieng Regular",
-                "Mukti Narrow Regular", "gargi Medium", "TSCu_Paranar Regular", "Tibetan Machine Uni Regular", "Mallige Normal",
-                "Droid Sans Fallback Regular", "Unifont Medium", "unifont Medium";
-
-
-@sans_bold:  "Open Sans Bold", "DejaVu Sans Bold", "Arundina Sans Bold", "Padauk Bold", "Mukti Narrow Bold", "TSCu_Paranar Bold", "Mallige Bold",
-             "DejaVu Sans Book", "Arundina Sans Regular", "Padauk Regular", "Khmer OS Metal Chrieng Regular",
-             "Mukti Narrow Regular", "gargi Medium", "TSCu_Paranar Regular", "Tibetan Machine Uni Regular", "Mallige Normal",
-             "Droid Sans Fallback Regular", "Unifont Medium", "unifont Medium";
-
-@sans_bold_italic:  "Open Sans Bold Italic","DejaVu Sans Bold Oblique", "DejaVu Sans Oblique", "Arundina Sans Italic", "TSCu_Paranar Italic", "Mallige NormalItalic",
-                "DejaVu Sans Book", "Arundina Sans Regular", "Padauk Regular", "Khmer OS Metal Chrieng Regular",
-                "Mukti Narrow Regular", "gargi Medium", "TSCu_Paranar Regular", "Tibetan Machine Uni Regular", "Mallige Normal",
-                "Droid Sans Fallback Regular", "Unifont Medium", "unifont Medium";
+@sans_bold:  "Open Sans Bold", "DejaVu Sans Bold";
+@sans_bold_italic:  "Open Sans Bold Italic","DejaVu Sans Bold Oblique", "DejaVu Sans Oblique";
 
 /* Some fonts are larger or smaller than others. Use this variable to
    globally increase or decrease the font sizes. */
@@ -61,18 +40,16 @@ Map { font-directory: url(./fonts); }
 /* LANDUSE & LANDCOVER COLORS
 /* ================================================================== */
 
-@land:              #FCFBE7;
-@water:             #C4DFF6;
-@grass:             #E6F2C1;
-@beach:             #FFEEC7;
-@park:              #DAF2C1;
+@land:              #F8F4F0;
+@water:             #A0C8F0;
+@grass:             #DEEBBA;
+@park:              #D8E8C8;
 @cemetery:          #D6DED2;
-@wooded:            #C3D9AD;
-@agriculture:       #F2E8B6;
+@wooded:            #E9EDDF;
 
-@building:          #E4E0E0;
-@hospital:          rgb(229,198,195);
-@school:            #FFF5CC;
+@building:          #EFE8E0; //#E4E0E0;
+@hospital:          #FFDDEE;
+@school:            #F0E8F8;
 @sports:            #B8E6B8;
 
 @residential:       @land * 0.98;
@@ -93,37 +70,49 @@ Map { font-directory: url(./fonts); }
  *         inner fill (inline).
  */
 
-@motorway_line:     #E65C5C;
-@motorway_fill:     lighten(@motorway_line,10%);
+@motorway_fill:     #FFCC88;
+@motorway_line:     mix(@motorway_fill, #800, 75);
 @motorway_case:     @motorway_line * 0.9;
+@motorway_shield_fill: #333; //#fff;
 
-@trunk_line:        #E68A5C;
-@trunk_fill:        lighten(@trunk_line,10%);
+@trunk_fill:        #FFEEAA;
+@trunk_line:        mix(@trunk_fill, #800, 75);
 @trunk_case:        @trunk_line * 0.9;
 
-@primary_line:      #FFC859;
-@primary_fill:      lighten(@primary_line,10%);
-@primary_case:      @primary_line * 0.9;
+@primary_fill:      @trunk_fill;
+@primary_line:      mix(@trunk_fill, #800, 75);
+@primary_case:      @trunk_line * 0.9;
 
-@secondary_line:    #FFE873;
-@secondary_fill:    lighten(@secondary_line,10%);
-@secondary_case:    @secondary_line * 0.9;
+// @secondary_line:    @land*0.8;
+// @secondary_fill:    #FFFFFF;
+// @secondary_case:    @secondary_line;
 
-@standard_line:     @land * 0.85;
-@standard_fill:     #fff;
-@standard_case:     @land * 0.9;
+@secondary_line:    @land*0.8;
+@secondary_fill:    #FFEEAA;
+@secondary_case:    @secondary_line;
 
-@pedestrian_line:   @standard_line;
+@standard_fill:     #FFFFFF;
+@standard_case:     @land*0.7;
+
+@noauto_fill:       #EAEAE9;
+@noauto_case:       @standard_case;
+
+// @pedestrian_line:   @standard_line;
 @pedestrian_fill:   #FAFAF5;
-@pedestrian_case:   @land;
+// @pedestrian_case:   @land;
 
-@cycle_line:        @standard_line;
-@cycle_fill:        #FAFAF5;
-@cycle_case:        @land;
+@path_line:  	    #CCBBAA;
+@cycleway_line:     #B42EFF;
+
+// @cycle_line:        @standard_line;
+// @cycle_fill:        #FAFAF5;
+// @cycle_case:        @land;
 
 @rail_line:         #999;
 @rail_fill:         #fff;
-@rail_case:         @land;
+@rail_case:         fadeout(@land,50%);
+// @rail_fill:         #fff;
+// @rail_case:         @land;
 
 @aeroway:           #ddd;
 
@@ -132,6 +121,9 @@ Map { font-directory: url(./fonts); }
 /* ================================================================== */
 
 @admin_2:           #324;
+
+@fence_color:       #aab;
+@barrier_point:     #c7c7c7;
 
 /* ================================================================== */
 /* LABEL COLORS
@@ -155,18 +147,42 @@ Map { font-directory: url(./fonts); }
 
 @poi_text:          #888;
 
+@area_text:	    @poi_text;
+@area_halo:         @place_halo;
+
 @road_text:         #777;
 @road_halo:         #fff;
 
 @other_text:        #888;
 @other_halo:        @place_halo;
 
-@locality_text:     #aaa;
+@locality_text:     #999;
 @locality_halo:     @land;
 
 /* Also used for other small places: hamlets, suburbs, localities */
 @village_text:      #888;
 @village_halo:      @place_halo;
+
+/* For POIs and other styles from standard map*/
+@standard-halo-radius:  1;
+@standard-halo-fill: rgba(255,255,255,0.6);
+@standard-wrap-width: 30;
+@standard-text-size: 10;
+@standard-font: @sans;
+@book-fonts: @sans;
+@bold-fonts: @sans_bold;
+@standard-poi-font: @book-fonts;
+
+@water-color: @water;
+@airtransport: #8461C4;
+
+// POI colors
+// Colors and corresponding IDs in the database
+@amenity-brown:  #734a08; 	// 0
+@health-color: #da0092;		// 1
+@landform-color: #d08f55;	// 2
+@transportation-icon: #0092da;	// 3
+@shop-icon: #ac39ac;		// 4
 
 /* ****************************************************************** */
 
