@@ -63,7 +63,7 @@ highway IN ('bus_stop', 'ford' ) OR
 leisure IN ('water_park', 'dog_park', 'playground' ) OR
 man_made IN ('lighthouse') OR
 shop IN ('bicycle', 'department_store', 'supermarket', 'art', 'bag', 'bakery', 'beverages', 'books', 'butcher', 'coffee', 'convenience', 'deli', 'doityourself', 'hardware',
-'fishmonger', 'ice_cream', 'seafood', 'garden_centre', 'toys', 'sports',  ) OR
+'fishmonger', 'ice_cream', 'seafood', 'garden_centre', 'toys', 'sports') OR
 tourism IN ('alpine_hut', 'wilderness_hut', 'museum', 'camp_site', 'caravan_site', 'picnic_site', 'artwork', 'hostel', 'hotel', 'motel', 'information', 'zoo' );
 
 SELECT date(), time(), 'Create temporary table with all amenity IDs';
