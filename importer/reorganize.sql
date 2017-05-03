@@ -284,7 +284,7 @@ WHERE highway IN ('motorway', 'trunk');
 DROP VIEW IF EXISTS vw_osm_roads_gen1;
 CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_Simplify(geometry, 0.0005) AS geometry, highway AS type
 FROM lines
-WHERE highway IN ('motorway', 'trunk', 'primary', 'secondary');
+WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary');
 
 DROP VIEW IF EXISTS vw_osm_roads_gen2;
 CREATE VIEW vw_osm_roads_gen2 AS SELECT ST_Simplify(geometry, 0.0002) AS geometry,
