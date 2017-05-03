@@ -569,7 +569,6 @@
             "srs-name": "900913", 
             "status": "on"
         },
-        
         {
             "Datasource": {
                 "key_field": "rowid",
@@ -582,7 +581,9 @@
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
-        }, 
+        },
+
+
         {
             "Datasource": {
                 "key_field": "rowid",
@@ -592,6 +593,45 @@
             "geometry": "linestring", 
             "id": "motorway_label", 
             "name": "motorway_label", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        },        
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name, ref, LENGTH(ref) AS reflen, type FROM osm_roads_gen2 WHERE type IN ('motorway', 'trunk')\n AND (name IS NOT NULL OR ref IS NOT NULL)) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "motorway_label_gen2", 
+            "name": "motorway_label_gen2", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, name, ref, LENGTH(ref) AS reflen, type FROM osm_roads_gen1 WHERE type IN ('motorway', 'trunk')\n AND (name IS NOT NULL OR ref IS NOT NULL)) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "motorway_label_gen1", 
+            "name": "motorway_label_gen1", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
+                "table": "(SELECT rowid, geometry, ref, LENGTH(ref) AS reflen, type FROM osm_motorways_gen0 WHERE type IN ('motorway', 'trunk')\n AND (ref IS NOT NULL)) AS data"
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "motorway_label_low", 
+            "name": "motorway_label_low", 
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
@@ -612,6 +652,19 @@
         {
             "Datasource": {
                 "key_field": "rowid",
+                "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads_gen2\n  WHERE type IN ('primary') AND (name IS NOT NULL OR oneway <> 0)\n) AS data" 
+            }, 
+            "class": "", 
+            "geometry": "linestring", 
+            "id": "mainroad_label_gen2", 
+            "name": "mainroad_label_gen2", 
+            "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
+            "srs-name": "900913", 
+            "status": "on"
+        }, 
+        {
+            "Datasource": {
+                "key_field": "rowid",
                 "table": "( SELECT rowid, geometry, type, name, oneway\n  FROM osm_roads\n  WHERE (NOT type IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')) AND (name IS NOT NULL OR oneway <> 0)\n) AS data"
             }, 
             "class": "", 
@@ -621,7 +674,9 @@
             "srs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs", 
             "srs-name": "900913", 
             "status": "on"
-        }, 
+        },
+
+
         {
             "Datasource": {
                 "key_field": "rowid",

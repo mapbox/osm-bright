@@ -277,12 +277,13 @@ WHERE  leisure IN ('park', 'garden', 'playground', 'golf_course', 'sports_centre
 -- FROM lines
 -- WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link');
 DROP VIEW IF EXISTS vw_osm_motorways;
-CREATE VIEW vw_osm_motorways AS SELECT geometry, highway AS type
+CREATE VIEW vw_osm_motorways AS SELECT geometry, ref, highway AS type
 FROM lines
 WHERE highway IN ('motorway', 'trunk');
 
 DROP VIEW IF EXISTS vw_osm_roads_gen1;
-CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_Simplify(geometry, 0.0005) AS geometry, highway AS type
+CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_Simplify(geometry, 0.0005) AS geometry,
+name, ref, highway AS type
 FROM lines
 WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary');
 
@@ -462,7 +463,7 @@ WHERE  ST_Area(geometry)>1e-5;
 
 DROP VIEW IF EXISTS vw_osm_motorways_gen0;
 CREATE VIEW vw_osm_motorways_gen0 AS
-SELECT ST_SimplifyPreserveTopology(geometry, 0.002) AS geometry, type
+SELECT ST_SimplifyPreserveTopology(geometry, 0.002) AS geometry, type, ref
 FROM   vw_osm_motorways;
 
 -- DROP VIEW IF EXISTS vw_osm_motorways_gen1;
