@@ -1,8 +1,8 @@
 OSM Bright SQLite
 =================
 
-OSM Bright SQLite is a fork of OSM Bright Mapnik style which is
-tailored to be used by SQLite database backend. 
+OSM Bright SQLite is based on OSM Bright Mapnik style (version TM2)
+which is tailored to be used by SQLite database backend.
 
 ![screenshot](https://raw.github.com/rinigus/osm-bright-sqlite/master/preview.png)
 
