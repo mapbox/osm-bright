@@ -62,8 +62,8 @@ barrier IN ('border_control') OR
 highway IN ('bus_stop', 'ford' ) OR
 leisure IN ('water_park', 'dog_park', 'playground' ) OR
 man_made IN ('lighthouse') OR
-shop IN ('department_store', 'supermarket', 'art', 'bag', 'bakery', 'beverages', 'books', 'butcher', 'coffee', 'convenience', 'deli', 'doityourself', 'hardware',
-'fishmonger', 'seafood', 'garden_centre', 'toys', 'sports' ) OR
+shop IN ('bicycle', 'department_store', 'supermarket', 'art', 'bag', 'bakery', 'beverages', 'books', 'butcher', 'coffee', 'convenience', 'deli', 'doityourself', 'hardware',
+'fishmonger', 'ice_cream', 'seafood', 'garden_centre', 'toys', 'sports',  ) OR
 tourism IN ('alpine_hut', 'wilderness_hut', 'museum', 'camp_site', 'caravan_site', 'picnic_site', 'artwork', 'hostel', 'hotel', 'motel', 'information', 'zoo' );
 
 SELECT date(), time(), 'Create temporary table with all amenity IDs';
@@ -161,12 +161,14 @@ WHEN feature IN ('shop_bag') THEN 'shop/bag'
 WHEN feature IN ('shop_bakery') THEN 'shop/bakery'
 WHEN feature IN ('shop_beverages') THEN 'shop/alcohol-shop'
 WHEN feature IN ('shop_books') THEN 'library'
+WHEN feature IN ('shop_bicycle') THEN 'bicycle'
 WHEN feature IN ('shop_coffee') THEN 'shop/coffee'
 WHEN feature IN ('shop_convenience') THEN 'shop/convenience'
 WHEN feature IN ('shop_deli') THEN 'shop/deli'
 WHEN feature IN ('shop_doityourself', 'shop_hardware') THEN 'shop/diy'
 WHEN feature IN ('shop_fishmonger', 'shop_seafood') THEN 'shop/seafood'
 WHEN feature IN ('shop_garden_centre') THEN 'garden-center'
+WHEN feature IN ('shop_ice_cream') THEN 'ice-cream'
 WHEN feature IN ('shop_toys') THEN 'shop/toys'
 WHEN feature IN ('shop_sports') THEN 'shop/sports'
 WHEN feature IN ('leisure_water_park') THEN 'water-park'
@@ -282,7 +284,7 @@ WHERE highway IN ('motorway', 'trunk');
 DROP VIEW IF EXISTS vw_osm_roads_gen1;
 CREATE VIEW vw_osm_roads_gen1 AS SELECT ST_Simplify(geometry, 0.0005) AS geometry, highway AS type
 FROM lines
-WHERE highway IN ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'secondary');
+WHERE highway IN ('motorway', 'trunk', 'primary', 'secondary');
 
 DROP VIEW IF EXISTS vw_osm_roads_gen2;
 CREATE VIEW vw_osm_roads_gen2 AS SELECT ST_Simplify(geometry, 0.0002) AS geometry,

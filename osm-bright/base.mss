@@ -91,6 +91,7 @@ Map { background-color: @water; }
 #water_gen0[zoom>3][zoom<=9],
 #water_gen1[zoom>9][zoom<=12],
 #water[zoom>12] {
+    // polygon-fill: @water;
     polygon-fill: @water - #111;
     ::blur {
         // This attachment creates a shadow effect by creating a
