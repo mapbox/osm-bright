@@ -39,7 +39,7 @@
     text-wrap-width: 80;
     text-line-spacing: 2;
   }
-  [zoom=7] {
+  [zoom>=7] {
     text-size:14 + @text_adjust;
     text-character-spacing: 2;
   }
@@ -288,8 +288,10 @@
       text-halo-fill: lighten(@school, 10%);
     }
     [type='water'][zoom>=10] {
-      text-fill: @water * 0.6;
-      text-halo-fill: lighten(@water, 10%);
+        text-fill: @water * 0.75;
+        text-halo-fill: fadeout(lighten(@water,5%),25%);
+        text-halo-radius: 1;
+        text-face-name: @sans_italic;
     }
   }
   [zoom=15][area>1600000/111000.0/111000.0],
